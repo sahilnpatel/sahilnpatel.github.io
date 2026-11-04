@@ -22,3 +22,13 @@ article p,.interest p,.hobby-list>p,.interest-intro,.interest-group li,.interest
 ::selection{background:#cfe5ff;color:var(--galactic)}
 @media(max-width:900px){body::before{opacity:.55;background-size:1100px 960px}}
 @media(max-width:550px){body::before{opacity:.4;background-size:850px 960px}}
+
+/* A small star cursor for precise mouse pointers; native text and zoom cues remain. */
+@media (hover:hover) and (pointer:fine){
+body{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20d%3D%22M16%203L19%2012L28%2016L19%2019L16%2029L13%2019L4%2016L13%2012Z%22%20fill%3D%22%230067c7%22%20stroke%3D%22white%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%222%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E") 16 16,auto}
+a,button,[role="button"],#spark,.photo-close{cursor:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20d%3D%22M16%203L19%2012L28%2016L19%2019L16%2029L13%2019L4%2016L13%2012Z%22%20fill%3D%22%23071c46%22%20stroke%3D%22white%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%222%22%20fill%3D%22white%22%2F%3E%3C%2Fsvg%3E") 16 16,pointer}
+input,textarea,[contenteditable="true"]{cursor:text}
+.photo-open,.photo-open img{cursor:zoom-in}
+}
+@media (forced-colors:active){body{cursor:auto}a,button,[role="button"],#spark,.photo-close{cursor:pointer}}
+
