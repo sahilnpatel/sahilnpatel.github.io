@@ -1,1 +1,44 @@
-{"version":1,"entries":[]}
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "ai-policy-2026-11-05-fda-generative-ai",
+      "date": "2026-11-05",
+      "title": "Read first: How should the FDA regulate generative AI?",
+      "summary": "MedTech Dive — published November 3, 2026. The FDA is developing its approach to generative AI medical devices, and this article compares responses from industry, clinicians, patients, and researchers. Disagreements include whether existing oversight is sufficient, who should monitor deployed systems, and how evaluations should capture rare but serious failures. These are recommendations informing policy development, not newly enacted requirements. Why it matters now: This connects healthcare AI engineering directly to regulatory choices: strong average performance can conceal dangerous failures, and responsibility must remain clear after deployment. Policy term — postmarket monitoring: checking a product’s real-world safety and performance after it reaches users, so problems missed before release can be detected and addressed.",
+      "question": "If a healthcare AI passes initial testing but becomes unsafe during longer conversations, what evidence should regulators require before deployment—and who should be responsible for detecting failures afterward?",
+      "sources": [
+        {
+          "title": "How should the FDA regulate generative AI in medtech? Here are 5 takes",
+          "url": "https://www.medtechdive.com/news/how-should-the-fda-regulate-generative-ai-in-medtech-here-are-5-takes/873608/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-05-federal-ai-laws",
+      "date": "2026-11-05",
+      "title": "Federal government plans overview of laws applying to AI labs",
+      "summary": "Reuters — published November 4, 2026, at 6:38 p.m. ET. Pentagon technology chief Emil Michael said the government would describe the laws and regulations applying to domestic AI labs within one or two weeks. Details remain unspecified; this is an announcement of a forthcoming overview, not evidence that a new AI law has passed. Why it matters now: Watch which existing authorities the administration identifies and what enforcement responsibilities it assigns.",
+      "question": "What would make an overview of existing AI laws useful beyond simply listing statutes?",
+      "sources": [
+        {
+          "title": "Pentagon chief tech officer says government will detail laws that apply to AI labs this month",
+          "url": "https://www.reuters.com/legal/litigation/pentagon-chief-tech-officer-says-government-will-detail-laws-that-apply-ai-labs-2026-11-04/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-05-ai-political-spending",
+      "date": "2026-11-05",
+      "title": "Assessing AI political spending after the midterms",
+      "summary": "WIRED — published November 4, 2026. WIRED examines the election spending of Leading the Future, a major AI-backed political network. Its analysis argues that supporting many winning candidates overstated its electoral impact because much support went to already-safe races; that interpretation does not establish that spending had no influence. Why it matters now: Post-election claims about AI’s political power deserve scrutiny before they become assumptions about what regulation Congress will support.",
+      "question": "What evidence would distinguish changing election outcomes from gaining access to lawmakers?",
+      "sources": [
+        {
+          "title": "The Biggest Pro-AI Super PAC Network Didn’t Really Impact the Midterms",
+          "url": "https://www.wired.com/story/the-biggest-pro-ai-super-pac-network-didnt-really-impact-the-midterms/"
+        }
+      ]
+    }
+  ]
+}
