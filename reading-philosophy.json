@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-05-mill-disagreement",
+      "date": "2026-11-05",
+      "title": "Understand the strongest objection",
+      "quote": "He who knows only his own side of the case, knows little of that.",
+      "attribution": "John Stuart Mill, On Liberty, Chapter II",
+      "summary": "Mill argues that understanding a belief requires hearing its strongest objections from people who actually hold them. In a disagreement with a friend or teammate, explaining their reasoning fairly can reveal a concern that your own argument overlooks. This does not require treating every position as equally credible; it means giving your confidence something harder to answer than a weak version of the opposing view.",
+      "question": "Could someone who disagrees with you recognize their position in your explanation of it?",
+      "sources": [
+        {
+          "title": "On Liberty — Chapter II",
+          "url": "https://www.gutenberg.org/cache/epub/34901/pg34901-images.html"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-04-aristotle-habits",
       "date": "2026-11-04",
       "title": "What we practice, we become",
