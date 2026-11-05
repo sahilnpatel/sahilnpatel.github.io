@@ -48,6 +48,10 @@
         fragment.append(article);
       }
       section.append(fragment);
+      const titles = new Set(entries.map(e => e.title));
+      document.querySelectorAll('article.post-preview').forEach(article => {
+        if (titles.has(article.querySelector('h2')?.textContent.trim())) article.remove();
+      });
       document.querySelector('.page-heading').after(section);
     } catch { /* Keep the existing curated reading list when the feed is unavailable. */ }
   }
