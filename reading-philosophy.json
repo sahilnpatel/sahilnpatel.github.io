@@ -1,1 +1,20 @@
-{"version":1,"entries":[]}
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "philosophy-2026-11-04-aristotle-habits",
+      "date": "2026-11-04",
+      "title": "What we practice, we become",
+      "quote": "States of character arise out of like activities.",
+      "attribution": "Aristotle · Nicomachean Ethics, II.1 · W. D. Ross translation",
+      "summary": "Aristotle connects character to repeated choices. Patience, honesty, and courage take shape through practice, not just good intentions.",
+      "question": "What quality do your everyday habits give you the most practice in?",
+      "sources": [
+        {
+          "title": "Nicomachean Ethics, II.1",
+          "url": "https://classics.mit.edu/Aristotle/nicomachaen.2.ii.html"
+        }
+      ]
+    }
+  ]
+}
