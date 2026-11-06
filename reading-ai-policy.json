@@ -2,6 +2,45 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-06-metr-research-acceleration",
+      "date": "2026-11-06",
+      "title": "Read first: Independent assessment of AI research acceleration",
+      "summary": "METR — published November 5, 2026. After examining internal Anthropic data, METR estimates that capabilities on well-specified tasks are improving roughly twice as fast as during its earlier baseline period, with substantial uncertainty. It judges AI-assisted research likely responsible for most of that acceleration, but warns that Anthropic redacted much of the evidence most important to its conclusions. This is an evaluator’s assessment, not proof of an inevitable runaway intelligence explosion. Why it matters now: The report raises two linked governance questions: how quickly oversight must adapt, and whether an evaluation is publicly accountable when outsiders cannot inspect its strongest evidence. Policy term — independent evaluation: assessment by an organization outside the developer; independence alone does not guarantee unrestricted access or permission to publish findings.",
+      "question": "Should AI safety evaluators be guaranteed the right to publish evidence supporting their conclusions, and what narrowly defined exceptions should protect security or trade secrets?",
+      "sources": [
+        {
+          "title": "Independent Assessment of AI R&D Acceleration at Anthropic in October 2026",
+          "url": "https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-06-congress-ai-proposals",
+      "date": "2026-11-06",
+      "title": "Congressional plans for AI testing and liability",
+      "summary": "Reuters — published November 6, 2026, 6:05 a.m. ET. Democrats plan bills covering independent AI testing, liability for AI-related harm, and electricity costs associated with data centers. These are legislative plans, not enacted rules, and face presidential opposition. Why it matters now: Committee control can produce investigations and testimony even when passing legislation remains difficult; distinguish oversight powers from the power to create binding requirements.",
+      "question": "How could congressional investigations improve AI accountability even if proposed laws do not pass?",
+      "sources": [
+        {
+          "title": "Democrats planning flood of AI bills when they take control of Congress",
+          "url": "https://www.reuters.com/business/media-telecom/democrats-planning-flood-ai-bills-when-they-take-control-congress-2026-11-06/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-06-doj-task-force",
+      "date": "2026-11-06",
+      "title": "DOJ announces an AI enforcement task force",
+      "summary": "U.S. Department of Justice — published November 5, 2026. DOJ announced a task force targeting unlawful AI use, including fraud and threats involving foreign actors, criminal organizations, and critical infrastructure. The announcement describes an organizational enforcement initiative, not a newly enacted AI safety statute; the underlying memorandum dates to October 13. Why it matters now: This illustrates a different policy approach from pre-release safety testing: applying enforcement tools to misuse. For policy discussions, ask what this approach can address and what risks might remain outside its focus.",
+      "question": "What AI risks can existing enforcement tools address, and which would require additional safeguards?",
+      "sources": [
+        {
+          "title": "Department of Justice Launches Super Intelligence Task Force",
+          "url": "https://www.justice.gov/opa/pr/department-justice-launches-super-intelligence-task-force"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-05-fda-generative-ai",
       "date": "2026-11-05",
       "title": "Read first: How should the FDA regulate generative AI?",
