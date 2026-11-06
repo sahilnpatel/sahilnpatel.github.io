@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-06-douglass-learning",
+      "date": "2026-11-06",
+      "title": "When learning reveals injustice",
+      "quote": "It had given me a view of my wretched condition, without the remedy.",
+      "attribution": "Frederick Douglass, Narrative of the Life of Frederick Douglass, Chapter VII",
+      "summary": "Douglass reflects that learning to read helped him recognize slavery’s injustice, while knowledge alone could not free him. Understanding a problem can bring discomfort before it brings a way to act; that discomfort does not make the knowledge worthless.",
+      "question": "What have you learned that made you less comfortable but more aware?",
+      "sources": [
+        {
+          "title": "Narrative of the Life of Frederick Douglass, Chapter VII",
+          "url": "https://en.wikisource.org/wiki/Page:Narrative_of_the_Life_of_Frederick_Douglass,_an_American_Slave.djvu/64"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-05-mill-disagreement",
       "date": "2026-11-05",
       "title": "Understand the strongest objection",
