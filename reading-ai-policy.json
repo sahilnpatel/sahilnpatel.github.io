@@ -2,6 +2,45 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-07-dna-screening",
+      "date": "2026-11-07",
+      "title": "Read first: New federal DNA synthesis screening policy",
+      "summary": "NIH Office of Science Policy — published November 6, 2026. NIH explains a newly issued federal policy requiring recipients of federal life-sciences funding to purchase synthetic nucleic acids and benchtop synthesis equipment exclusively from verified suppliers that check customers and ordered sequences. Implementation is still underway: the existing 2024 framework remains applicable until the new policy is fully implemented. Why it matters now: For AI-biosecurity discussions, this illustrates an intervention at the physical supply chain: screening what researchers can order, alongside safeguards on what AI systems can explain or design. It also connects biotechnology governance directly to research funding and procurement. Policy term — nucleic acid synthesis screening: checking customers and requested DNA or RNA sequences before supplying manufactured genetic material, to identify potentially dangerous orders.",
+      "question": "How should policymakers divide responsibility between AI developers and DNA suppliers for preventing biological misuse without obstructing legitimate research?",
+      "sources": [
+        {
+          "title": "White House Issues New USG Policy for Nucleic Acid Synthesis Screening",
+          "url": "https://osp.od.nih.gov/white-house-issues-new-usg-policy-for-nucleic-acid-synthesis-screening/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-07-raise-act-oversight",
+      "date": "2026-11-07",
+      "title": "New York proposes stronger frontier AI oversight",
+      "summary": "StateScoop — published November 6, 2026. This new report examines an October 29 proposal for independent, state-licensed AI examiners, reporting on automated AI research, and authority to restrict computing resources when necessary to reduce catastrophic risks. These are proposed requirements, not enacted provisions; the article’s supportive interpretation comes largely from an AI-safety advocate. Why it matters now: It offers a concrete response to yesterday’s evaluation-access problem: give outside examiners formal authority rather than depend entirely on voluntary company cooperation.",
+      "question": "What access and independence would state-licensed AI examiners need to evaluate developers credibly?",
+      "sources": [
+        {
+          "title": "New York’s RAISE Act 2.0 would expand AI oversight, according to safety expert",
+          "url": "https://statescoop.com/new-yorks-raise-act-2-0-would-expand-ai-oversight-according-to-safety-expert/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-07-cyber-capability-controls",
+      "date": "2026-11-07",
+      "title": "Cybersecurity AI and the limits of safety benchmarks",
+      "summary": "OpenAI — published November 5, 2026. OpenAI reports stronger vulnerability-finding and exploitation capabilities alongside improved adherence to authorized testing boundaries, and classifies GPT-6 Cyber as Critical in cybersecurity under its own Preparedness Framework. This is a developer’s release and evaluation account, not an independent safety certification or a government risk designation. Why it matters now: The policy issue is how to give defenders useful capabilities while controlling misuse. High scores on bounded tests do not, by themselves, establish safety across real-world deployments.",
+      "question": "What evidence beyond developer-run benchmarks should justify access to highly capable cybersecurity models?",
+      "sources": [
+        {
+          "title": "GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents",
+          "url": "https://openai.com/index/introducing-gpt-6-cyber/"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-06-metr-research-acceleration",
       "date": "2026-11-06",
       "title": "Read first: Independent assessment of AI research acceleration",
