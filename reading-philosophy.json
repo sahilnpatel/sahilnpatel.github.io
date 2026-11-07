@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-07-james-attention",
+      "date": "2026-11-07",
+      "title": "Attention shapes experience",
+      "quote": "My experience is what I agree to attend to.",
+      "attribution": "William James, The Principles of Psychology, Chapter XI (1890)",
+      "summary": "James argues that attention shapes which parts of the world become vivid and meaningful to us. During a conversation, rehearsing your reply can leave you with a different experience from listening closely to what the other person is trying to say. His nineteenth-century account offers a useful lens on daily life, though its language of choice should not imply that every distraction or distressing thought is under voluntary control.",
+      "question": "What deserves more of your attention than it currently receives?",
+      "sources": [
+        {
+          "title": "The Principles of Psychology — Chapter XI: Attention",
+          "url": "https://psychclassics.yorku.ca/James/Principles/prin11"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-06-douglass-learning",
       "date": "2026-11-06",
       "title": "When learning reveals injustice",
