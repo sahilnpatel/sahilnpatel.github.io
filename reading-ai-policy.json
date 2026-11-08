@@ -2,6 +2,32 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-08-agent-permissions",
+      "date": "2026-11-08",
+      "title": "Read first: Singapore’s guidance on personal AI agents",
+      "summary": "CSA, GovTech and IMDA, Singapore — published November 6, 2026. Using Personal AI Agents Safely and Securely: What Consumers Should Know recommends narrow permissions, approval for consequential actions, and controls over retained personal information. Its key distinction is between instructing an agent to behave and restricting what its connected apps actually permit: users should not rely solely on chat instructions. This is government safety guidance, not a newly enacted AI law. Why it matters now: Agents can send messages, change files and expose information about people who never chose to use them. My policy takeaway: meaningful human control requires usable permission settings and activity records, not merely a warning that users remain responsible. For healthcare applications, this raises an especially concrete question about access to sensitive accounts. Policy term — least privilege: give a system only the access needed for its current task, limiting the damage if it makes a mistake or is manipulated.",
+      "question": "Which agent safeguards should be mandatory product defaults, and which can reasonably remain the user’s responsibility?",
+      "sources": [
+        {
+          "title": "Using Personal AI Agents Safely and Securely: What Consumers Should Know",
+          "url": "https://www.csa.gov.sg/alerts-and-advisories/advisories/ad-2026-015/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-08-jailbreak-ratings",
+      "date": "2026-11-08",
+      "title": "A shared framework for rating cyber jailbreaks",
+      "summary": "Frontier Model Forum — published November 5, 2026. Introducing the FMF Jailbreak Rating Framework for Frontier Cyber Threats presents a preliminary method for comparing successful safeguard bypasses using capability gain, capability scope, ease of deployment and ease of discovery. FMF says it still needs to test whether different assessors reach consistent ratings and whether those ratings track meaningful risk; public comments are open through December 21. This is an industry framework under consultation, not binding regulation or a validated universal standard. Why it matters now: A dramatic jailbreak demonstration does not automatically show substantial real-world danger. A shared rating method could help prioritize serious failures, but policymakers should examine whose judgments shape the scale and whether independent researchers can reproduce its results.",
+      "question": "What independent validation should be required before regulators use an industry-developed jailbreak rating scale?",
+      "sources": [
+        {
+          "title": "Introducing the FMF Jailbreak Rating Framework for Frontier Cyber Threats",
+          "url": "https://www.frontiermodelforum.org/updates/introducing-the-fmf-jailbreak-rating-framework-for-frontier-cyber-threats/"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-07-dna-screening",
       "date": "2026-11-07",
       "title": "Read first: New federal DNA synthesis screening policy",
