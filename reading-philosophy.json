@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-08-nietzsche-values",
+      "date": "2026-11-08",
+      "title": "Question the values you inherit",
+      "quote": "we must first question the very value of these values",
+      "attribution": "Friedrich Nietzsche, On the Genealogy of Morals, Preface §6, translated by Ian Johnston",
+      "summary": "Nietzsche proposes examining where our moral ideals came from and what kinds of lives they encourage. Applied to everyday life, this invites you to examine whether calling constant self-sacrifice admirable helps people flourish or makes it harder to set reasonable boundaries. An ideal’s origins do not automatically disprove it, but investigating its effects can help you decide whether it deserves your loyalty.",
+      "question": "Which expectation do you treat as a moral duty without knowing why?",
+      "sources": [
+        {
+          "title": "On the Genealogy of Morals — Preface §6",
+          "url": "https://web.viu.ca/johnstoi/nietzsche/genealogypreface.htm"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-07-james-attention",
       "date": "2026-11-07",
       "title": "Attention shapes experience",
