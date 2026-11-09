@@ -2,6 +2,25 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-09-king-time",
+      "date": "2026-11-09",
+      "title": "Time alone does not bring progress",
+      "quote": "Actually, time itself is neutral; it can be used either destructively or constructively.",
+      "attribution": "Martin Luther King Jr., “Letter from Birmingham Jail,” in Why We Can’t Wait",
+      "summary": "King challenges the belief that racial injustice will disappear if people simply wait long enough: progress requires deliberate effort, while delay can protect an unfair system. His argument also offers a useful test of leadership in everyday settings, where postponing an uncomfortable conversation can leave someone else carrying the cost. Patience has value when it supports a concrete plan; without one, it can become an excuse for avoiding responsibility.",
+      "question": "Who bears the cost of a problem you are waiting to address?",
+      "sources": [
+        {
+          "title": "Letter from Birmingham Jail",
+          "url": "https://crmvet.lib.duke.edu/docs/bhamlbj.html"
+        },
+        {
+          "title": "King Institute: Letter from Birmingham Jail",
+          "url": "https://kinginstitute.stanford.edu/letter-birmingham-jail"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-08-nietzsche-values",
       "date": "2026-11-08",
       "title": "Question the values you inherit",
