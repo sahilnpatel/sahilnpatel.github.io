@@ -2,6 +2,45 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-09-government-evaluator-independence",
+      "date": "2026-11-09",
+      "title": "Read first: Independence of government AI safety testing",
+      "summary": "Associated Press — published November 8, 2026. AP reports that U.S. government AI-safety staff were asked to report informally to a White House office, citing two former officials. Critics fear political interference; others see potential for greater influence and funding. This is reporting about oversight arrangements, not a new law. Why it matters now: Effective evaluation requires institutional independence as well as technical skill.",
+      "question": "What protections would let government AI evaluators publish uncomfortable findings while preserving legitimate security confidentiality?",
+      "sources": [
+        {
+          "title": "Staff at the US center for AI safety are reporting to the White House, raising independence concerns",
+          "url": "https://apnews.com/article/ai-safety-trump-white-house-d3318eb2cf011df53e9ddb3e03d25f13"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-09-trump-ai-guardrails",
+      "date": "2026-11-09",
+      "title": "Trump signals openness to AI safeguards",
+      "summary": "Reuters — published November 8, 2026, 7:29 p.m. ET (November 9 in UTC). Trump told CBS he was open to AI safeguards and working with Democrats, while emphasizing competition with China. He did not specify the safeguards; this is a political signal, not an enacted rule or detailed proposal. Why it matters now: Watch for concrete commitments on testing, disclosure and enforcement before interpreting this as a policy reversal.",
+      "question": "What specific action would demonstrate that openness to safeguards has become a substantive policy commitment?",
+      "sources": [
+        {
+          "title": "Trump says AI risks can be managed, signals openness to guardrails",
+          "url": "https://www.reuters.com/world/trump-says-ai-risks-can-be-managed-signals-openness-guardrails-2026-11-09/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-09-health-federated-governance",
+      "date": "2026-11-09",
+      "title": "Health research, federated learning and privacy",
+      "summary": "Digital Health & Discovery Platform / Terry Fox Research Institute — published November 6, 2026. Responding to Canadian privacy regulators, these research organizations advocate collaboration across hospitals while keeping patient records at their originating institutions. They describe a federated research platform for cancer and neurodegenerative disease, explicitly acknowledging that its architecture alone cannot guarantee privacy. This is a research-sector position and implementation update, not new legislation; the regulators’ underlying resolution is older. Why it matters now: It connects AI-biology ambitions to a practical governance problem: how to learn from diverse populations without treating sensitive data as freely transferable. The useful distinction is between a technical design that reduces data movement and an accountable process for deciding who may use the data. Policy term — federated learning: training across multiple organizations while keeping their raw datasets local and combining learning through shared model updates; it does not automatically eliminate privacy risks.",
+      "question": "What evidence should a hospital require before accepting a claim that an AI research platform preserves patient privacy?",
+      "sources": [
+        {
+          "title": "DHDP Response: Responsible Use of Artificial Intelligence in Health and Health Research",
+          "url": "https://www.dhdp.ca/updates/news-item/dhdp-response--responsible-use-of-artificial-intelligence-in-health-and-health-research"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-08-agent-permissions",
       "date": "2026-11-08",
       "title": "Read first: Singapore’s guidance on personal AI agents",
