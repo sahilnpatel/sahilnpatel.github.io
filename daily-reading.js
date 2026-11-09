@@ -2,8 +2,7 @@
 (async () => {
   const path = location.pathname;
   const home = path.endsWith('/') || path.endsWith('/index.html');
-  const quoteBook = path.endsWith('/quotes.html');
-  const topics = home ? ['philosophy', 'ai-policy'] : quoteBook ? ['philosophy'] : path.endsWith('/philosophy.html') ? ['philosophy'] : path.endsWith('/ai-policy.html') ? ['ai-policy'] : [];
+  const topics = home ? ['philosophy', 'ai-policy'] : path.endsWith('/philosophy.html') ? ['philosophy'] : path.endsWith('/ai-policy.html') ? ['ai-policy'] : [];
   const el = (tag, text, cls) => {
     const node = document.createElement(tag);
     if (text) node.textContent = text;
@@ -26,29 +25,6 @@
         preview.querySelector('.post-meta').textContent = `${topic === 'philosophy' ? 'PHILOSOPHY' : 'AI & POLICY'} · ${latest.date}`;
         preview.querySelector('h3 a').textContent = latest.title;
         preview.querySelector('p:not(.post-meta)').textContent = latest.summary.length > 180 ? latest.summary.slice(0,177).trimEnd()+'…' : latest.summary;
-        continue;
-      }
-      if (quoteBook) {
-        const section = document.getElementById('quote-book');
-        if (!section) continue;
-        const quoted = entries.filter(entry => typeof entry.quote === 'string' && entry.quote.trim());
-        if (!quoted.length) continue;
-        section.replaceChildren();
-        for (const entry of quoted) {
-          const article = el('article', null, 'quote-card');
-          article.append(el('p', entry.date + ' · PHILOSOPHY READING', 'post-meta'));
-          const block = el('blockquote');
-          block.append(el('p', '“' + entry.quote + '”'));
-          if (typeof entry.attribution === 'string') block.append(el('cite', entry.attribution));
-          article.append(block);
-          const source = entry.sources.find(item => safeUrl(item.url));
-          if (source) {
-            const link = el('a', (source.title || 'Original source') + ' ↗', 'read-more');
-            link.href = safeUrl(source.url);
-            article.append(link);
-          }
-          section.append(article);
-        }
         continue;
       }
       const section = el('section', null, 'prose daily-entries');
