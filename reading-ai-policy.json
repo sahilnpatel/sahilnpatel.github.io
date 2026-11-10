@@ -2,6 +2,45 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-10-australia-mandatory-safeguards",
+      "date": "2026-11-10",
+      "title": "Read first: Australia proposes mandatory AI safeguards",
+      "summary": "Prime Minister of Australia — published November 10, 2026. Australia announced plans for legislation requiring frontier AI companies to permit independent evaluations, rapidly report incidents, manage serious risks and publish safety frameworks. A proposed regulator would enforce these obligations with penalties; these are announced legislative plans, not already enacted requirements. Why it matters now: The announcement provides a concrete checklist for judging AI regulation: who must comply, what evidence they must supply, and who can enforce it. Watch the eventual bill for definitions, reporting deadlines and evaluator access. Policy term — incident reporting: a requirement to notify an oversight body when specified failures or dangerous events occur, enabling investigation and coordinated response.",
+      "question": "What evidence would convince you that human oversight is meaningful: a person approving outputs, documented overrides, or measured reductions in harm?",
+      "sources": [
+        {
+          "title": "New Australian AI safety and security protections",
+          "url": "https://www.pm.gov.au/media/new-australian-ai-safety-and-security-protections"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-10-paris-safety-declaration",
+      "date": "2026-11-10",
+      "title": "Governments and AI companies sign Paris safety declaration",
+      "summary": "Prime Minister of Canada — published November 9, 2026. Six governments and ten AI companies signed a declaration supporting comparable safety evaluations, publication of non-sensitive findings, incident information sharing and protections for whistleblowers. Developers also commit to shutdown mechanisms within their control, but support for independent evaluation includes qualifications about proportionality and existing arrangements. This is a joint commitment, not an enacted international law. Why it matters now: It makes international coordination tangible while exposing a key policy question: whether shared promises will produce sufficiently independent testing and transparent results.",
+      "question": "What evidence would convince you that human oversight is meaningful: a person approving outputs, documented overrides, or measured reductions in harm?",
+      "sources": [
+        {
+          "title": "Joint declaration on Paris call for AI safety and security",
+          "url": "https://www.pm.gc.ca/en/news/statements/2026/11/09/joint-declaration-paris-call-ai-safety-and-security"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-10-healthcare-referral-oversight",
+      "date": "2026-11-10",
+      "title": "Human oversight in AI-assisted healthcare referrals",
+      "summary": "Healthcare IT News — published November 9, 2026. UTMB describes an AI system that reviews patient records and recommends referral priorities using physician-written rules, while people retain booking decisions. Clinicians validate the rules and review samples monthly; reported shorter waiting times are preliminary hospital results, not independent proof of safety. Why it matters now: This deployment report makes healthcare AI governance concrete: oversight needs assigned reviewers, evidence they can inspect and ongoing checks. My policy takeaway: faster access is valuable, but evaluation should also examine missed urgent cases and whether benefits are distributed fairly.",
+      "question": "What evidence would convince you that human oversight is meaningful: a person approving outputs, documented overrides, or measured reductions in harm?",
+      "sources": [
+        {
+          "title": "AI helps sort specialty referrals before scheduling at UTMB",
+          "url": "https://www.healthcareitnews.com/news/ai-helps-sort-specialty-referrals-scheduling-utmb"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-09-government-evaluator-independence",
       "date": "2026-11-09",
       "title": "Read first: Independence of government AI safety testing",
