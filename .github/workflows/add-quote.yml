@@ -1,0 +1,173 @@
+name: Add a quotebook entry
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: none
+  issues: none
+
+concurrency:
+  group: quotebook-writes
+  cancel-in-progress: false
+
+jobs:
+  publish-quote:
+    if: github.event.issue.user.login == 'sahilsworld' && github.event.issue.title == '[Quotebook] Add quote'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - name: Validate, publish, and deploy the quote
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import base64
+          import datetime
+          import json
+          import os
+          import re
+          import urllib.error
+          import urllib.parse
+          import urllib.request
+
+          event = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))
+          issue = event["issue"]
+          body = issue.get("body") or ""
+          number = issue["number"]
+          repo = os.environ["GITHUB_REPOSITORY"]
+          token = os.environ["GH_TOKEN"]
+          api_root = "https://api.github.com/repos/" + repo
+
+          def api(method, path, payload=None):
+              raw = json.dumps(payload).encode("utf-8") if payload is not None else None
+              request = urllib.request.Request(
+                  api_root + path,
+                  data=raw,
+                  method=method,
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": "Bearer " + token,
+                      "X-GitHub-Api-Version": "2022-11-28",
+                      "User-Agent": "sahilsworld-quotebook",
+                      **({"Content-Type": "application/json"} if raw is not None else {}),
+                  },
+              )
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  content = response.read()
+                  return json.loads(content) if content else None
+
+          def field(label):
+              pattern = r"(?ms)^### " + re.escape(label) + r"\s*\n(.*?)(?=^### |\Z)"
+              match = re.search(pattern, body)
+              value = match.group(1).strip() if match else ""
+              return "" if value == "_No response_" else value
+
+          def comment(text):
+              api("POST", "/issues/" + str(number) + "/comments", {"body": text})
+
+          quote = field("Quote")
+          attribution = field("Attribution")
+          source = field("Source link")
+          errors = []
+          if not quote:
+              errors.append("Add the quote text.")
+          if not attribution:
+              errors.append("Add who said or wrote it.")
+          if len(quote) > 1200:
+              errors.append("Keep the quote under 1,200 characters.")
+          if len(attribution) > 240:
+              errors.append("Keep the attribution under 240 characters.")
+          if len(source) > 1500:
+              errors.append("Keep the source link under 1,500 characters.")
+          if source:
+              parsed = urllib.parse.urlparse(source)
+              if parsed.scheme != "https" or not parsed.netloc:
+                  errors.append("Use a full HTTPS source link, or leave it blank.")
+          if errors:
+              comment("I couldn’t add this quote yet. " + " ".join(errors) + " Edit this issue to retry.")
+              raise SystemExit(0)
+
+          path = "/contents/quotes.json?ref=main"
+          current = api("GET", path)
+          data = json.loads(base64.b64decode(current["content"]))
+          entries = data.get("entries", [])
+          entry_id = "issue-" + str(number)
+          previous = next((item for item in entries if item.get("id") == entry_id), None)
+          created = issue.get("created_at", datetime.datetime.now(datetime.timezone.utc).isoformat())
+          date = previous.get("date") if previous else created[:10]
+          entry = {
+              "id": entry_id,
+              "date": date,
+              "quote": quote,
+              "attribution": attribution,
+              "source": source,
+          }
+          changed = previous != entry
+          if changed:
+              data["version"] = 1
+              data["entries"] = [item for item in entries if item.get("id") != entry_id]
+              data["entries"].insert(0, entry)
+              encoded = base64.b64encode(
+                  (json.dumps(data, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+              ).decode("ascii")
+              api("PUT", "/contents/quotes.json", {
+                  "message": "Add quotebook entry from issue #" + str(number),
+                  "content": encoded,
+                  "sha": current["sha"],
+                  "branch": "main",
+              })
+              api("POST", "/dispatches", {
+                  "event_type": "publish-site",
+                  "client_payload": {"issue_number": number},
+              })
+
+          comment("Added to the public quotebook: https://sahilsworld.github.io/quotes.html")
+          api("PATCH", "/issues/" + str(number), {"state": "closed"})
+          PY
+  close-unapproved-submission:
+    if: github.event.issue.title == '[Quotebook] Add quote' && github.event.issue.user.login != 'sahilsworld'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Close this owner-only submission
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          issue = json.load(open(os.environ["GITHUB_EVENT_PATH"], encoding="utf-8"))["issue"]
+          root = "https://api.github.com/repos/" + os.environ["GITHUB_REPOSITORY"] + "/issues/" + str(issue["number"])
+          token = os.environ["GH_TOKEN"]
+
+          def request(method, suffix, payload):
+              body = json.dumps(payload).encode("utf-8")
+              req = urllib.request.Request(
+                  root + suffix,
+                  data=body,
+                  method=method,
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": "Bearer " + token,
+                      "X-GitHub-Api-Version": "2022-11-28",
+                      "User-Agent": "sahilsworld-quotebook",
+                      "Content-Type": "application/json",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=30):
+                  pass
+
+          request("POST", "/comments", {
+              "body": "This quotebook submission form is reserved for Sahil. This issue was closed and was not published."
+          })
+          request("PATCH", "", {"state": "closed"})
+          PY
