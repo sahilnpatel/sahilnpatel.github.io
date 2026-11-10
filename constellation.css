@@ -61,3 +61,11 @@ input,textarea,[contenteditable="true"]{cursor:text}
 .soundtrack-caption a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:550px){.quote-card blockquote p{font-size:23px}.site-soundtrack{right:12px;bottom:12px}.soundtrack-panel{width:min(340px,calc(100vw - 24px))}}
 @media(prefers-reduced-motion:reduce){.soundtrack-star{transition:none}}
+
+.quote-status{font-size:13px;color:var(--muted);margin:0}
+.quote-workspace{padding:28px 0 40px}
+.quote-empty{margin:0 0 24px}
+.quote-add-button{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 15px;border-radius:999px;background:var(--galactic);border:1px solid #7dbdff;color:#fff;font-size:11px;box-shadow:0 6px 20px #071c4620}
+.quote-add-button:hover{background:#0b2d68;color:#fff}
+.quote-add-button:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.quote-card blockquote p{white-space:pre-line}
