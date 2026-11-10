@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-10-buddha-hatred",
+      "date": "2026-11-10",
+      "title": "Interrupting retaliation",
+      "quote": "Hatred is never appeased by hatred in this world.",
+      "attribution": "The Buddha, Dhammapada 5, translated by Acharya Buddharakkhita",
+      "summary": "This Buddhist teaching asks us to interrupt the impulse to answer hostility with more hostility. In an argument, a reply designed to humiliate someone may satisfy the urge to retaliate while keeping the conflict alive; a firm response that addresses the behavior can serve a different purpose. Read as an ethical discipline, the verse invites you to resist cruelty without requiring reconciliation, continued contact, or acceptance of mistreatment.",
+      "question": "What would a firm response look like if hurting back were not the goal?",
+      "sources": [
+        {
+          "title": "Dhammapada 1–20: Yamakavagga, translated by Buddharakkhita",
+          "url": "https://suttacentral.net/dhp1-20/en/buddharakkhita?lang=en"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-09-king-time",
       "date": "2026-11-09",
       "title": "Time alone does not bring progress",
