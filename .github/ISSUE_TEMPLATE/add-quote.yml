@@ -1,0 +1,32 @@
+name: Add a quote
+description: Add a quote to Sahil’s public quotebook.
+title: "[Quotebook] Add quote"
+body:
+  - type: markdown
+    attributes:
+      value: "Submitted quotes are published publicly on Sahil’s website."
+  - type: textarea
+    id: quote
+    attributes:
+      label: Quote
+      description: Paste the quote exactly as you want it to appear.
+      placeholder: Your quote
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: attribution
+    attributes:
+      label: Attribution
+      description: Who said or wrote it? Include the work or page if you know it.
+      placeholder: Author · Work
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source link
+      description: Optional. Use a public HTTPS link.
+      placeholder: https://example.com
+    validations:
+      required: false
