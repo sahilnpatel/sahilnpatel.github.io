@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-11-epictetus-control",
+      "date": "2026-11-11",
+      "title": "Focus on what you can influence",
+      "quote": "Some things are in our control and others not.",
+      "attribution": "Epictetus, Enchiridion §1, translated by Elizabeth Carter",
+      "summary": "Epictetus separates our choices from outcomes shaped by other people and circumstances. Before an important conversation, you can prepare carefully, speak honestly, and listen well, but you cannot guarantee agreement. The distinction can help direct effort toward what you can influence while making room for disappointment without treating it as proof that you acted badly or should stop trying.",
+      "question": "Where are you judging your effort by an outcome you cannot guarantee?",
+      "sources": [
+        {
+          "title": "The Enchiridion, §1",
+          "url": "https://classics.mit.edu/Epictetus/epicench.html"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-10-buddha-hatred",
       "date": "2026-11-10",
       "title": "Interrupting retaliation",
