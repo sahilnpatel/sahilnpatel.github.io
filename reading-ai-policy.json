@@ -2,6 +2,45 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-11-us-china-ai-cooperation",
+      "date": "2026-11-11",
+      "title": "U.S.–China talks may include AI safety cooperation",
+      "summary": "Reuters — published November 10, 2026, 8:25 p.m. ET. Treasury Secretary Scott Bessent said upcoming U.S.–China talks would address advanced-model testing and shared AI risks. He described planned exchanges on evaluation practices and an earlier agreement on incident alerts. These are diplomatic discussions and plans, not a new binding safety regime. Why it matters: the report raises the question of whether strategic competitors can cooperate on reducing AI risks while continuing to compete economically and militarily.",
+      "question": "Which shared AI risks could the U.S. and China address without requiring broader political agreement?",
+      "sources": [
+        {
+          "title": "US and China should stay clear-eyed on AI cooperation and competition, Bessent says",
+          "url": "https://www.reuters.com/world/china/us-china-should-stay-clear-eyed-ai-cooperation-competition-bessent-says-2026-11-11/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-11-new-york-ai-research-center",
+      "date": "2026-11-11",
+      "title": "New York launches independent AI safety research center",
+      "summary": "SUNY, from the New York governor’s office — published November 10, 2026. New York launched a statewide center intended to bring together more than 80 researchers to test advanced AI systems and safety frameworks, supported by Empire AI computing resources. The state also opened a registration portal for large frontier-AI developers under its already-enacted RAISE Act. This announcement describes a research initiative and implementation of existing law, not a newly passed statute. Why it matters: it connects academic evaluation capacity with state oversight.",
+      "question": "What access and independence would researchers need to evaluate advanced AI systems meaningfully?",
+      "sources": [
+        {
+          "title": "New York launches AI Research Institute",
+          "url": "https://www.suny.edu/suny-news/press-releases/11-26/11-10-26-2/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-11-trust-but-verify-california",
+      "date": "2026-11-11",
+      "title": "Read first: Putting California’s frontier AI law into practice",
+      "summary": "Carnegie Endowment for International Peace — published November 10, 2026. This report examines how California can implement its existing SB 53 frontier-AI transparency law. It argues that developers can design risk-management practices, while public agencies need evidence and independent expertise to verify company claims. Recommendations address evaluations, incident reporting, and whistleblower protections; they are proposals for implementation, not newly enacted requirements. Why it matters: the central policy challenge is how to make verification credible while the technology and evidence keep changing.",
+      "question": "What information would regulators need to verify a company’s safety claims?",
+      "sources": [
+        {
+          "title": "Trust but Verify: Implementing Frontier AI Policy in California and Beyond",
+          "url": "https://carnegieendowment.org/research/2026/11/trust-but-verify-implementing-frontier-ai-policy-in-california-and-beyond"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-10-australia-mandatory-safeguards",
       "date": "2026-11-10",
       "title": "Read first: Australia proposes mandatory AI safeguards",
