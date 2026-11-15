@@ -2,6 +2,71 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-15-institutional-accountability",
+      "date": "2026-11-15",
+      "title": "Can AI safety depend on trusting CEOs?",
+      "summary": "The Verge / Decoder — published November 14, 2026. CSET’s Helen Toner argues that AI safety should depend on accountable institutions rather than trust in individual executives. She discusses the tension between commercial incentives and safety commitments, and the role of technically informed policy research. These are an expert’s arguments, not new legal requirements or proof that every company’s governance fails. Why it matters: safety promises need practical authority to intervene. Reading angle: ask who receives evaluation results, who can delay deployment, and what happens when management disagrees. Policy term — institutional accountability: defined responsibilities, independent scrutiny, and consequences for organizational decisions.",
+      "question": "What powers would an AI safety board need for its ability to stop an unsafe deployment to remain credible under commercial pressure?",
+      "sources": [
+        {
+          "title": "The OpenAI board member who fired Sam Altman says we still can’t trust AI CEOs",
+          "url": "https://www.theverge.com/podcast/1032907/helen-toner-openai-cset-ai-safety-policy-interview"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-14-anthropic-evaluations",
+      "date": "2026-11-14",
+      "title": "What makes an AI safety evaluation credible?",
+      "summary": "Anthropic — published November 13, 2026. Anthropic’s guidance recommends involving subject-matter experts, designing tests around real use, measuring the intended risk, preregistering analysis, and documenting results. It is a developer’s methodology, not an independent certification or regulatory standard. Why it matters: deployment decisions can only rely on evaluations that test the right thing and make their limits visible. Policy term — construct validity: whether a test measures the concept it claims to measure.",
+      "question": "What evidence should an evaluator require before a higher safety score justifies giving an AI system more decision-making authority?",
+      "sources": [
+        {
+          "title": "Building strong safety evaluations",
+          "url": "https://www.anthropic.com/research/building-strong-safety-evaluations"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-14-insurance-safeguards",
+      "date": "2026-11-14",
+      "title": "California begins shaping AI safeguards for insurance",
+      "summary": "California Department of Insurance — published November 13, 2026. The department opened an industry survey and public workshop to inform its approach to transparency, privacy, fairness, and accountability in insurance. The announcement does not adopt new AI rules or propose regulatory text; it begins a public input process. Why it matters: this is an early chance to shape safeguards before rules are drafted, including what consumers should know when AI influences a decision.",
+      "question": "What should someone be told when AI influences an insurance decision, and what would meaningful human review look like?",
+      "sources": [
+        {
+          "title": "Commissioner Lara launches statewide effort to establish consumer safeguards for AI in insurance",
+          "url": "https://www.insurance.ca.gov/0400-news/0100-press-releases/2026/release042-2026.cfm"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-13-frontier-ai-lawsuit",
+      "date": "2026-11-13",
+      "title": "A lawsuit asks a court to halt frontier AI development",
+      "summary": "Reuters — published November 12, 2026. Nonprofits sued several major AI developers and asked a California court to halt further frontier-model development under existing unfair-business-practices law. Claims of harm and the requested remedy are the plaintiffs’ allegations, not court findings or an ordered shutdown. Why it matters: the case tests whether existing legal tools can constrain frontier development without a new AI-specific statute.",
+      "question": "What evidence would justify a narrowly targeted development restriction, and how could a court decide when it should end?",
+      "sources": [
+        {
+          "title": "OpenAI, Google, Anthropic hit with lawsuit seeking halt to frontier AI development",
+          "url": "https://www.reuters.com/business/openai-google-anthropic-hit-with-lawsuit-seeking-halt-frontier-ai-development-2026-11-12/"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-12-open-weight-use",
+      "date": "2026-11-12",
+      "title": "Companies turn to open-weight AI as costs rise",
+      "summary": "Reuters — published November 12, 2026. A Capgemini survey found that nearly six in ten large-enterprise executives plan to increase open-weight AI use as costs exceed expectations. These are reported intentions, not proof that the shift has already happened. Why it matters: organizations running models themselves also need to assign responsibility for safeguards, incident response, and later modifications.",
+      "question": "If a hospital runs an open-weight model locally, who should maintain safeguards and investigate failures?",
+      "sources": [
+        {
+          "title": "Most large firms plan higher open-weight AI use to cap bills, study shows",
+          "url": "https://www.reuters.com/business/most-large-firms-plan-higher-open-weight-ai-use-cap-bills-study-shows-2026-11-12/"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-11-us-china-ai-cooperation",
       "date": "2026-11-11",
       "title": "U.S.–China talks may include AI safety cooperation",
