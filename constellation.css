@@ -69,3 +69,27 @@ input,textarea,[contenteditable="true"]{cursor:text}
 .quote-add-button:hover{background:#0b2d68;color:#fff}
 .quote-add-button:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
 .quote-card blockquote p{white-space:pre-line}
+
+/* Homepage interests: a clear map of the questions Sahil follows. */
+.home-interests{margin:48px 0 46px;padding:28px 0 0;border-top:1px solid var(--line)}
+.curiosity-heading{display:flex;justify-content:space-between;align-items:end;gap:16px}
+.curiosity-heading .kicker{margin:0 0 8px}
+.home-interests h2{font:32px/1.15 'Instrument Serif',Georgia,serif;font-weight:400;margin:0}
+.curiosity-heading .read-more{white-space:nowrap;margin-bottom:3px}
+.curiosity-intro{font-size:13px;line-height:1.8;color:var(--muted);max-width:570px;margin:13px 0 24px}
+.curiosity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+.curiosity-card{padding:17px 0 19px;border-top:1px solid var(--line)}
+.curiosity-index{font-size:9px;letter-spacing:1.1px;color:var(--blue)}
+.curiosity-card h3{font:23px/1.18 'Instrument Serif',Georgia,serif;font-weight:400;margin:6px 0}
+.curiosity-card p{font-size:12px;line-height:1.8;color:var(--muted);max-width:none;margin:0}
+.curiosity-now{margin:8px 0 0;padding:10px 13px;border-left:2px solid var(--blue);background:#f3f8fe;color:var(--muted);font-size:11px;line-height:1.7}
+.curiosity-now strong{color:var(--ink);font-weight:600}
+@media(max-width:550px){
+  .home-interests{margin:38px 0 34px;padding-top:22px}
+  .curiosity-heading{align-items:flex-start;flex-direction:column;gap:4px}
+  .home-interests h2{font-size:29px}
+  .curiosity-grid{grid-template-columns:1fr}
+  .curiosity-card{padding:15px 0 17px}
+  .curiosity-card h3{font-size:22px}
+  .curiosity-now{font-size:10px}
+}
