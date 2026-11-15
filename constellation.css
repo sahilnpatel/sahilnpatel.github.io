@@ -125,3 +125,16 @@ input,textarea,[contenteditable="true"]{cursor:text}
  .constellation-node{font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.constellation-node{transition:none}}
+
+/* Project-led research and work page. */
+.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:34px}
+.project-card{padding:20px 0 24px;border-top:1px solid var(--line)}
+.project-kicker{font-size:9px!important;letter-spacing:1.15px;color:var(--blue)!important;margin:0 0 9px!important}
+.project-card h2,.work-community h2{font:25px/1.17 'Instrument Serif',Georgia,serif;font-weight:400;margin:0 0 10px}
+.project-card>p:not(.project-kicker){font-size:13px;line-height:1.8;color:#656c64;margin:0 0 12px}
+.project-card .read-more{display:inline-block;font-size:11px;color:var(--blue);margin-top:1px}
+.work-community{border-top:1px solid var(--line);padding:25px 0 5px;margin-top:5px}
+.work-community .kicker{margin:0 0 8px}
+.work-community p:last-child{font-size:13px;line-height:1.8;color:#656c64;margin:0}
+.work-community p a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:550px){.project-grid{grid-template-columns:1fr}.project-card{padding:18px 0 20px}.project-card h2,.work-community h2{font-size:23px}}
