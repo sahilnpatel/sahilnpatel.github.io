@@ -138,3 +138,17 @@ input,textarea,[contenteditable="true"]{cursor:text}
 .work-community p:last-child{font-size:13px;line-height:1.8;color:#656c64;margin:0}
 .work-community p a{color:var(--blue);text-decoration:underline;text-underline-offset:3px}
 @media(max-width:550px){.project-grid{grid-template-columns:1fr}.project-card{padding:18px 0 20px}.project-card h2,.work-community h2{font-size:23px}}
+
+/* Personal context for the project-led work page. */
+.work-profile{display:grid;grid-template-columns:minmax(150px,.72fr) minmax(0,1.28fr);align-items:center;gap:30px;margin:0 0 34px}
+.work-profile-photo{margin:0}
+.work-profile-photo img{display:block;width:100%;height:210px;object-fit:cover;object-position:center 45%;border-radius:3px}
+.work-profile-photo figcaption{margin-top:7px;font-size:10px;color:var(--muted)}
+.work-profile-copy .kicker{margin:0 0 7px;color:var(--blue)}
+.work-profile-copy h2{font:27px/1.16 'Instrument Serif',Georgia,serif;font-weight:400;margin:0 0 8px}
+.work-profile-copy>p:not(.kicker){font-size:12px;line-height:1.75;color:#656c64;margin:0 0 15px}
+.work-profile-copy dl{margin:0}
+.work-profile-copy dl div{display:grid;grid-template-columns:48px 1fr;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.work-profile-copy dt{font-size:10px;color:var(--blue)}
+.work-profile-copy dd{font-size:11px;line-height:1.55;color:#656c64;margin:0}
+@media(max-width:550px){.work-profile{grid-template-columns:1fr;gap:16px;margin-bottom:28px}.work-profile-photo img{height:220px;object-position:center 43%}}
