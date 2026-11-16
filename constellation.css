@@ -167,3 +167,6 @@ input,textarea,[contenteditable="true"]{cursor:text}
 @keyframes wheel-turn{to{transform:rotate(360deg)}}
 @keyframes star-drift{0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(0)}16%{opacity:1}75%{opacity:.9}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.65) rotate(95deg)}}
 @media(prefers-reduced-motion:reduce){#spark svg{transition:none}#spark.is-turning svg{animation:none}.star-spark{animation:none;opacity:.9}}
+
+/* Keep the homepage name row balanced without the removed star wheel. */
+.name-row{justify-content:flex-start}

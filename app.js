@@ -1,34 +1,5 @@
 (() => {
   const initPageFeatures = () => {
-    const spark = document.querySelector('#spark');
-    if (spark && !spark.dataset.bound) {
-      spark.dataset.bound = 'true';
-      spark.addEventListener('click', () => {
-        const wheel = spark.querySelector('.star-wheel');
-        if (wheel) {
-          wheel.style.animation = 'none';
-          void wheel.offsetWidth;
-          wheel.style.animation = '';
-        }
-        const origin = spark.getBoundingClientRect();
-        const symbols = ['✦', '✧', '⋆', '·'];
-        for (let i = 0; i < 16; i += 1) {
-          const star = document.createElement('span');
-          star.className = 'star-spark';
-          star.setAttribute('aria-hidden', 'true');
-          star.textContent = symbols[i % symbols.length];
-          const angle = (Math.PI * 2 * i / 16) + (Math.random() - 0.5) * 0.34;
-          const distance = 55 + Math.random() * 95;
-          star.style.left = (origin.left + origin.width / 2) + 'px';
-          star.style.top = (origin.top + origin.height / 2) + 'px';
-          star.style.setProperty('--dx', (Math.cos(angle) * distance) + 'px');
-          star.style.setProperty('--dy', (Math.sin(angle) * distance) + 'px');
-          document.body.appendChild(star);
-          window.setTimeout(() => star.remove(), 1250);
-        }
-      });
-    }
-
     const photoDialog = document.querySelector('.photo-dialog');
     if (photoDialog && !photoDialog.dataset.bound) {
       photoDialog.dataset.bound = 'true';
