@@ -28,19 +28,6 @@
       ]
     },
     {
-      "id": "ai-policy-2026-11-14-insurance-safeguards",
-      "date": "2026-11-14",
-      "title": "California begins shaping AI safeguards for insurance",
-      "summary": "California Department of Insurance — published November 13, 2026. The department opened an industry survey and public workshop to inform its approach to transparency, privacy, fairness, and accountability in insurance. The announcement does not adopt new AI rules or propose regulatory text; it begins a public input process. Why it matters: this is an early chance to shape safeguards before rules are drafted, including what consumers should know when AI influences a decision.",
-      "question": "What should someone be told when AI influences an insurance decision, and what would meaningful human review look like?",
-      "sources": [
-        {
-          "title": "Commissioner Lara launches statewide effort to establish consumer safeguards for AI in insurance",
-          "url": "https://www.insurance.ca.gov/0400-news/0100-press-releases/2026/release042-2026.cfm"
-        }
-      ]
-    },
-    {
       "id": "ai-policy-2026-11-13-frontier-ai-lawsuit",
       "date": "2026-11-13",
       "title": "A lawsuit asks a court to halt frontier AI development",
@@ -63,32 +50,6 @@
         {
           "title": "Most large firms plan higher open-weight AI use to cap bills, study shows",
           "url": "https://www.reuters.com/business/most-large-firms-plan-higher-open-weight-ai-use-cap-bills-study-shows-2026-11-12/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-11-us-china-ai-cooperation",
-      "date": "2026-11-11",
-      "title": "U.S.–China talks may include AI safety cooperation",
-      "summary": "Reuters — published November 10, 2026, 8:25 p.m. ET. Treasury Secretary Scott Bessent said upcoming U.S.–China talks would address advanced-model testing and shared AI risks. He described planned exchanges on evaluation practices and an earlier agreement on incident alerts. These are diplomatic discussions and plans, not a new binding safety regime. Why it matters: the report raises the question of whether strategic competitors can cooperate on reducing AI risks while continuing to compete economically and militarily.",
-      "question": "Which shared AI risks could the U.S. and China address without requiring broader political agreement?",
-      "sources": [
-        {
-          "title": "US and China should stay clear-eyed on AI cooperation and competition, Bessent says",
-          "url": "https://www.reuters.com/world/china/us-china-should-stay-clear-eyed-ai-cooperation-competition-bessent-says-2026-11-11/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-11-new-york-ai-research-center",
-      "date": "2026-11-11",
-      "title": "New York launches independent AI safety research center",
-      "summary": "SUNY, from the New York governor’s office — published November 10, 2026. New York launched a statewide center intended to bring together more than 80 researchers to test advanced AI systems and safety frameworks, supported by Empire AI computing resources. The state also opened a registration portal for large frontier-AI developers under its already-enacted RAISE Act. This announcement describes a research initiative and implementation of existing law, not a newly passed statute. Why it matters: it connects academic evaluation capacity with state oversight.",
-      "question": "What access and independence would researchers need to evaluate advanced AI systems meaningfully?",
-      "sources": [
-        {
-          "title": "New York launches AI Research Institute",
-          "url": "https://www.suny.edu/suny-news/press-releases/11-26/11-10-26-2/"
         }
       ]
     },
@@ -119,32 +80,6 @@
       ]
     },
     {
-      "id": "ai-policy-2026-11-10-paris-safety-declaration",
-      "date": "2026-11-10",
-      "title": "Governments and AI companies sign Paris safety declaration",
-      "summary": "Prime Minister of Canada — published November 9, 2026. Six governments and ten AI companies signed a declaration supporting comparable safety evaluations, publication of non-sensitive findings, incident information sharing and protections for whistleblowers. Developers also commit to shutdown mechanisms within their control, but support for independent evaluation includes qualifications about proportionality and existing arrangements. This is a joint commitment, not an enacted international law. Why it matters now: It makes international coordination tangible while exposing a key policy question: whether shared promises will produce sufficiently independent testing and transparent results.",
-      "question": "What evidence would convince you that human oversight is meaningful: a person approving outputs, documented overrides, or measured reductions in harm?",
-      "sources": [
-        {
-          "title": "Joint declaration on Paris call for AI safety and security",
-          "url": "https://www.pm.gc.ca/en/news/statements/2026/11/09/joint-declaration-paris-call-ai-safety-and-security"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-10-healthcare-referral-oversight",
-      "date": "2026-11-10",
-      "title": "Human oversight in AI-assisted healthcare referrals",
-      "summary": "Healthcare IT News — published November 9, 2026. UTMB describes an AI system that reviews patient records and recommends referral priorities using physician-written rules, while people retain booking decisions. Clinicians validate the rules and review samples monthly; reported shorter waiting times are preliminary hospital results, not independent proof of safety. Why it matters now: This deployment report makes healthcare AI governance concrete: oversight needs assigned reviewers, evidence they can inspect and ongoing checks. My policy takeaway: faster access is valuable, but evaluation should also examine missed urgent cases and whether benefits are distributed fairly.",
-      "question": "What evidence would convince you that human oversight is meaningful: a person approving outputs, documented overrides, or measured reductions in harm?",
-      "sources": [
-        {
-          "title": "AI helps sort specialty referrals before scheduling at UTMB",
-          "url": "https://www.healthcareitnews.com/news/ai-helps-sort-specialty-referrals-scheduling-utmb"
-        }
-      ]
-    },
-    {
       "id": "ai-policy-2026-11-09-government-evaluator-independence",
       "date": "2026-11-09",
       "title": "Read first: Independence of government AI safety testing",
@@ -154,32 +89,6 @@
         {
           "title": "Staff at the US center for AI safety are reporting to the White House, raising independence concerns",
           "url": "https://apnews.com/article/ai-safety-trump-white-house-d3318eb2cf011df53e9ddb3e03d25f13"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-09-trump-ai-guardrails",
-      "date": "2026-11-09",
-      "title": "Trump signals openness to AI safeguards",
-      "summary": "Reuters — published November 8, 2026, 7:29 p.m. ET (November 9 in UTC). Trump told CBS he was open to AI safeguards and working with Democrats, while emphasizing competition with China. He did not specify the safeguards; this is a political signal, not an enacted rule or detailed proposal. Why it matters now: Watch for concrete commitments on testing, disclosure and enforcement before interpreting this as a policy reversal.",
-      "question": "What specific action would demonstrate that openness to safeguards has become a substantive policy commitment?",
-      "sources": [
-        {
-          "title": "Trump says AI risks can be managed, signals openness to guardrails",
-          "url": "https://www.reuters.com/world/trump-says-ai-risks-can-be-managed-signals-openness-guardrails-2026-11-09/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-09-health-federated-governance",
-      "date": "2026-11-09",
-      "title": "Health research, federated learning and privacy",
-      "summary": "Digital Health & Discovery Platform / Terry Fox Research Institute — published November 6, 2026. Responding to Canadian privacy regulators, these research organizations advocate collaboration across hospitals while keeping patient records at their originating institutions. They describe a federated research platform for cancer and neurodegenerative disease, explicitly acknowledging that its architecture alone cannot guarantee privacy. This is a research-sector position and implementation update, not new legislation; the regulators’ underlying resolution is older. Why it matters now: It connects AI-biology ambitions to a practical governance problem: how to learn from diverse populations without treating sensitive data as freely transferable. The useful distinction is between a technical design that reduces data movement and an accountable process for deciding who may use the data. Policy term — federated learning: training across multiple organizations while keeping their raw datasets local and combining learning through shared model updates; it does not automatically eliminate privacy risks.",
-      "question": "What evidence should a hospital require before accepting a claim that an AI research platform preserves patient privacy?",
-      "sources": [
-        {
-          "title": "DHDP Response: Responsible Use of Artificial Intelligence in Health and Health Research",
-          "url": "https://www.dhdp.ca/updates/news-item/dhdp-response--responsible-use-of-artificial-intelligence-in-health-and-health-research"
         }
       ]
     },
@@ -197,19 +106,6 @@
       ]
     },
     {
-      "id": "ai-policy-2026-11-08-jailbreak-ratings",
-      "date": "2026-11-08",
-      "title": "A shared framework for rating cyber jailbreaks",
-      "summary": "Frontier Model Forum — published November 5, 2026. Introducing the FMF Jailbreak Rating Framework for Frontier Cyber Threats presents a preliminary method for comparing successful safeguard bypasses using capability gain, capability scope, ease of deployment and ease of discovery. FMF says it still needs to test whether different assessors reach consistent ratings and whether those ratings track meaningful risk; public comments are open through December 21. This is an industry framework under consultation, not binding regulation or a validated universal standard. Why it matters now: A dramatic jailbreak demonstration does not automatically show substantial real-world danger. A shared rating method could help prioritize serious failures, but policymakers should examine whose judgments shape the scale and whether independent researchers can reproduce its results.",
-      "question": "What independent validation should be required before regulators use an industry-developed jailbreak rating scale?",
-      "sources": [
-        {
-          "title": "Introducing the FMF Jailbreak Rating Framework for Frontier Cyber Threats",
-          "url": "https://www.frontiermodelforum.org/updates/introducing-the-fmf-jailbreak-rating-framework-for-frontier-cyber-threats/"
-        }
-      ]
-    },
-    {
       "id": "ai-policy-2026-11-07-dna-screening",
       "date": "2026-11-07",
       "title": "Read first: New federal DNA synthesis screening policy",
@@ -219,32 +115,6 @@
         {
           "title": "White House Issues New USG Policy for Nucleic Acid Synthesis Screening",
           "url": "https://osp.od.nih.gov/white-house-issues-new-usg-policy-for-nucleic-acid-synthesis-screening/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-07-raise-act-oversight",
-      "date": "2026-11-07",
-      "title": "New York proposes stronger frontier AI oversight",
-      "summary": "StateScoop — published November 6, 2026. This new report examines an October 29 proposal for independent, state-licensed AI examiners, reporting on automated AI research, and authority to restrict computing resources when necessary to reduce catastrophic risks. These are proposed requirements, not enacted provisions; the article’s supportive interpretation comes largely from an AI-safety advocate. Why it matters now: It offers a concrete response to yesterday’s evaluation-access problem: give outside examiners formal authority rather than depend entirely on voluntary company cooperation.",
-      "question": "What access and independence would state-licensed AI examiners need to evaluate developers credibly?",
-      "sources": [
-        {
-          "title": "New York’s RAISE Act 2.0 would expand AI oversight, according to safety expert",
-          "url": "https://statescoop.com/new-yorks-raise-act-2-0-would-expand-ai-oversight-according-to-safety-expert/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-07-cyber-capability-controls",
-      "date": "2026-11-07",
-      "title": "Cybersecurity AI and the limits of safety benchmarks",
-      "summary": "OpenAI — published November 5, 2026. OpenAI reports stronger vulnerability-finding and exploitation capabilities alongside improved adherence to authorized testing boundaries, and classifies GPT-6 Cyber as Critical in cybersecurity under its own Preparedness Framework. This is a developer’s release and evaluation account, not an independent safety certification or a government risk designation. Why it matters now: The policy issue is how to give defenders useful capabilities while controlling misuse. High scores on bounded tests do not, by themselves, establish safety across real-world deployments.",
-      "question": "What evidence beyond developer-run benchmarks should justify access to highly capable cybersecurity models?",
-      "sources": [
-        {
-          "title": "GPT‑6 Cyber: Advancing the frontier of aligned cybersecurity agents",
-          "url": "https://openai.com/index/introducing-gpt-6-cyber/"
         }
       ]
     },
@@ -262,32 +132,6 @@
       ]
     },
     {
-      "id": "ai-policy-2026-11-06-congress-ai-proposals",
-      "date": "2026-11-06",
-      "title": "Congressional plans for AI testing and liability",
-      "summary": "Reuters — published November 6, 2026, 6:05 a.m. ET. Democrats plan bills covering independent AI testing, liability for AI-related harm, and electricity costs associated with data centers. These are legislative plans, not enacted rules, and face presidential opposition. Why it matters now: Committee control can produce investigations and testimony even when passing legislation remains difficult; distinguish oversight powers from the power to create binding requirements.",
-      "question": "How could congressional investigations improve AI accountability even if proposed laws do not pass?",
-      "sources": [
-        {
-          "title": "Democrats planning flood of AI bills when they take control of Congress",
-          "url": "https://www.reuters.com/business/media-telecom/democrats-planning-flood-ai-bills-when-they-take-control-congress-2026-11-06/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-06-doj-task-force",
-      "date": "2026-11-06",
-      "title": "DOJ announces an AI enforcement task force",
-      "summary": "U.S. Department of Justice — published November 5, 2026. DOJ announced a task force targeting unlawful AI use, including fraud and threats involving foreign actors, criminal organizations, and critical infrastructure. The announcement describes an organizational enforcement initiative, not a newly enacted AI safety statute; the underlying memorandum dates to October 13. Why it matters now: This illustrates a different policy approach from pre-release safety testing: applying enforcement tools to misuse. For policy discussions, ask what this approach can address and what risks might remain outside its focus.",
-      "question": "What AI risks can existing enforcement tools address, and which would require additional safeguards?",
-      "sources": [
-        {
-          "title": "Department of Justice Launches Super Intelligence Task Force",
-          "url": "https://www.justice.gov/opa/pr/department-justice-launches-super-intelligence-task-force"
-        }
-      ]
-    },
-    {
       "id": "ai-policy-2026-11-05-fda-generative-ai",
       "date": "2026-11-05",
       "title": "Read first: How should the FDA regulate generative AI?",
@@ -297,32 +141,6 @@
         {
           "title": "How should the FDA regulate generative AI in medtech? Here are 5 takes",
           "url": "https://www.medtechdive.com/news/how-should-the-fda-regulate-generative-ai-in-medtech-here-are-5-takes/873608/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-05-federal-ai-laws",
-      "date": "2026-11-05",
-      "title": "Federal government plans overview of laws applying to AI labs",
-      "summary": "Reuters — published November 4, 2026, at 6:38 p.m. ET. Pentagon technology chief Emil Michael said the government would describe the laws and regulations applying to domestic AI labs within one or two weeks. Details remain unspecified; this is an announcement of a forthcoming overview, not evidence that a new AI law has passed. Why it matters now: Watch which existing authorities the administration identifies and what enforcement responsibilities it assigns.",
-      "question": "What would make an overview of existing AI laws useful beyond simply listing statutes?",
-      "sources": [
-        {
-          "title": "Pentagon chief tech officer says government will detail laws that apply to AI labs this month",
-          "url": "https://www.reuters.com/legal/litigation/pentagon-chief-tech-officer-says-government-will-detail-laws-that-apply-ai-labs-2026-11-04/"
-        }
-      ]
-    },
-    {
-      "id": "ai-policy-2026-11-05-ai-political-spending",
-      "date": "2026-11-05",
-      "title": "Assessing AI political spending after the midterms",
-      "summary": "WIRED — published November 4, 2026. WIRED examines the election spending of Leading the Future, a major AI-backed political network. Its analysis argues that supporting many winning candidates overstated its electoral impact because much support went to already-safe races; that interpretation does not establish that spending had no influence. Why it matters now: Post-election claims about AI’s political power deserve scrutiny before they become assumptions about what regulation Congress will support.",
-      "question": "What evidence would distinguish changing election outcomes from gaining access to lawmakers?",
-      "sources": [
-        {
-          "title": "The Biggest Pro-AI Super PAC Network Didn’t Really Impact the Midterms",
-          "url": "https://www.wired.com/story/the-biggest-pro-ai-super-pac-network-didnt-really-impact-the-midterms/"
         }
       ]
     }
