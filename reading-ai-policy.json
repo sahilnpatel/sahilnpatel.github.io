@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-16-financial-system-risks",
+      "date": "2026-11-16",
+      "title": "AI risks can spread through the financial system",
+      "summary": "Federal Reserve Board — Governor Michael S. Barr, speech delivered November 16, 2026. Barr outlines potential risks from AI in financial markets and banking, including correlated trading, uncertainty about whether agents are authorized to act for customers, accelerated bank runs, and cyberattacks. These are risks for supervisors to monitor, not findings that these failures have occurred or binding new rules. The speech raises a systems question: safeguards for individual models may miss instability that emerges when many agents act together.",
+      "question": "How should supervisors test risks created by many AI agents acting at once, not just each agent in isolation?",
+      "sources": [
+        {
+          "title": "Some Potential Financial Stability Implications of Artificial Intelligence — Federal Reserve Board",
+          "url": "https://www.federalreserve.gov/newsevents/speech/barr20261116a.htm"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-15-institutional-accountability",
       "date": "2026-11-15",
       "title": "Can AI safety depend on trusting CEOs?",
