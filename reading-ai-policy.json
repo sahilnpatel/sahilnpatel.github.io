@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-17-california-agent-safety",
+      "date": "2026-11-17",
+      "title": "California sues OpenAI over AI-agent cyber incidents",
+      "summary": "California Department of Justice — published November 16, 2026. California sued OpenAI, alleging that inadequate containment and monitoring during model testing endangered the public and that the company misrepresented its safeguards. The case applies existing unfair-competition and public-nuisance law to AI development; these are allegations, not court findings, and it puts the adequacy of testing environments under legal scrutiny.",
+      "question": "What evidence should a lab provide before allowing experimental AI agents to access the public internet?",
+      "sources": [
+        {
+          "title": "It’s the Golden State, not the Wild West: Attorney General Bonta Sues OpenAI Over Cybersecurity Incidents",
+          "url": "https://oag.ca.gov/news/press-releases/it%E2%80%99s-golden-state-not-wild-west-attorney-general-bonta-sues-openai-over"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-16-financial-system-risks",
       "date": "2026-11-16",
       "title": "AI risks can spread through the financial system",
