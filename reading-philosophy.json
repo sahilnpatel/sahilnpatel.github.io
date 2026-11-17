@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-17-hume-evidence",
+      "date": "2026-11-17",
+      "title": "Let confidence follow evidence",
+      "quote": "A wise man, therefore, proportions his belief to the evidence.",
+      "attribution": "David Hume, An Enquiry Concerning Human Understanding, §10.4",
+      "summary": "Hume argues that our confidence should rise or fall with the strength of the evidence, leaving room for uncertainty when observations conflict. If a friend sends one unusually short reply, that gives you little basis for concluding they are angry with you. The same discipline applies to an impressive AI answer: fluency can invite confidence, but checking its sources gives you a better reason to trust it.",
+      "question": "Which belief are you holding more confidently than your evidence warrants?",
+      "sources": [
+        {
+          "title": "An Enquiry Concerning Human Understanding, §10.4 — Hume Texts Online",
+          "url": "https://davidhume.org/texts/e/full"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-11-epictetus-control",
       "date": "2026-11-11",
       "title": "Focus on what you can influence",
