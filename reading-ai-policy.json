@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-18-clinical-ai-oversight",
+      "date": "2026-11-18",
+      "title": "Who oversees state clinical-AI pilots?",
+      "summary": "Nextgov/FCW — published November 16, 2026, reporting on HHS’s November 13 roadmap. HHS plans to support state clinical-AI testbeds, risk-based oversight and payments tied to patient outcomes, but the roadmap leaves FDA oversight of state pilots unresolved. These are policy plans, not blanket authorization for clinical AI; the unanswered oversight question matters as states test tools that can influence prescribing.",
+      "question": "Before a clinical-AI pilot treats patients, which decisions should require federal approval, state approval, or independent clinical review?",
+      "sources": [
+        {
+          "title": "Trump administration releases roadmap to boost clinical AI",
+          "url": "https://www.nextgov.com/artificial-intelligence/2026/11/trump-administration-releases-roadmap-boost-clinical-ai/417254/"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-17-california-agent-safety",
       "date": "2026-11-17",
       "title": "California sues OpenAI over AI-agent cyber incidents",
