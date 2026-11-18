@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-18-rousseau-self-rule",
+      "date": "2026-11-18",
+      "title": "Freedom through self-rule",
+      "quote": "obedience to a law which we prescribe to ourselves is liberty.",
+      "attribution": "Jean-Jacques Rousseau, The Social Contract, I.8, translated by G. D. H. Cole",
+      "summary": "Rousseau connects freedom with governing ourselves through principles we endorse, rather than simply following each passing impulse. His political argument concerns citizens making shared laws, but it also suggests a personal distinction: a commitment you choose can express your freedom even when keeping it feels inconvenient. Putting your phone away during dinner, for example, can protect the attention you want to give someone.",
+      "question": "Which commitment feels restrictive in the moment but supports a life you actually want?",
+      "sources": [
+        {
+          "title": "Rousseau: The Social Contract — translated by G. D. H. Cole",
+          "url": "https://public.archive.wsu.edu/brians/public_html/world_civ/worldcivreader/world_civ_reader_2/rousseau.html"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-17-hume-evidence",
       "date": "2026-11-17",
       "title": "Let confidence follow evidence",
