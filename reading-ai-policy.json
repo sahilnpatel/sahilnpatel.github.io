@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-19-california-shutdown-proposal",
+      "date": "2026-11-19",
+      "title": "California proposes emergency AI shutdown authority",
+      "summary": "Governor of California — published November 18, 2026. New recommendations call for state-set safety standards, independent testing throughout AI development, verified shutdown protocols and authority to limit recursive self-improvement. These measures are proposals, not newly enacted requirements; they would give the state a more direct role in deciding when dangerous development or operation must stop.",
+      "question": "What evidence should trigger an emergency AI shutdown, and who should independently review that decision?",
+      "sources": [
+        {
+          "title": "Governor Newsom’s nation-leading AI safety framework is getting even stronger as California releases next steps on mandatory safety standards and oversight",
+          "url": "https://www.gov.ca.gov/2026/11/18/governor-newsoms-nation-leading-ai-safety-framework-is-getting-even-stronger-as-california-releases-next-steps-on-mandatory-safety-standards-and-oversight/"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-18-clinical-ai-oversight",
       "date": "2026-11-18",
       "title": "Who oversees state clinical-AI pilots?",
