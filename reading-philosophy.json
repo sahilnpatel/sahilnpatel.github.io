@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-19-smith-impartial-spectator",
+      "date": "2026-11-19",
+      "title": "Seeing your own actions fairly",
+      "quote": "We endeavour to examine our own conduct as we imagine any other fair and impartial spectator would examine it.",
+      "attribution": "Adam Smith, The Theory of Moral Sentiments, III.1.2",
+      "summary": "Smith suggests judging our actions from the standpoint of a fair observer who understands the situation without automatically taking our side. After an argument, this means considering both what you intended and how your words reasonably sounded to the other person. The exercise can expose excuses you would reject from someone else, while also helping you avoid condemning yourself more harshly than you would a friend.",
+      "question": "Would you judge your latest disagreement differently if you had watched it happen between two strangers?",
+      "sources": [
+        {
+          "title": "The Theory of Moral Sentiments — Part III",
+          "url": "https://www.econlib.org/library/Smith/smMS.html?chapter_num=4"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-18-rousseau-self-rule",
       "date": "2026-11-18",
       "title": "Freedom through self-rule",
