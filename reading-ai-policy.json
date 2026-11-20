@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-20-safe-ai-outline",
+      "date": "2026-11-20",
+      "title": "Bipartisan SAFE AI outline proposes federal safety requirements",
+      "summary": "Office of Representative Sara Jacobs — published November 19, 2026. Representatives Jacobs, Maloy and Beyer released an outline for forthcoming SAFE AI legislation requiring frontier-lab safety frameworks, incident reporting and oversight, with civil penalties and targeted emergency authority. This is a legislative blueprint, not enacted law; its sponsors intend federal requirements to leave states room for stronger protections.",
+      "question": "Should federal AI safety requirements set a minimum that states can strengthen, or establish one national standard—and what would each approach mean for enforcement?",
+      "sources": [
+        {
+          "title": "Jacobs, Maloy, Beyer Release Outline For Sweeping, Bipartisan AI Safety Legislation",
+          "url": "https://sarajacobs.house.gov/news/press-releases/jacobs-maloy-beyer-release-outline-for-sweeping-bipartisan-ai-safety-legislation"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-19-california-shutdown-proposal",
       "date": "2026-11-19",
       "title": "California proposes emergency AI shutdown authority",
