@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-20-kant-persons",
+      "date": "2026-11-20",
+      "title": "People have purposes of their own",
+      "quote": "man and generally any rational being exists as an end in himself, not merely as a means",
+      "attribution": "Immanuel Kant, Fundamental Principles of the Metaphysic of Morals, Section II, translated by Thomas Kingsmill Abbott",
+      "summary": "Kant argues that people deserve respect as beings with purposes of their own. Asking someone for help is compatible with that respect when they understand what you are asking and can freely decline. Hiding your real intentions or using guilt to secure agreement treats their ability to choose as an obstacle to your goal.",
+      "question": "Does your next request leave the other person genuinely free to say no?",
+      "sources": [
+        {
+          "title": "Fundamental Principles of the Metaphysic of Morals — Abbott translation",
+          "url": "https://en.wikisource.org/wiki/The_Metaphysic_of_Morals_(tr._Abbott)"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-19-smith-impartial-spectator",
       "date": "2026-11-19",
       "title": "Seeing your own actions fairly",
