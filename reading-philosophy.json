@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-21-wollstonecraft-education",
+      "date": "2026-11-21",
+      "title": "Education that strengthens judgment",
+      "quote": "Strengthen the female mind by enlarging it, and there will be an end to blind obedience",
+      "attribution": "Mary Wollstonecraft, A Vindication of the Rights of Woman, Chapter II",
+      "summary": "Wollstonecraft argues that denying women a serious education helps keep them dependent on other people’s judgment. Education should develop the ability to examine reasons, including the reasons offered by someone powerful or admired. In everyday life, that means measuring learning partly by whether you can explain and question an idea yourself, rather than by how confidently you repeat an expert’s conclusion.",
+      "question": "Where have you learned to repeat an answer without understanding its reasons?",
+      "sources": [
+        {
+          "title": "A Vindication of the Rights of Woman — Project Gutenberg",
+          "url": "https://www.gutenberg.org/cache/epub/3420/pg3420.html"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-20-kant-persons",
       "date": "2026-11-20",
       "title": "People have purposes of their own",
