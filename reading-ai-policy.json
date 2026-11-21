@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-21-mental-health-chatbots",
+      "date": "2026-11-21",
+      "title": "GAO examines safety gaps in mental-health chatbots",
+      "summary": "The U.S. Government Accountability Office reported on November 20, 2026 that no chatbot has FDA marketing authorization for mental-health care, and that evidence of effectiveness remains limited. It identifies risks from excessive agreement with users, ineffective safeguards and retained conversation data, raising concrete questions about what evidence and monitoring should be required before these tools are promoted for mental-health support.",
+      "question": "Should chatbot oversight depend on what a company markets its product for, or how people actually use it—and what evidence should trigger stronger requirements?",
+      "sources": [
+        {
+          "title": "Science & Tech Spotlight: AI Chatbots and Mental Health",
+          "url": "https://www.gao.gov/products/gao-27-109184"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-20-safe-ai-outline",
       "date": "2026-11-20",
       "title": "Bipartisan SAFE AI outline proposes federal safety requirements",
