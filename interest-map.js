@@ -59,28 +59,5 @@
     }
   }
 
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const openingAnimations = mapEl.querySelectorAll(".opening-signal animateMotion, .opening-signal animate");
-  let openingPlayed = false;
-  function playOpeningSignal() {
-    if (openingPlayed || reducedMotion.matches) return;
-    openingPlayed = true;
-    openingAnimations.forEach(animation => {
-      try { animation.beginElement(); } catch {}
-    });
-  }
-  if (openingAnimations.length) {
-    if ("IntersectionObserver" in window) {
-      const openingObserver = new IntersectionObserver(items => {
-        if (items.some(item => item.isIntersecting)) {
-          playOpeningSignal();
-          openingObserver.disconnect();
-        }
-      }, {threshold: .24});
-      openingObserver.observe(mapEl);
-    } else {
-      playOpeningSignal();
-    }
-  }
   buttons.forEach(button=>button.addEventListener("click",()=>select(button)));
 })();
