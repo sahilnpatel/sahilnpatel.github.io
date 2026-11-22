@@ -9,12 +9,15 @@
   const maskCtx = mask.getContext("2d");
   const phrase = title.textContent.trim();
   const bases = ["A", "C", "T", "G"];
-  const colors = ["#126dc1", "#4d9bd8", "#0d2b50", "#77b9ec"];
+  const colors = ["#0d2b50", "#126dc1", "#2478bb", "#4d9bd8"];
   const navy = [13, 43, 80];
   const flightDuration = 850;
-  const blendDuration = 80;
-  const holdDuration = 480;
-  const pressDuration = 220;
+  const staggerDuration = 120;
+  const blendDuration = 90;
+  const holdDuration = 620;
+  const bounceDelay = 100;
+  const bounceDuration = 360;
+  const pressDuration = 260;
   const fadeDuration = 180;
 
   function launch() {
@@ -39,7 +42,7 @@
     sequence.width = mask.width;
     sequence.height = mask.height;
     const sequenceCtx = sequence.getContext("2d");
-    sequenceCtx.font = "700 8px Helvetica, Arial, sans-serif";
+    sequenceCtx.font = "700 9px Helvetica, Arial, sans-serif";
     sequenceCtx.textBaseline = "alphabetic";
     let baseIndex = 0;
     for (let y = 9; y < mask.height + 8; y += 10) {
@@ -72,7 +75,7 @@
       const j = Math.floor(Math.random() * (i + 1));
       [targets[i], targets[j]] = [targets[j], targets[i]];
     }
-    const points = targets.slice(0, 320);
+    const points = targets.slice(0, 28);
     if (!points.length) return;
 
     const centerX = width / 2;
@@ -89,7 +92,7 @@
         base: bases[i % bases.length],
         color: colors[i % colors.length],
         rgb: [[18,109,193],[77,155,216],[13,43,80],[119,185,236]][i % 4],
-        delay: (i % 13) * 7
+        delay: (i / points.length) * staggerDuration
       };
     });
 
@@ -121,11 +124,11 @@
         }
         ctx.globalAlpha = alpha;
         ctx.fillStyle = p.color;
-        ctx.font = `600 ${size}px Helvetica, Arial, sans-serif`;
+        ctx.font = `600 11px Helvetica, Arial, sans-serif`;
         ctx.fillText(p.base, x, y);
       }
 
-      const sequenceStart = flightDuration;
+      const sequenceStart = flightDuration + staggerDuration;
       const pressStart = sequenceStart + blendDuration + holdDuration;
       const sequenceAge = elapsed - sequenceStart;
       if (sequenceAge >= 0 && elapsed < pressStart + pressDuration + fadeDuration) {
@@ -139,11 +142,20 @@
             fade = Math.max(0, 1 - (elapsed - pressStart - pressDuration) / fadeDuration);
           }
         }
-        const scaleUp = 1 + .07 * press;
-        const down = 5 * press;
+        const bounceElapsed = elapsed - sequenceStart - bounceDelay;
+        const bounceActive = bounceElapsed >= 0 && bounceElapsed < bounceDuration && elapsed < pressStart;
+        const bounceT = Math.max(0, Math.min(1, bounceElapsed / bounceDuration));
+        const bounceArc = bounceActive ? Math.sin(Math.PI * bounceT) : 0;
+        const bounceY = -6 * bounceArc;
+        const bounceScale = 1 + .035 * bounceArc;
+        const glow = bounceActive ? Math.sin(Math.PI * bounceT) : 0;
+        const scaleUp = 1 + .07 * press + (1 - press) * (bounceScale - 1);
+        const down = 5 * press + (1 - press) * bounceY;
         ctx.save();
         ctx.translate(box.left + box.width / 2, box.top + box.height / 2 + down);
         ctx.scale(scaleUp, scaleUp);
+        ctx.shadowColor = "rgba(36,120,187," + (.62 * glow) + ")";
+        ctx.shadowBlur = 13 * glow;
         ctx.globalAlpha = (1 - press) * fade;
         ctx.drawImage(sequence, -box.width / 2, -box.height / 2, box.width, box.height);
         ctx.globalAlpha = press * fade;
