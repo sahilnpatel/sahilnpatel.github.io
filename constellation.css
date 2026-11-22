@@ -390,6 +390,6 @@ h1{font-style:normal}
 
 /* A short genome inspired opening: base letters assemble into the name. */
 .genome-intro{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none}
-.home-intro .name-title{display:inline-block;color:var(--galactic);opacity:0;transform-origin:left center;animation:name-press-in .42s 1.41s cubic-bezier(.16,.72,.2,1) forwards}
+.home-intro .name-title{display:inline-block;color:var(--galactic);opacity:0;transform-origin:left center;animation:name-press-in .42s 1.68s cubic-bezier(.16,.72,.2,1) forwards}
 @keyframes name-press-in{0%{opacity:0;transform:translateY(-5px) scale(.94)}55%{opacity:1;transform:translateY(6px) scale(1.07)}100%{opacity:1;transform:translateY(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){.genome-intro{display:none}.home-intro .name-title{opacity:1;animation:none}}
