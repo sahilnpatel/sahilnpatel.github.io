@@ -390,7 +390,7 @@ h1{font-style:normal}
 
 /* A short genome cue: ACTG assembles over the name, then resolves into it. */
 .name-row h1{position:relative;display:inline-block}
-.name-title{display:inline-block;animation:name-resolve 1.05s ease-out both}
+.name-title{display:inline-block;color:var(--galactic);animation:name-resolve 1.05s ease-out both}
 .name-sequence{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;gap:.12em;color:var(--blue);font:600 .46em/1 var(--font-body);letter-spacing:.18em;pointer-events:none}
 .name-sequence i{font-style:normal;opacity:0;animation:base-arrive 1.05s cubic-bezier(.16,.72,.26,1) both}
 .name-sequence i:nth-child(1){--x:-74px;--y:-28px;animation-delay:0s}
