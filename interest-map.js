@@ -1,23 +1,53 @@
 (function(){
   const entries={
-    ai:{kicker:"01 · BUILD",title:"AI & intelligent systems",question:"How can AI and robotics help us understand and shape the physical world?",label:"Explore these interests →",href:"interests.html"},
-    bio:{kicker:"02 · DISCOVER",title:"Computational biology & medicine",question:"Can AI help us read biology more deeply and make medicine more personal?",label:"See research & work →",href:"work.html"},
-    policy:{kicker:"03 · STEWARD",title:"AI safety & governance",question:"What evidence and oversight should earn trust in a powerful AI system?",label:"Read AI policy notes →",href:"ai-policy.html"},
-    philosophy:{kicker:"04 · UNDERSTAND",title:"Philosophy & human psychology",question:"What do intelligence and human behavior reveal about how technology fits into our lives?",label:"Explore the quotebook",href:"quotes.html"},
-    innovation:{kicker:"05 · MAKE",title:"Entrepreneurship & innovation",question:"How do promising research ideas become useful tools, products, or companies?",label:"Explore research & work →",href:"work.html"}
+    ai:{
+      kicker:"AI & INTELLIGENT SYSTEMS",
+      title:"Machines that can act in the world",
+      question:"Machine learning, robotics, autonomous systems, and the hardware that connects them to the physical world.",
+      label:"More on my interests",
+      href:"interests.html"
+    },
+    bio:{
+      kicker:"COMPUTATIONAL BIOLOGY & MEDICINE",
+      title:"Using computation to read biology",
+      question:"AI for scientific discovery, bioinformatics, autonomous labs, biological digital twins, molecular design, and personalized medicine.",
+      label:"Research & work",
+      href:"work.html"
+    },
+    policy:{
+      kicker:"AI SAFETY & POLICY",
+      title:"How should AI be governed?",
+      question:"Safety evaluation, public policy, technology governance, and the evidence needed to trust powerful systems.",
+      label:"Read AI policy notes",
+      href:"ai-policy.html"
+    },
+    philosophy:{
+      kicker:"PHILOSOPHY & HUMAN PSYCHOLOGY",
+      title:"Intelligence, people, and technology",
+      question:"Philosophy, cognition, human behavior, and the ways technology changes how we think and live.",
+      label:"Writing & ideas",
+      href:"writing.html"
+    },
+    innovation:{
+      kicker:"ENTREPRENEURSHIP & INNOVATION",
+      title:"Making research useful",
+      question:"Turning research into tools, products, and companies—and figuring out how to build them with other people.",
+      label:"Research & work",
+      href:"work.html"
+    }
   };
-  const map=document.querySelector(".constellation-map");
-  const buttons=map&&map.querySelectorAll("[data-interest]");
+  const mapEl=document.querySelector(".constellation-map");
+  const buttons=mapEl&&mapEl.querySelectorAll("[data-interest]");
   const kicker=document.getElementById("curiosity-detail-kicker");
   const title=document.getElementById("curiosity-detail-title");
   const question=document.getElementById("curiosity-detail-question");
   const link=document.getElementById("curiosity-detail-link");
-  if(!map||!buttons.length||!kicker||!title||!question||!link)return;
+  if(!mapEl||!buttons.length||!kicker||!title||!question||!link)return;
   function select(button){
     const entry=entries[button.dataset.interest];
     if(!entry)return;
     buttons.forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
-    map.dataset.active=button.dataset.interest;
+    mapEl.dataset.active=button.dataset.interest;
     kicker.textContent=entry.kicker;
     title.textContent=entry.title;
     question.textContent=entry.question;
