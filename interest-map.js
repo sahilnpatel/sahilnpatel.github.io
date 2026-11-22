@@ -2,14 +2,14 @@
   const entries={
     ai:{
       kicker:"AI & INTELLIGENT SYSTEMS",
-      title:"Machines that can act in the world",
+      title:"Machines that can act in the world — Physical AI",
       question:"Machine learning, robotics, autonomous systems, and the hardware that connects them to the physical world.",
       label:"More on my interests",
       href:"interests.html"
     },
     bio:{
       kicker:"COMPUTATIONAL BIOLOGY & MEDICINE",
-      title:"Using computation to read biology",
+      title:"Using computation to read biology — Biological AI",
       question:"AI for scientific discovery, bioinformatics, autonomous labs, biological digital twins, molecular design, and personalized medicine.",
       label:"Research & work",
       href:"work.html"
