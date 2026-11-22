@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#fbfdff">
   <meta name="description" content="Sahil Patel — AI for scientific discovery, computational biology, robotics, and the ideas around technology.">
   <title>Sahil Patel</title>
-  <link rel="stylesheet" href="constellation.css?v=20261122j">
+  <link rel="stylesheet" href="constellation.css?v=20261122-strokes">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext x='10' y='48' font-size='48' fill='%230067c7' font-family='serif'%3Es%3C/text%3E%3C/svg%3E">
 </head>
 <body class="home-page">
@@ -24,12 +24,12 @@
   </header>
   <main id="main">
     <section class="home-intro" aria-labelledby="name">
-      <p class="location">Long Island raised. Currently in Atlanta.</p>
+      <p class="location">From Long Island. Currently in Atlanta.</p>
       <div class="name-row"><h1 id="name"><span class="name-title">Sahil Patel<span>.</span></span></h1></div>
       <p class="subtitle">Computer Engineering at Georgia Tech · Stamps President’s Scholar</p>
-      <p>I’m interested in AI for scientific discovery: computational biology, robotics, autonomous labs, and biological digital twins. I also follow AI safety and policy, philosophy, and how technology affects people.</p>
-      <p>My research has taken me from lung-cancer bioinformatics to microRNA transcription. I co-founded <a href="https://www.listentolead.org/" target="_blank" rel="noopener noreferrer">Listen to Lead</a>, a youth service nonprofit.</p>
-      <p>Outside class and research: music, tennis, lifting, and getting out to explore.</p>
+      <p>I’m interested in how AI can help us study biology, from modeling living systems to building robots that run experiments. I also read about AI safety, policy, and philosophy.</p>
+      <p>I’ve studied gene expression in lung cancer and microRNA transcription. I co-founded <a href="https://www.listentolead.org/" target="_blank" rel="noopener noreferrer">Listen to Lead</a>, a youth service nonprofit.</p>
+      <p>Outside the lab, I like music, tennis, and lifting.</p>
       <div class="links" aria-label="Contact and profiles">
         <a href="mailto:sahilpatel@gatech.edu">Email</a>
         <a href="https://www.linkedin.com/in/sahilpatel880/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -44,7 +44,6 @@
         </div>
         <a class="read-more interest-cta" href="interests.html">Explore all interests →</a>
       </div>
-      <p class="curiosity-intro">Choose an area to see its subtopics.</p>
       <div class="constellation-interface">
         <div class="constellation-map" data-active="ai" role="group" aria-label="Select an interest">
           <canvas class="interest-field" id="interest-field" aria-hidden="true"></canvas>
@@ -53,15 +52,15 @@
             <circle cx="160" cy="140" r="3"/>
             
           </svg>
-          <div class="constellation-core" aria-hidden="true"><span class="core-mark">sp</span><small>the mix</small></div>
-          <button class="constellation-node node-ai" type="button" data-interest="ai" aria-pressed="true" aria-controls="curiosity-detail"><span>AI &amp; systems</span></button>
-          <button class="constellation-node node-bio" type="button" data-interest="bio" aria-pressed="false" aria-controls="curiosity-detail"><span>Bio &amp; medicine</span></button>
+          <div class="constellation-core" aria-hidden="true"><span class="core-mark">sp</span></div>
+          <button class="constellation-node node-ai" type="button" data-interest="ai" aria-pressed="true" aria-controls="curiosity-detail"><span>Physical AI</span></button>
+          <button class="constellation-node node-bio" type="button" data-interest="bio" aria-pressed="false" aria-controls="curiosity-detail"><span>Biological AI</span></button>
           <button class="constellation-node node-policy" type="button" data-interest="policy" aria-pressed="false" aria-controls="curiosity-detail"><span>AI &amp; policy</span></button>
           <button class="constellation-node node-philosophy" type="button" data-interest="philosophy" aria-pressed="false" aria-controls="curiosity-detail"><span>People &amp; ideas</span></button>
           <button class="constellation-node node-innovation" type="button" data-interest="innovation" aria-pressed="false" aria-controls="curiosity-detail"><span>Building things</span></button>
         </div>
         <div class="curiosity-detail" id="curiosity-detail" aria-live="polite">
-          <p class="kicker" id="curiosity-detail-kicker">AI &amp; INTELLIGENT SYSTEMS</p>
+          <p hidden id="curiosity-detail-kicker">AI &amp; INTELLIGENT SYSTEMS</p>
           <h3 id="curiosity-detail-title">Machines that can act in the world — Physical AI</h3>
           <p id="curiosity-detail-question">Machine learning, robotics, autonomous systems, and the hardware that connects them to the physical world.</p>
           <a class="read-more" id="curiosity-detail-link" href="interests.html">More on my interests</a>
@@ -82,7 +81,7 @@
     <section class="reading-preview" aria-labelledby="reading-heading">
       <div class="reading-heading-row"><h2 id="reading-heading">On my mind</h2><a class="read-more" href="writing.html">All writing &amp; reading →</a></div>
       <div class="reading-grid">
-        <article id="home-quotebook-preview"><p class="post-meta">QUOTEBOOK / PHILOSOPHY</p><h3><a href="quotes.html">Quotebook / Philosophy</a></h3><p>Quotes and ideas I’ve collected—words I want to return to.</p><a class="read-more" href="quotes.html">Explore the quotebook →</a></article>
+        <article id="home-quotebook-preview"><p class="post-meta">QUOTES</p><h3><a href="quotes.html">Quotebook / Philosophy</a></h3><p>Quotes and philosophical ideas I’ve collected.</p><a class="read-more" href="quotes.html">Browse the collection →</a></article>
         <article id="home-policy-preview"><p class="post-meta">AI &amp; POLICY</p><h3><a href="ai-policy.html">AI safety &amp; policy</a></h3><p>Articles on AI safety, governance, and how policy meets real-world use.</p><a class="read-more" href="ai-policy.html">Explore AI safety &amp; policy →</a></article>
       </div>
     </section>
@@ -96,6 +95,6 @@
   <script src="daily-reading.js?v=20261121b" defer></script>
   <script src="interest-map.js?v=20261122b" defer></script>
   <script src="interest-field.js?v=20261121c" defer></script>
-  <script src="genome-intro.js?v=20261122h" defer></script>
+  <script src="genome-intro.js?v=20261122-strokes" defer></script>
 </body>
 </html>
