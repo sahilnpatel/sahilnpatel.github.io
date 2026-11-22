@@ -388,15 +388,24 @@ h1{font-style:normal}
 @media(prefers-reduced-motion:reduce){.interest-cta{transition:none}}
 
 
-/* A brief welcome: the page settles in, then the interest network carries one signal. */
-@keyframes home-open-settle{
-  from{opacity:.9;transform:translateY(6px)}
-  to{opacity:1;transform:translateY(0)}
+/* A short genome cue: ACTG assembles over the name, then resolves into it. */
+.name-row h1{position:relative;display:inline-block}
+.name-title{display:inline-block;animation:name-resolve 1.05s ease-out both}
+.name-sequence{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;gap:.12em;color:var(--blue);font:600 .46em/1 var(--font-body);letter-spacing:.18em;pointer-events:none}
+.name-sequence i{font-style:normal;opacity:0;animation:base-arrive 1.05s cubic-bezier(.16,.72,.26,1) both}
+.name-sequence i:nth-child(1){--x:-74px;--y:-28px;animation-delay:0s}
+.name-sequence i:nth-child(2){--x:54px;--y:-36px;animation-delay:.07s}
+.name-sequence i:nth-child(3){--x:-52px;--y:32px;animation-delay:.14s}
+.name-sequence i:nth-child(4){--x:80px;--y:24px;animation-delay:.21s}
+@keyframes base-arrive{
+  0%{opacity:0;transform:translate(var(--x),var(--y)) scale(.78)}
+  30%{opacity:1}
+  62%{opacity:1;transform:translate(0,0) scale(1)}
+  82%{opacity:0;transform:translate(0,-5px) scale(1.08)}
+  100%{opacity:0;transform:translate(0,-5px) scale(1.08)}
 }
-.home-page .home-intro{animation:home-open-settle .42s cubic-bezier(.2,.75,.3,1) both}
-.opening-signal-glow{fill:#3d9be8;filter:drop-shadow(0 0 5px rgba(18,109,193,.55))}
-.opening-signal-core{fill:#fff;stroke:var(--blue);stroke-width:2}
-@media(prefers-reduced-motion:reduce){
-  .home-page .home-intro{animation:none}
-  .opening-signal{display:none}
+@keyframes name-resolve{
+  0%,56%{opacity:0;clip-path:inset(0 100% 0 0)}
+  100%{opacity:1;clip-path:inset(0 0 0 0)}
 }
+@media(prefers-reduced-motion:reduce){.name-title,.name-sequence i{animation:none}.name-title{opacity:1;clip-path:none}.name-sequence{display:none}}
