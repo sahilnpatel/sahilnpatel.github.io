@@ -1,221 +1,137 @@
 (() => {
-  const canvas = document.querySelector(".genome-intro");
-  const title = document.querySelector(".name-title");
-  if (!canvas || !title || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-  const ctx = canvas.getContext("2d");
+  const title = document.querySelector('.name-title');
+  const canvas = document.querySelector('.genome-intro');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  if (!title || !canvas || motion.matches || scrollY > 20) return;
+  const ctx = canvas.getContext('2d');
   if (!ctx) return;
-  const mask = document.createElement("canvas");
-  const maskCtx = mask.getContext("2d");
-  const bases = ["A", "C", "T", "G"];
-  const baseColors = ["#4d9bd8", "#62ade4", "#338ccf", "#6eb8eb"];
-  const navy = "#0d2b50";
-  const lightBlue = "rgba(132,202,255,";
-  const flowDuration = 560;
-  const particleDelay = 100;
-  const flightDuration = 850;
-  const staggerDuration = 100;
-  const blendDuration = 100;
-  const holdDuration = 620;
-  const bounceDelay = 80;
-  const bounceDuration = 360;
-  const pressDuration = 300;
-  const fadeDuration = 180;
 
-  function launch() {
-    const box = title.getBoundingClientRect();
-    if (!box.width || !box.height) return;
-    const width = innerWidth;
-    const height = innerHeight;
-    const scale = Math.min(devicePixelRatio || 1, 2);
-    canvas.width = Math.round(width * scale);
-    canvas.height = Math.round(height * scale);
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
-
-    mask.width = Math.ceil(box.width);
-    mask.height = Math.ceil(box.height);
-    maskCtx.clearRect(0, 0, mask.width, mask.height);
-    maskCtx.font = getComputedStyle(title).font;
-    maskCtx.textBaseline = "alphabetic";
-    maskCtx.fillStyle = "#fff";
-    maskCtx.fillText(title.textContent.trim(), 0, box.height * .78);
-    const pixels = maskCtx.getImageData(0, 0, mask.width, mask.height).data;
-
-    const sequence = document.createElement("canvas");
-    sequence.width = mask.width;
-    sequence.height = mask.height;
-    const sequenceCtx = sequence.getContext("2d");
-    sequenceCtx.textAlign = "center";
-    sequenceCtx.textBaseline = "middle";
-    let placed = 0;
-    let attempts = 0;
-    while (placed < 145 && attempts < 6000) {
-      attempts++;
-      const x = 5 + Math.random() * Math.max(1, mask.width - 10);
-      const y = 5 + Math.random() * Math.max(1, mask.height - 10);
-      const px = Math.floor(x);
-      const py = Math.floor(y);
-      if (pixels[(py * mask.width + px) * 4 + 3] < 190) continue;
-      const size = 8 + Math.random() * 2;
-      sequenceCtx.save();
-      sequenceCtx.translate(x, y);
-      sequenceCtx.rotate((Math.random() - .5) * .18);
-      sequenceCtx.globalAlpha = .88;
-      sequenceCtx.font = "700 " + size + "px Helvetica, Arial, sans-serif";
-      sequenceCtx.fillStyle = baseColors[placed % baseColors.length];
-      sequenceCtx.fillText(bases[placed % bases.length], 0, 0);
-      sequenceCtx.restore();
-      placed++;
-    }
-    sequenceCtx.globalCompositeOperation = "destination-in";
-    sequenceCtx.drawImage(mask, 0, 0);
-
-    const solid = document.createElement("canvas");
-    solid.width = mask.width;
-    solid.height = mask.height;
-    const solidCtx = solid.getContext("2d");
-    solidCtx.drawImage(mask, 0, 0);
-    solidCtx.globalCompositeOperation = "source-in";
-    solidCtx.fillStyle = navy;
-    solidCtx.fillRect(0, 0, solid.width, solid.height);
-
-    const candidates = [];
-    for (let y = 2; y < mask.height; y += 3) {
-      for (let x = 2; x < mask.width; x += 3) {
-        if (pixels[(y * mask.width + x) * 4 + 3] > 180) candidates.push({ x: box.left + x, y: box.top + y });
+  // Each path follows the pen stroke of a letter. Separate strokes leave
+  // the counters in a, e and P open even on a narrow screen.
+  const strokes = {
+    S: ['M85 16 C62 -3 13 1 13 28 C13 52 85 47 85 73 C85 99 38 108 10 86'],
+    a: ['M76 50 C59 32 13 38 13 70 C13 99 53 107 76 77', 'M79 41 L79 98'],
+    h: ['M16 3 L16 98', 'M16 65 C34 32 78 30 78 59 L78 98'],
+    i: ['M48 43 L48 98', 'M48 17 L48 18'],
+    l: ['M42 3 L42 98'],
+    P: ['M17 98 L17 5 L49 5 C101 5 101 54 52 54 L18 54'],
+    t: ['M46 17 L46 81 Q46 104 81 95', 'M13 42 L80 42'],
+    e: ['M16 69 L83 64 C83 28 15 29 15 69 C15 101 53 108 82 87'],
+    '.': ['M46 96 L46 97']
+  };
+  const textNode = title.firstChild;
+  const range = document.createRange();
+  const bounds = title.getBoundingClientRect();
+  if (!textNode || !bounds.width || bounds.bottom < 0) return;
+  const width = innerWidth, height = innerHeight;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
+  ctx.scale(dpr, dpr);
+  const style = getComputedStyle(title);
+  ctx.font = style.fontSize + ' ' + style.fontFamily;
+  const metrics = ctx.measureText('H');
+  const cap = metrics.actualBoundingBoxAscent || parseFloat(style.fontSize) * .72;
+  const probe = document.createElement('i');
+  probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+  title.append(probe);
+  const baseline = probe.getBoundingClientRect().top;
+  probe.remove();
+  const size = Math.max(4.7, Math.min(7, cap * .115));
+  const spacing = size * 1.04;
+  const points = [];
+  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  function addLetter(letter, box) {
+    for (const stroke of strokes[letter] || []) {
+      path.setAttribute('d', stroke);
+      const length = path.getTotalLength();
+      const samples = [];
+      let distance = 0;
+      for (let s = 0; s <= Math.ceil(length); s++) {
+        const p = path.getPointAtLength(Math.min(s, length));
+        const x = box.left + p.x * box.width / 100;
+        const y = baseline - cap + p.y * cap / 100;
+        if (samples.length) distance += Math.hypot(x - samples.at(-1).x, y - samples.at(-1).y);
+        samples.push({x, y, distance});
+      }
+      const intervals = Math.max(1, Math.round(distance / spacing));
+      let j = 0;
+      for (let i = 0; i <= intervals; i++) {
+        while (j + 1 < samples.length && samples[j].distance < i * distance / intervals) j++;
+        const p = samples[j];
+        if (points.every(q => Math.hypot(q.x - p.x, q.y - p.y) > spacing * .75)) points.push(p);
       }
     }
-    for (let i = candidates.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
-    }
-    const targets = candidates.slice(0, 36);
-    if (!targets.length) return;
-
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const particles = targets.map((target, i) => {
-      const angle = i / targets.length * Math.PI * 2 + (Math.random() - .5) * .08;
-      const dx = Math.cos(angle);
-      const dy = Math.sin(angle);
-      const distance = Math.min(width / 2 / Math.abs(dx || .001), height / 2 / Math.abs(dy || .001)) + 26;
-      return {
-        target,
-        x: centerX + dx * distance,
-        y: centerY + dy * distance,
-        base: bases[i % bases.length],
-        color: baseColors[i % baseColors.length],
-        rotation: (Math.random() - .5) * .72,
-        delay: particleDelay + i / targets.length * staggerDuration
-      };
-    });
-
-    const sequenceStart = particleDelay + flightDuration + staggerDuration;
-    const pressStart = sequenceStart + blendDuration + holdDuration;
-    const endAt = pressStart + pressDuration + fadeDuration;
-    const started = performance.now();
-
-    function draw(now) {
-      const elapsed = now - started;
-      ctx.clearRect(0, 0, width, height);
-
-      const flowProgress = Math.min(1, elapsed / flowDuration);
-      const flowOpacity = .78 * Math.max(0, 1 - Math.max(0, elapsed - flowDuration + 70) / 250);
-      if (flowProgress > 0 && flowOpacity > 0) {
-        const cx = box.left + box.width / 2;
-        const cy = box.top + box.height / 2;
-        const rx = box.width / 2 + 24;
-        const ry = box.height / 2 + 15;
-        const start = -Math.PI / 2;
-        const gradient = ctx.createLinearGradient(box.left, box.top, box.right, box.bottom);
-        gradient.addColorStop(0, "rgba(132,202,255,.18)");
-        gradient.addColorStop(.42, "rgba(116,190,248,.95)");
-        gradient.addColorStop(.72, "rgba(181,225,255,.92)");
-        gradient.addColorStop(1, "rgba(132,202,255,.12)");
-        ctx.save();
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, rx, ry, 0, start, start + Math.PI * 2 * flowProgress);
-        ctx.globalAlpha = flowOpacity;
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth = 1.7;
-        ctx.shadowColor = "#9ed5ff";
-        ctx.shadowBlur = 11;
-        ctx.stroke();
-        ctx.restore();
-      }
-
-      for (const p of particles) {
-        const age = elapsed - p.delay;
-        if (age < 0 || elapsed >= sequenceStart + blendDuration) continue;
-        let x, y, rotation, alpha;
-        if (age < flightDuration) {
-          const t = Math.max(0, Math.min(1, age / flightDuration));
-          const eased = 1 - Math.pow(1 - t, 3);
-          const dx = p.target.x - p.x;
-          const dy = p.target.y - p.y;
-          const curve = Math.sin(Math.PI * t) * 9;
-          const distance = Math.max(1, Math.hypot(dx, dy));
-          x = p.x + dx * eased - dy / distance * curve;
-          y = p.y + dy * eased + dx / distance * curve;
-          rotation = p.rotation * (1 - eased);
-          alpha = .16 + .74 * Math.min(1, t * 2.4);
-        } else {
-          x = p.target.x;
-          y = p.target.y;
-          rotation = 0;
-          alpha = 1 - Math.min(1, (elapsed - sequenceStart) / blendDuration);
-        }
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(rotation);
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = p.color;
-        ctx.font = "600 12px Helvetica, Arial, sans-serif";
-        ctx.fillText(p.base, 0, 0);
-        ctx.restore();
-      }
-
-      if (elapsed >= sequenceStart && elapsed < endAt) {
-        let press = 0;
-        let fade = 1;
-        if (elapsed >= pressStart) {
-          const p = Math.min(1, (elapsed - pressStart) / pressDuration);
-          press = 1 - Math.pow(1 - p, 3);
-          if (elapsed > pressStart + pressDuration) {
-            fade = Math.max(0, 1 - (elapsed - pressStart - pressDuration) / fadeDuration);
-          }
-        }
-
-        const bounceElapsed = elapsed - sequenceStart - blendDuration - bounceDelay;
-        const bounceActive = bounceElapsed >= 0 && bounceElapsed < bounceDuration && elapsed < pressStart;
-        const bounceT = Math.max(0, Math.min(1, bounceElapsed / bounceDuration));
-        const bounce = bounceActive ? Math.sin(Math.PI * bounceT) : 0;
-        const yShift = 9 * bounce * (1 - press) + 5 * press;
-        const xScale = 1 + .025 * bounce * (1 - press) + .06 * press;
-        const yScale = 1 - .035 * bounce * (1 - press) + .06 * press;
-        const glow = bounceActive ? Math.sin(Math.PI * bounceT) : 0;
-
-        ctx.save();
-        ctx.translate(box.left + box.width / 2, box.top + box.height / 2 + yShift);
-        ctx.scale(xScale, yScale);
-        ctx.shadowColor = lightBlue + (.9 * glow) + ")";
-        ctx.shadowBlur = 17 * glow;
-        ctx.globalAlpha = (1 - press) * fade;
-        ctx.drawImage(sequence, -box.width / 2, -box.height / 2, box.width, box.height);
-        ctx.globalAlpha = press * fade;
-        ctx.drawImage(solid, -box.width / 2, -box.height / 2, box.width, box.height);
-        ctx.restore();
-      }
-
-      if (elapsed < endAt) requestAnimationFrame(draw);
-      else {
-        ctx.clearRect(0, 0, width, height);
-        canvas.remove();
-      }
-    }
-
-    requestAnimationFrame(draw);
   }
+  for (let i = 0; i < textNode.length; i++) {
+    range.setStart(textNode, i);
+    range.setEnd(textNode, i + 1);
+    addLetter(textNode.data[i], range.getBoundingClientRect());
+  }
+  const dot = title.querySelector('span');
+  if (dot) addLetter('.', dot.getBoundingClientRect());
+  if (!points.length) return;
 
-  requestAnimationFrame(launch);
+  const cx = bounds.left + bounds.width / 2, cy = baseline - cap / 2;
+  const particles = points.map((p, i) => {
+    const angle = i * 2.39996;
+    const dx = Math.cos(angle), dy = Math.sin(angle);
+    const reach = Math.min((dx > 0 ? width - cx : -cx) / (dx || .001),
+      (dy > 0 ? height - cy : -cy) / (dy || .001)) + 12;
+    return {...p, startX:cx + dx * reach, startY:cy + dy * reach,
+      bend:Math.sin(i * 1.73) * 38, delay:210 + (i * 47 % 390),
+      base:'ACTG'[i % 4]};
+  });
+  const clamp = n => Math.max(0, Math.min(1, n));
+  const smooth = n => n * n * (3 - 2 * n);
+  const start = performance.now();
+  function finish() {
+    title.style.removeProperty('opacity');
+    canvas.remove();
+  }
+  function frame(now) {
+    const t = now - start;
+    if (t >= 2670 || motion.matches || !title.isConnected || scrollY > 20 ||
+        innerWidth !== width || Math.abs(title.getBoundingClientRect().width - bounds.width) > 1) {
+      finish();
+      return;
+    }
+    ctx.clearRect(0, 0, width, height);
+    const halo = clamp(t / 170) * (1 - smooth(clamp((t - 650) / 760)));
+    if (halo > 0) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.scale(bounds.width * .57, cap * .95);
+      const light = ctx.createRadialGradient(0, 0, .25, 0, 0, 1.12);
+      light.addColorStop(0, 'rgba(155,215,255,0)');
+      light.addColorStop(.7, 'rgba(139,207,255,.28)');
+      light.addColorStop(1, 'rgba(155,215,255,0)');
+      ctx.globalAlpha = halo;
+      ctx.fillStyle = light;
+      ctx.fillRect(-1.13, -1.13, 2.26, 2.26);
+      ctx.restore();
+    }
+    const bounce = Math.sin(Math.PI * clamp((t - 1950) / 390)) ** 2;
+    const reveal = smooth(clamp((t - 2330) / 340));
+    title.style.opacity = String(.09 * (1 - smooth(clamp((t - 430) / 620))) + reveal);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '600 ' + size + 'px Helvetica, Arial, sans-serif';
+    ctx.fillStyle = '#286ba0';
+    ctx.shadowColor = '#87cbff';
+    ctx.shadowBlur = 4 * bounce;
+    for (const p of particles) {
+      const u = clamp((t - p.delay) / 880);
+      if (!u) continue;
+      const remaining = (1 - u) ** 3;
+      const arc = remaining * u * 5;
+      ctx.globalAlpha = smooth(clamp(u * 3)) * (1 - reveal);
+      ctx.fillText(p.base, p.x + (p.startX - p.x) * remaining + p.bend * arc,
+        p.y + (p.startY - p.y) * remaining - 35 * arc + 4 * bounce);
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
 })();
