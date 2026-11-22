@@ -86,14 +86,23 @@
       window.scrollTo(0, 0);
       initPageFeatures();
 
+      const pageScripts = ['daily-reading.js', 'interest-map.js', 'interest-field.js'];
       document.querySelectorAll('script[src]').forEach(script => {
-        try { if (new URL(script.src).pathname.endsWith('/daily-reading.js')) script.remove(); } catch {}
+        try {
+          const pathname = new URL(script.src).pathname;
+          if (pageScripts.some(file => pathname.endsWith('/' + file))) script.remove();
+        } catch {}
       });
-      if (nextDocument.querySelector('script[src$="daily-reading.js"]')) {
-        const reader = document.createElement('script');
-        reader.src = new URL('daily-reading.js', location.href).href;
-        reader.dataset.pageScript = 'daily-reading';
-        document.body.append(reader);
+      for (const file of pageScripts) {
+        const needed = Array.from(nextDocument.querySelectorAll('script[src]'))
+          .some(script => {
+            try { return new URL(script.src).pathname.endsWith('/' + file); } catch { return false; }
+          });
+        if (!needed) continue;
+        const pageScript = document.createElement('script');
+        pageScript.src = new URL(file, location.href).href;
+        pageScript.dataset.pageScript = file;
+        document.body.append(pageScript);
       }
     } catch {
       location.assign(address);
