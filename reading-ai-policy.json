@@ -4,13 +4,17 @@
     {
       "id": "ai-policy-2026-11-22-agency-ai-hearings",
       "date": "2026-11-22",
-      "title": "Federal consultation asks how AI should be used in agency hearings",
-      "summary": "The Administrative Conference of the United States published a request for comments on November 19, 2026 about generative AI in federal agency adjudications, including evidence summaries, legal research and drafting decisions. It asks whether participants should disclose AI use or certify that they checked outputs, with comments due January 19, 2027. This is a consultation to inform recommended practices, not a new rule; it addresses how agencies can use these tools without compromising accuracy, privacy or fair proceedings.",
-      "question": "If an agency uses AI to summarize evidence in your case, should you be able to inspect and challenge that summary before a decision is made?",
+      "title": "Who should oversee AI in government?",
+      "summary": "Two November developments outline different parts of government AI oversight. The Administrative Conference of the United States is requesting comments on AI use in federal adjudications, including evidence summaries, legal research, and drafting; comments are due January 19, 2027. Separately, Senator John Hickenlooper proposed a Senate AI select committee focused on independent evaluations and national-security safeguards. Both are proposals, not enacted requirements.",
+      "question": "Who should set guardrails when government adopts AI—agencies, Congress, or independent evaluators—and how should people challenge AI-generated evidence used in their cases?",
       "sources": [
         {
           "title": "Policies on the Use of Generative Super Intelligence in Agency Adjudication; Request for Comments",
           "url": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23539.pdf"
+        },
+        {
+          "title": "Senator proposes select committee on AI as Democrats hope to move quickly to regulate it",
+          "url": "https://apnews.com/article/047d0ab21237984701decd9ed5ced403"
         }
       ]
     },
