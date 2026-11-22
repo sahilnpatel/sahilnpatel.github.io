@@ -1,4 +1,69 @@
 {
   "version": 1,
-  "entries": []
+  "entries": [
+    {
+      "id": "doc-quote-1",
+      "quote": "Most people don’t have original opinions. They just repeat what they heard from someone louder, richer, or more popular.",
+      "attribution": "Attributed to Fyodor Dostoevsky — unverified",
+      "submittedAuthor": "Fyodor Dostoevsky",
+      "source": ""
+    },
+    {
+      "id": "doc-quote-2",
+      "quote": "Stress, anxiety, and depression are caused when we are living to please others. Don’t burn your soul to keep others warm.",
+      "attribution": "Attributed to Bob Marley — unverified",
+      "submittedAuthor": "Bob Marley",
+      "source": "",
+      "note": "This reflection is not a clinical explanation of anxiety or depression."
+    },
+    {
+      "id": "doc-quote-3",
+      "quote": "A homeless man died of hunger but there was food at his funeral",
+      "attribution": "Attributed to Oscar Wilde — unverified",
+      "submittedAuthor": "Oscar Wilde",
+      "source": ""
+    },
+    {
+      "id": "doc-quote-4",
+      "quote": "Do not wait; the time will never be ‘just right.’ Start where you stand.",
+      "attribution": "Attributed to Napoleon Hill — unverified",
+      "submittedAuthor": "Napoleon Hill",
+      "source": ""
+    },
+    {
+      "id": "doc-quote-5",
+      "quote": "We are what we repeatedly do. Excellence is not an act, but a habit.",
+      "attribution": "Adapted from Will Durant’s summary of Aristotle",
+      "submittedAuthor": "Aristotle",
+      "source": "https://www.quote.org/quote/we-are-what-we-repeatedly-do-excellence-645773"
+    },
+    {
+      "id": "doc-quote-6",
+      "quote": "Do not get upset with people or situations. Both are powerless without your reaction",
+      "attribution": "Author unknown",
+      "submittedAuthor": "",
+      "source": ""
+    },
+    {
+      "id": "doc-quote-7",
+      "quote": "Day by day, what you choose, what you think and what you do is who you become",
+      "attribution": "Attributed to Heraclitus — unverified",
+      "submittedAuthor": "Heraclitus",
+      "source": ""
+    },
+    {
+      "id": "doc-quote-8",
+      "quote": "If you kill a cockroach, you are a hero; if you kill a butterfly, you are evil.",
+      "attribution": "Author unknown — attribution to Friedrich Nietzsche is disputed",
+      "submittedAuthor": "Friedrich Nietzsche",
+      "source": "https://en.wikiquote.org/wiki/Friedrich_Nietzsche#Misattributed"
+    },
+    {
+      "id": "doc-quote-9",
+      "quote": "Most people do not think. They repeat. They adopt the opinions of those around them, wear them like borrowed clothes, and call it a worldview. And when you dare to think for yourself, really think, they will not admire you for it. They will resent you. Because your refusal to conform is a mirror they did not ask to look into. The unexamined man does not hate you because you are wrong. He hates you because somewhere beneath the noise, he suspects you might be right.",
+      "attribution": "Attributed to Friedrich Nietzsche — unverified",
+      "submittedAuthor": "Neitzche",
+      "source": ""
+    }
+  ]
 }

@@ -29,8 +29,9 @@
       empty.hidden = false;
       return;
     }
-    status.textContent = 'A growing collection of lines worth keeping.';
+    status.textContent = 'Quotes and ideas I’ve collected. Uncertain author attributions are marked.';
     empty.hidden = true;
+    list.replaceChildren();
     for (const entry of entries) {
       const article = el('article', null, 'quote-card');
       if (typeof entry.date === 'string') article.append(el('p', entry.date + ' · QUOTE', 'post-meta'));
@@ -46,10 +47,15 @@
         link.rel = 'noopener noreferrer';
         article.append(link);
       }
+      if (entry.note) article.append(el('p', entry.note, 'quote-note'));
+      if (entry.summary) article.append(el('p', entry.summary));
+      if (entry.question) article.append(el('p', entry.question));
       list.append(article);
     }
   } catch {
-    status.textContent = 'In progress.';
-    empty.hidden = false;
+    if (!list.children.length) {
+      status.textContent = 'The collection is temporarily unavailable.';
+      empty.hidden = false;
+    }
   }
 })();

@@ -2,7 +2,7 @@
 (async () => {
   const path = location.pathname;
   const home = path.endsWith('/') || path.endsWith('/index.html');
-  const topics = home ? ['philosophy', 'ai-policy'] : path.endsWith('/philosophy.html') ? ['philosophy'] : path.endsWith('/ai-policy.html') ? ['ai-policy'] : [];
+  const topics = home || path.endsWith('/ai-policy.html') ? ['ai-policy'] : [];
   const el = (tag, text, cls) => {
     const node = document.createElement(tag);
     if (text) node.textContent = text;

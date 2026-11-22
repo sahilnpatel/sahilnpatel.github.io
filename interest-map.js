@@ -3,7 +3,7 @@
     ai:{kicker:"01 · BUILD",title:"AI & intelligent systems",question:"How can AI and robotics help us understand and shape the physical world?",label:"Explore these interests →",href:"interests.html"},
     bio:{kicker:"02 · DISCOVER",title:"Computational biology & medicine",question:"Can AI help us read biology more deeply and make medicine more personal?",label:"See research & work →",href:"work.html"},
     policy:{kicker:"03 · STEWARD",title:"AI safety & governance",question:"What evidence and oversight should earn trust in a powerful AI system?",label:"Read AI policy notes →",href:"ai-policy.html"},
-    philosophy:{kicker:"04 · UNDERSTAND",title:"Philosophy & human psychology",question:"What do intelligence and human behavior reveal about how technology fits into our lives?",label:"Read philosophy notes →",href:"philosophy.html"},
+    philosophy:{kicker:"04 · UNDERSTAND",title:"Philosophy & human psychology",question:"What do intelligence and human behavior reveal about how technology fits into our lives?",label:"Explore the quotebook",href:"quotes.html"},
     innovation:{kicker:"05 · MAKE",title:"Entrepreneurship & innovation",question:"How do promising research ideas become useful tools, products, or companies?",label:"Explore research & work →",href:"work.html"}
   };
   const map=document.querySelector(".constellation-map");
