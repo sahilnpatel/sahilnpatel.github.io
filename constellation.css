@@ -388,8 +388,12 @@ h1{font-style:normal}
 @media(prefers-reduced-motion:reduce){.interest-cta{transition:none}}
 
 
-/* A short genome inspired opening: base letters assemble into the name. */
-.genome-intro{position:fixed;inset:0;width:100vw;height:100vh;z-index:20;pointer-events:none}
-.home-intro .name-title{display:inline-block;color:var(--galactic);opacity:0;transform-origin:left center;animation:name-press-in .48s 1.77s cubic-bezier(.16,.72,.2,1) forwards}
-@keyframes name-press-in{0%{opacity:0;transform:translateY(0) scale(.96)}52%{opacity:1;transform:translateY(7px) scale(1.06)}100%{opacity:1;transform:translateY(0) scale(1)}}
-@media(prefers-reduced-motion:reduce){.genome-intro{display:none}.home-intro .name-title{opacity:1;animation:none}}
+/* The real title stays visible on return visits and with reduced motion. */
+.genome-intro{position:fixed;inset:0;width:100%;height:100%;z-index:20;pointer-events:none}
+.home-intro .name-title{display:inline-block;color:var(--galactic);white-space:nowrap}
+.home-intro p:not(.location):not(.subtitle){max-width:62ch}
+.curiosity-detail{background:#f7faff;border:1px solid #d5e4f2;box-shadow:none;backdrop-filter:none}
+.constellation-interface{margin-top:24px}
+.curiosity-detail h3{max-width:22ch;text-wrap:balance}
+.curiosity-detail .read-more:focus-visible,.links a:focus-visible{outline-offset:4px}
+@media(prefers-reduced-motion:reduce){.genome-intro{display:none}.home-intro .name-title{opacity:1!important}}
