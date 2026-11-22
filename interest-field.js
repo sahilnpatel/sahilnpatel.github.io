@@ -1,4 +1,5 @@
 (() => {
+  window.cleanupInterestField?.();
   const canvas = document.getElementById('interest-field');
   const field = canvas && canvas.closest('.constellation-map');
   if (!canvas || !field) return;
@@ -88,6 +89,7 @@
   let start = performance.now();
   let visible = true;
   let paused = document.hidden;
+  let disposed = false;
 
   function resize() {
     const rect = field.getBoundingClientRect();
@@ -102,7 +104,7 @@
   }
   function draw(now) {
     frame = 0;
-    if (paused || !visible) return;
+    if (disposed || !canvas.isConnected || paused || !visible) return;
     resize();
     const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
     gl.clearColor(0, 0, 0, 0);
@@ -116,7 +118,7 @@
     if (!reducedMotion.matches) frame = requestAnimationFrame(draw);
   }
   function schedule() {
-    if (!frame && !paused && visible && !reducedMotion.matches) frame = requestAnimationFrame(draw);
+    if (!disposed && canvas.isConnected && !frame && !paused && visible) frame = requestAnimationFrame(draw);
   }
   field.addEventListener('pointermove', event => {
     const rect = field.getBoundingClientRect();
@@ -132,12 +134,24 @@
     if (visible) schedule();
   });
   observer.observe(field);
-  document.addEventListener('visibilitychange', () => {
+  const onVisibilityChange = () => {
     paused = document.hidden;
     if (!paused) schedule();
-  });
+  };
+  document.addEventListener('visibilitychange', onVisibilityChange);
   field.querySelectorAll('[data-interest]').forEach(button => button.addEventListener('click', schedule));
   reducedMotion.addEventListener?.('change', schedule);
+  window.cleanupInterestField = () => {
+    disposed = true;
+    cancelAnimationFrame(frame);
+    observer.disconnect();
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+    reducedMotion.removeEventListener?.('change', schedule);
+    gl.deleteBuffer(buffer);
+    gl.deleteProgram(program);
+    gl.deleteShader(vs);
+    gl.deleteShader(fs);
+  };
   resize();
   draw(performance.now());
 })();

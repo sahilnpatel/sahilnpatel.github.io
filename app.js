@@ -53,21 +53,32 @@
     close.addEventListener('click', () => setOpen(false));
   };
 
-  const pagePaths = new Set(['/', '/index.html', '/work.html', '/interests.html', '/hobbies.html', '/writing.html', '/philosophy.html', '/ai-policy.html', '/quotes.html']);
-  let navigating = false;
+  const pagePaths = new Set(['/', '/index.html', '/work.html', '/interests.html', '/hobbies.html', '/writing.html', '/ai-policy.html', '/quotes.html']);
+  let navigationId = 0;
   const showPage = async (address, addHistory) => {
-    if (navigating) return;
-    navigating = true;
+    const currentNavigation = ++navigationId;
     try {
       const response = await fetch(address, { cache: 'no-cache' });
       if (!response.ok) throw new Error('Page unavailable');
       const nextDocument = new DOMParser().parseFromString(await response.text(), 'text/html');
+      if (currentNavigation !== navigationId) return;
       const nextHeader = nextDocument.querySelector('header');
       const nextMain = nextDocument.querySelector('#main');
       const currentHeader = document.querySelector('header');
       const currentMain = document.querySelector('#main');
       if (!nextHeader || !nextMain || !currentHeader || !currentMain) throw new Error('Page layout unavailable');
 
+      window.cleanupQuotebook?.();
+      window.cleanupInterestField?.();
+      document.querySelector('.photo-dialog')?.remove();
+      const nextDialog = nextDocument.querySelector('.photo-dialog');
+      if (nextDialog) document.body.append(nextDialog);
+      const nextFooter = nextDocument.querySelector('footer');
+      if (nextFooter) document.querySelector('footer')?.replaceWith(nextFooter);
+      for (const name of ['description', 'theme-color']) {
+        const nextMeta = nextDocument.querySelector('meta[name="' + name + '"]');
+        if (nextMeta) document.querySelector('meta[name="' + name + '"]')?.setAttribute('content', nextMeta.content);
+      }
       currentHeader.replaceWith(nextHeader);
       currentMain.replaceWith(nextMain);
       document.title = nextDocument.title;
@@ -83,10 +94,12 @@
       if (addHistory) history.pushState({}, '', address);
       nextMain.setAttribute('tabindex', '-1');
       nextMain.focus({ preventScroll: true });
-      window.scrollTo(0, 0);
+      const hash = new URL(address, location.href).hash;
+      const target = hash && document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (target) target.scrollIntoView();
+      else window.scrollTo(0, 0);
       initPageFeatures();
 
-      if (window.cleanupQuotebook) window.cleanupQuotebook();
       const pageScripts = ['daily-reading.js', 'interest-map.js', 'interest-field.js', 'quotes.js'];
       document.querySelectorAll('script[src]').forEach(script => {
         try {
@@ -96,19 +109,18 @@
       });
       for (const file of pageScripts) {
         const needed = Array.from(nextDocument.querySelectorAll('script[src]'))
-          .some(script => {
-            try { return new URL(script.src).pathname.endsWith('/' + file); } catch { return false; }
+          .find(script => {
+            try { return new URL(script.getAttribute('src'), address).pathname.endsWith('/' + file); } catch { return false; }
           });
         if (!needed) continue;
         const pageScript = document.createElement('script');
-        pageScript.src = new URL(file === 'quotes.js' ? file + '?v=2' : file, location.href).href;
+        pageScript.src = new URL(needed.getAttribute('src'), address).href;
+        pageScript.async = false;
         pageScript.dataset.pageScript = file;
         document.body.append(pageScript);
       }
     } catch {
-      location.assign(address);
-    } finally {
-      navigating = false;
+      if (currentNavigation === navigationId) location.assign(address);
     }
   };
 

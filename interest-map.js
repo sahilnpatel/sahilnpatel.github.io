@@ -18,15 +18,15 @@
       kicker:"AI SAFETY & POLICY",
       title:"How should AI be governed?",
       question:"Safety evaluation, public policy, technology governance, and the evidence needed to trust powerful systems.",
-      label:"Read AI policy notes",
+      label:"Explore AI safety & policy",
       href:"ai-policy.html"
     },
     philosophy:{
       kicker:"PHILOSOPHY & HUMAN PSYCHOLOGY",
       title:"Intelligence, people, and technology",
       question:"Philosophy, cognition, human behavior, and the ways technology changes how we think and live.",
-      label:"Writing & ideas",
-      href:"writing.html"
+      label:"Explore the quotebook",
+      href:"quotes.html"
     },
     innovation:{
       kicker:"ENTREPRENEURSHIP & INNOVATION",

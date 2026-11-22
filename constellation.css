@@ -292,3 +292,9 @@ article p,.interest-group>p,.interest-group li,.interest-intro,.prose p,.prose l
 @media(prefers-reduced-motion:reduce){
   .constellation-node,.photo-card{transition:none}
 }
+
+/* Two clear destinations in On my mind, stacked on narrow screens. */
+.reading-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
+.reading-grid article{min-width:0;padding-top:20px;border-top:1px solid var(--line)}
+.reading-grid h3{margin-bottom:12px}
+@media(max-width:550px){.reading-grid{grid-template-columns:1fr;gap:29px}.reading-heading-row{flex-wrap:wrap}}

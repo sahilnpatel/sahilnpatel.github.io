@@ -2,6 +2,8 @@
 (async () => {
   const path = location.pathname;
   const home = path.endsWith('/') || path.endsWith('/index.html');
+  const main = document.getElementById('main');
+  if (!main) return;
   const topics = home || path.endsWith('/ai-policy.html') ? ['ai-policy'] : [];
   const el = (tag, text, cls) => {
     const node = document.createElement(tag);
@@ -15,24 +17,24 @@
       const response = await fetch(`reading-${topic}.json`, {cache:'no-cache'});
       if (!response.ok) continue;
       const data = await response.json();
-      if (!Array.isArray(data.entries)) continue;
+      if (!main.isConnected || location.pathname !== path || !Array.isArray(data.entries)) continue;
       const entries = data.entries.filter(e => typeof e.id === 'string' && typeof e.title === 'string' && typeof e.summary === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Array.isArray(e.sources) && e.sources.some(s => safeUrl(s.url))).sort((a,b) => b.date.localeCompare(a.date));
       if (!entries.length) continue;
       if (home) {
-        const preview = document.getElementById(topic === 'philosophy' ? 'home-philosophy-preview' : 'home-policy-preview');
+        const preview = main.querySelector('#home-policy-preview');
         if (!preview) continue;
         const latest = entries[0];
-        preview.querySelector('.post-meta').textContent = `${topic === 'philosophy' ? 'PHILOSOPHY' : 'AI & POLICY'} · ${latest.date}`;
+        preview.querySelector('.post-meta').textContent = `AI SAFETY & POLICY · ${latest.date}`;
         preview.querySelector('h3 a').textContent = latest.title;
         preview.querySelector('p:not(.post-meta)').textContent = latest.summary.length > 180 ? latest.summary.slice(0,177).trimEnd()+'…' : latest.summary;
         continue;
       }
       const section = el('section', null, 'prose daily-entries');
-      section.setAttribute('aria-label','Daily reading notes');
+      section.setAttribute('aria-label','AI safety and policy readings');
       const fragment = document.createDocumentFragment();
       for (const entry of entries) {
         const article = el('article', null, 'post-preview');
-        article.append(el('p', `${entry.date} · DAILY READING`, 'post-meta'), el('h2', entry.title));
+        article.append(el('p', `${entry.date} · AI SAFETY & POLICY`, 'post-meta'), el('h2', entry.title));
         if (typeof entry.quote === 'string' && entry.quote) {
           const quote = el('blockquote'); quote.append(el('p', `“${entry.quote}”`));
           if (typeof entry.attribution === 'string') quote.append(el('cite', entry.attribution));
@@ -49,10 +51,11 @@
       }
       section.append(fragment);
       const titles = new Set(entries.map(e => e.title));
-      document.querySelectorAll('article.post-preview').forEach(article => {
+      main.querySelectorAll('article.post-preview').forEach(article => {
         if (titles.has(article.querySelector('h2')?.textContent.trim())) article.remove();
       });
-      document.querySelector('.page-heading').after(section);
+      main.querySelector('.daily-entries')?.remove();
+      main.querySelector('.page-heading')?.after(section);
     } catch { /* Keep the existing curated reading list when the feed is unavailable. */ }
   }
 })();
