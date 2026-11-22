@@ -86,7 +86,8 @@
       window.scrollTo(0, 0);
       initPageFeatures();
 
-      const pageScripts = ['daily-reading.js', 'interest-map.js', 'interest-field.js'];
+      if (window.cleanupQuotebook) window.cleanupQuotebook();
+      const pageScripts = ['daily-reading.js', 'interest-map.js', 'interest-field.js', 'quotes.js'];
       document.querySelectorAll('script[src]').forEach(script => {
         try {
           const pathname = new URL(script.src).pathname;
@@ -100,7 +101,7 @@
           });
         if (!needed) continue;
         const pageScript = document.createElement('script');
-        pageScript.src = new URL(file, location.href).href;
+        pageScript.src = new URL(file === 'quotes.js' ? file + '?v=2' : file, location.href).href;
         pageScript.dataset.pageScript = file;
         document.body.append(pageScript);
       }

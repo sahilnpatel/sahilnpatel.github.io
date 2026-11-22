@@ -28,6 +28,7 @@ jobs:
           python3 - <<'PY'
           import base64
           import datetime
+          import html
           import json
           import os
           import re
@@ -120,12 +121,38 @@ jobs:
                   "sha": current["sha"],
                   "branch": "main",
               })
-              api("POST", "/dispatches", {
-                  "event_type": "publish-site",
-                  "client_payload": {"issue_number": number},
-              })
 
-          comment("Added to the public quotebook: https://sahilnpatel.github.io/quotes.html")
+          page = api("GET", "/contents/quotes.html?ref=main")
+          original_page = base64.b64decode(page["content"]).decode("utf-8")
+          cards = []
+          for item in data["entries"]:
+              text = item.get("quote", "")
+              author = item.get("submittedAuthor", item.get("attribution", ""))
+              card = '<article class="quote-card"><blockquote><p>“' + html.escape(text) + '”</p>'
+              if author:
+                  card += "<cite>" + html.escape(author) + "</cite>"
+              card += "</blockquote>"
+              for key in ("summary", "question"):
+                  if item.get(key):
+                      card += "<p>" + html.escape(item[key]) + "</p>"
+              cards.append(card + "</article>")
+          pattern = r'(<div id="quote-list" class="quote-entries" aria-live="polite">).*?(</div><a class="quote-add-button")'
+          updated_page, matches = re.subn(pattern, lambda m: m.group(1) + "\n".join(cards) + m.group(2), original_page, count=1, flags=re.S)
+          if matches != 1:
+              raise RuntimeError("Could not locate quotebook list in quotes.html")
+          if updated_page != original_page:
+              api("PUT", "/contents/quotes.html", {
+                  "message": "Render quotebook entry from issue #" + str(number),
+                  "content": base64.b64encode(updated_page.encode("utf-8")).decode("ascii"),
+                  "sha": page["sha"],
+                  "branch": "main",
+              })
+          api("POST", "/dispatches", {
+              "event_type": "publish-site",
+              "client_payload": {"issue_number": number},
+          })
+
+          comment("Saved your quote and started website deployment. It may take a minute to appear: https://sahilnpatel.github.io/quotes.html")
           api("PATCH", "/issues/" + str(number), {"state": "closed"})
           PY
   close-unapproved-submission:
