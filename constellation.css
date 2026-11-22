@@ -298,3 +298,6 @@ article p,.interest-group>p,.interest-group li,.interest-intro,.prose p,.prose l
 .reading-grid article{min-width:0;padding-top:20px;border-top:1px solid var(--line)}
 .reading-grid h3{margin-bottom:12px}
 @media(max-width:550px){.reading-grid{grid-template-columns:1fr;gap:29px}.reading-heading-row{flex-wrap:wrap}}
+
+/* Leave footer links clear of the fixed soundtrack control. */
+footer{padding-bottom:90px}
