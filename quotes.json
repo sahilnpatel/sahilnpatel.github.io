@@ -2,6 +2,14 @@
   "version": 1,
   "entries": [
     {
+      "id": "issue-1",
+      "date": "2026-11-22",
+      "quote": "The most dangerous form of blindness, is believing that your perspective is the only reality.",
+      "attribution": "Friedrich Nietzsche",
+      "submittedAuthor": "Friedrich Nietzsche",
+      "source": ""
+    },
+    {
       "id": "doc-quote-1",
       "quote": "Most people don’t have original opinions. They just repeat what they heard from someone louder, richer, or more popular.",
       "attribution": "Fyodor Dostoevsky",
