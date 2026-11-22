@@ -386,3 +386,17 @@ h1{font-style:normal}
   .interest-cta{min-height:40px;padding:8px 12px;font-size:12px}
 }
 @media(prefers-reduced-motion:reduce){.interest-cta{transition:none}}
+
+
+/* A brief welcome: the page settles in, then the interest network carries one signal. */
+@keyframes home-open-settle{
+  from{opacity:.9;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.home-page .home-intro{animation:home-open-settle .42s cubic-bezier(.2,.75,.3,1) both}
+.opening-signal-glow{fill:#3d9be8;filter:drop-shadow(0 0 5px rgba(18,109,193,.55))}
+.opening-signal-core{fill:#fff;stroke:var(--blue);stroke-width:2}
+@media(prefers-reduced-motion:reduce){
+  .home-page .home-intro{animation:none}
+  .opening-signal{display:none}
+}

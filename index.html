@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#fbfdff">
   <meta name="description" content="Sahil Patel — AI for scientific discovery, computational biology, robotics, and the ideas around technology.">
   <title>Sahil Patel</title>
-  <link rel="stylesheet" href="constellation.css?v=20261121g">
+  <link rel="stylesheet" href="constellation.css?v=20261122a">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext x='10' y='48' font-size='48' fill='%230067c7' font-family='serif'%3Es%3C/text%3E%3C/svg%3E">
 </head>
 <body class="home-page">
@@ -50,6 +50,14 @@
           <svg class="constellation-lines" viewBox="0 0 320 280" aria-hidden="true">
             <path d="M160 140 160 51M160 140 211 99M160 140 211 201M160 140 109 201M160 140 109 99"/>
             <circle cx="160" cy="140" r="3"/>
+            <circle class="opening-signal opening-signal-glow" r="8" opacity="0">
+              <animateMotion dur="1.25s" begin="indefinite" fill="freeze" path="M160 140 L160 51 L160 140 L211 99 L160 140 L211 201 L160 140 L109 201 L160 140 L109 99 L160 140"/>
+              <animate attributeName="opacity" dur="1.25s" begin="indefinite" values="0;0.48;0.34;0" keyTimes="0;0.12;0.82;1" fill="freeze"/>
+            </circle>
+            <circle class="opening-signal opening-signal-core" r="3.5" opacity="0">
+              <animateMotion dur="1.25s" begin="indefinite" fill="freeze" path="M160 140 L160 51 L160 140 L211 99 L160 140 L211 201 L160 140 L109 201 L160 140 L109 99 L160 140"/>
+              <animate attributeName="opacity" dur="1.25s" begin="indefinite" values="0;1;1;0" keyTimes="0;0.12;0.82;1" fill="freeze"/>
+            </circle>
           </svg>
           <div class="constellation-core" aria-hidden="true"><span class="core-mark">sp</span><small>the mix</small></div>
           <button class="constellation-node node-ai" type="button" data-interest="ai" aria-pressed="true" aria-controls="curiosity-detail"><span>AI &amp; systems</span></button>
@@ -92,7 +100,7 @@
   <dialog class="photo-dialog" aria-label="Photo viewer"><button class="photo-close" aria-label="Close photo">×</button><img class="full-photo" alt=""><p class="photo-caption"></p></dialog>
   <script src="app.js?v=20261121c"></script>
   <script src="daily-reading.js?v=20261121b" defer></script>
-  <script src="interest-map.js?v=20261121h" defer></script>
+  <script src="interest-map.js?v=20261122a" defer></script>
   <script src="interest-field.js?v=20261121c" defer></script>
 </body>
 </html>
