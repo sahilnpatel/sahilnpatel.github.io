@@ -10,7 +10,10 @@
   const phrase = title.textContent.trim();
   const colors = ["#126dc1", "#4d9bd8", "#0d2b50", "#77b9ec"];
   const bases = ["A", "C", "T", "G"];
-  const duration = 760;
+  const flightDuration = 760;
+  const pressDuration = 190;
+  const fadeDuration = 180;
+  const navy = [13, 43, 80];
   let frameId;
 
   function launch() {
@@ -64,6 +67,7 @@
         y: centerY + dy * distance,
         base: bases[i % bases.length],
         color: colors[i % colors.length],
+        rgb: [[18,109,193],[77,155,216],[13,43,80],[119,185,236]][i % 4],
         delay: (i % 9) * 10
       };
     });
@@ -73,19 +77,35 @@
       ctx.clearRect(0, 0, width, height);
       let active = false;
       for (const p of particles) {
-        const progress = Math.max(0, Math.min(1, (now - started - p.delay) / duration));
-        if (progress >= 1) continue;
+        const age = now - started - p.delay;
+        if (age < 0 || age >= flightDuration + pressDuration + fadeDuration) continue;
         active = true;
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const arc = Math.sin(progress * Math.PI) * 10;
+        const travel = Math.max(0, Math.min(1, age / flightDuration));
+        const eased = 1 - Math.pow(1 - travel, 4);
+        const arc = Math.sin(travel * Math.PI) * 12;
         const dx = p.target.x - p.x;
         const dy = p.target.y - p.y;
-        const alpha = progress < .72 ? Math.min(1, progress * 4) : (1 - progress) / .28;
-        ctx.globalAlpha = Math.max(0, alpha);
-        ctx.fillStyle = p.color;
-        ctx.font = "600 8px Helvetica, Arial, sans-serif";
-        ctx.fillText(p.base, p.x + dx * eased - dy / Math.max(1, Math.hypot(dx, dy)) * arc,
-          p.y + dy * eased + dx / Math.max(1, Math.hypot(dx, dy)) * arc);
+        let x = p.x + dx * eased - dy / Math.max(1, Math.hypot(dx, dy)) * arc;
+        let y = p.y + dy * eased + dx / Math.max(1, Math.hypot(dx, dy)) * arc;
+        let alpha = Math.min(1, travel * 5);
+        let size = 8;
+        let color = p.color;
+        if (age > flightDuration) {
+          const press = Math.min(1, (age - flightDuration) / pressDuration);
+          const pressed = 1 - Math.pow(1 - press, 3);
+          x = p.target.x;
+          y = p.target.y + 5 * pressed;
+          size = 8 + 5 * pressed;
+          const rgb = p.rgb.map((channel, index) => Math.round(channel + (navy[index] - channel) * pressed));
+          color = `rgb(${rgb.join(",")})`;
+          if (age > flightDuration + pressDuration) {
+            alpha = Math.max(0, 1 - (age - flightDuration - pressDuration) / fadeDuration);
+          }
+        }
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = color;
+        ctx.font = `600 ${size}px Helvetica, Arial, sans-serif`;
+        ctx.fillText(p.base, x, y);
       }
       ctx.globalAlpha = 1;
       if (active) frameId = requestAnimationFrame(draw);
