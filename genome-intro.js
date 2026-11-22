@@ -10,8 +10,9 @@
   const phrase = title.textContent.trim();
   const colors = ["#126dc1", "#4d9bd8", "#0d2b50", "#77b9ec"];
   const bases = ["A", "C", "T", "G"];
-  const flightDuration = 760;
-  const pressDuration = 190;
+  const flightDuration = 900;
+  const holdDuration = 420;
+  const pressDuration = 240;
   const fadeDuration = 180;
   const navy = [13, 43, 80];
   let frameId;
@@ -49,7 +50,7 @@
       const j = Math.floor(Math.random() * (i + 1));
       [targets[i], targets[j]] = [targets[j], targets[i]];
     }
-    const points = targets.slice(0, 115);
+    const points = targets.slice(0, 320);
     if (!points.length) return;
 
     const centerX = width / 2;
@@ -78,7 +79,7 @@
       let active = false;
       for (const p of particles) {
         const age = now - started - p.delay;
-        if (age < 0 || age >= flightDuration + pressDuration + fadeDuration) continue;
+        if (age < 0 || age >= flightDuration + holdDuration + pressDuration + fadeDuration) continue;
         active = true;
         const travel = Math.max(0, Math.min(1, age / flightDuration));
         const eased = 1 - Math.pow(1 - travel, 4);
@@ -88,18 +89,22 @@
         let x = p.x + dx * eased - dy / Math.max(1, Math.hypot(dx, dy)) * arc;
         let y = p.y + dy * eased + dx / Math.max(1, Math.hypot(dx, dy)) * arc;
         let alpha = Math.min(1, travel * 5);
-        let size = 8;
+        let size = 10;
         let color = p.color;
         if (age > flightDuration) {
-          const press = Math.min(1, (age - flightDuration) / pressDuration);
-          const pressed = 1 - Math.pow(1 - press, 3);
+          const hold = Math.min(1, (age - flightDuration) / holdDuration);
           x = p.target.x;
+          y = p.target.y;
+          if (age > flightDuration + holdDuration) {
+            const press = Math.min(1, (age - flightDuration - holdDuration) / pressDuration);
+            const pressed = 1 - Math.pow(1 - press, 3);
           y = p.target.y + 5 * pressed;
-          size = 8 + 5 * pressed;
+            size = 10 + 5 * pressed;
           const rgb = p.rgb.map((channel, index) => Math.round(channel + (navy[index] - channel) * pressed));
-          color = `rgb(${rgb.join(",")})`;
-          if (age > flightDuration + pressDuration) {
-            alpha = Math.max(0, 1 - (age - flightDuration - pressDuration) / fadeDuration);
+            color = `rgb(${rgb.join(",")})`;
+            if (age > flightDuration + holdDuration + pressDuration) {
+              alpha = Math.max(0, 1 - (age - flightDuration - holdDuration - pressDuration) / fadeDuration);
+            }
           }
         }
         ctx.globalAlpha = alpha;
