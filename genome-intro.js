@@ -1,29 +1,28 @@
 (() => {
   const canvas = document.querySelector(".genome-intro");
   const title = document.querySelector(".name-title");
-  if (!canvas || !title || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (!canvas || !title || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
   const ctx = canvas.getContext("2d");
   if (!ctx) return;
   const mask = document.createElement("canvas");
   const maskCtx = mask.getContext("2d");
   const phrase = title.textContent.trim();
-  const colors = ["#126dc1", "#4d9bd8", "#0d2b50", "#77b9ec"];
   const bases = ["A", "C", "T", "G"];
-  const flightDuration = 900;
-  const holdDuration = 420;
-  const pressDuration = 240;
-  const fadeDuration = 180;
+  const colors = ["#126dc1", "#4d9bd8", "#0d2b50", "#77b9ec"];
   const navy = [13, 43, 80];
-  let frameId;
+  const flightDuration = 850;
+  const blendDuration = 80;
+  const holdDuration = 480;
+  const pressDuration = 220;
+  const fadeDuration = 180;
 
   function launch() {
     const box = title.getBoundingClientRect();
     if (!box.width || !box.height) return;
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const scale = Math.min(window.devicePixelRatio || 1, 2);
-
+    const width = innerWidth;
+    const height = innerHeight;
+    const scale = Math.min(devicePixelRatio || 1, 2);
     canvas.width = Math.round(width * scale);
     canvas.height = Math.round(height * scale);
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
@@ -31,19 +30,42 @@
     mask.width = Math.ceil(box.width);
     mask.height = Math.ceil(box.height);
     maskCtx.clearRect(0, 0, mask.width, mask.height);
-    const style = getComputedStyle(title);
-    maskCtx.font = style.font;
+    maskCtx.font = getComputedStyle(title).font;
     maskCtx.textBaseline = "alphabetic";
     maskCtx.fillStyle = "#fff";
     maskCtx.fillText(phrase, 0, box.height * .78);
+
+    const sequence = document.createElement("canvas");
+    sequence.width = mask.width;
+    sequence.height = mask.height;
+    const sequenceCtx = sequence.getContext("2d");
+    sequenceCtx.font = "700 8px Helvetica, Arial, sans-serif";
+    sequenceCtx.textBaseline = "alphabetic";
+    let baseIndex = 0;
+    for (let y = 9; y < mask.height + 8; y += 10) {
+      for (let x = 0; x < mask.width; x += 7) {
+        sequenceCtx.fillStyle = colors[baseIndex % colors.length];
+        sequenceCtx.fillText(bases[baseIndex % bases.length], x, y);
+        baseIndex++;
+      }
+    }
+    sequenceCtx.globalCompositeOperation = "destination-in";
+    sequenceCtx.drawImage(mask, 0, 0);
+
+    const solid = document.createElement("canvas");
+    solid.width = mask.width;
+    solid.height = mask.height;
+    const solidCtx = solid.getContext("2d");
+    solidCtx.drawImage(mask, 0, 0);
+    solidCtx.globalCompositeOperation = "source-in";
+    solidCtx.fillStyle = "#0d2b50";
+    solidCtx.fillRect(0, 0, solid.width, solid.height);
 
     const pixels = maskCtx.getImageData(0, 0, mask.width, mask.height).data;
     const targets = [];
     for (let y = 2; y < mask.height; y += 3) {
       for (let x = 1; x < mask.width; x += 3) {
-        if (pixels[(y * mask.width + x) * 4 + 3] > 96) {
-          targets.push({ x: box.left + x, y: box.top + y });
-        }
+        if (pixels[(y * mask.width + x) * 4 + 3] > 96) targets.push({ x: box.left + x, y: box.top + y });
       }
     }
     for (let i = targets.length - 1; i > 0; i--) {
@@ -59,9 +81,7 @@
       const angle = i / points.length * Math.PI * 2;
       const dx = Math.cos(angle);
       const dy = Math.sin(angle);
-      const edgeX = Math.abs(dx) < .001 ? Infinity : width / 2 / Math.abs(dx);
-      const edgeY = Math.abs(dy) < .001 ? Infinity : height / 2 / Math.abs(dy);
-      const distance = Math.min(edgeX, edgeY) + 18;
+      const distance = Math.min(width / 2 / Math.abs(dx || .001), height / 2 / Math.abs(dy || .001)) + 18;
       return {
         target,
         x: centerX + dx * distance,
@@ -69,57 +89,76 @@
         base: bases[i % bases.length],
         color: colors[i % colors.length],
         rgb: [[18,109,193],[77,155,216],[13,43,80],[119,185,236]][i % 4],
-        delay: (i % 9) * 10
+        delay: (i % 13) * 7
       };
     });
 
     const started = performance.now();
     function draw(now) {
       ctx.clearRect(0, 0, width, height);
+      const elapsed = now - started;
       let active = false;
+
       for (const p of particles) {
-        const age = now - started - p.delay;
-        if (age < 0 || age >= flightDuration + holdDuration + pressDuration + fadeDuration) continue;
+        const age = elapsed - p.delay;
+        if (age < 0 || age >= flightDuration + blendDuration) continue;
         active = true;
-        const travel = Math.max(0, Math.min(1, age / flightDuration));
+        const travel = Math.min(1, age / flightDuration);
         const eased = 1 - Math.pow(1 - travel, 4);
-        const arc = Math.sin(travel * Math.PI) * 12;
         const dx = p.target.x - p.x;
         const dy = p.target.y - p.y;
+        const arc = Math.sin(travel * Math.PI) * 12;
         let x = p.x + dx * eased - dy / Math.max(1, Math.hypot(dx, dy)) * arc;
         let y = p.y + dy * eased + dx / Math.max(1, Math.hypot(dx, dy)) * arc;
         let alpha = Math.min(1, travel * 5);
         let size = 10;
-        let color = p.color;
-        if (age > flightDuration) {
-          const hold = Math.min(1, (age - flightDuration) / holdDuration);
+
+        if (age >= flightDuration) {
+          const blend = Math.min(1, (age - flightDuration) / blendDuration);
           x = p.target.x;
           y = p.target.y;
-          if (age > flightDuration + holdDuration) {
-            const press = Math.min(1, (age - flightDuration - holdDuration) / pressDuration);
-            const pressed = 1 - Math.pow(1 - press, 3);
-          y = p.target.y + 5 * pressed;
-            size = 10 + 5 * pressed;
-          const rgb = p.rgb.map((channel, index) => Math.round(channel + (navy[index] - channel) * pressed));
-            color = `rgb(${rgb.join(",")})`;
-            if (age > flightDuration + holdDuration + pressDuration) {
-              alpha = Math.max(0, 1 - (age - flightDuration - holdDuration - pressDuration) / fadeDuration);
-            }
-          }
+          alpha = 1 - blend;
         }
         ctx.globalAlpha = alpha;
-        ctx.fillStyle = color;
+        ctx.fillStyle = p.color;
         ctx.font = `600 ${size}px Helvetica, Arial, sans-serif`;
         ctx.fillText(p.base, x, y);
       }
+
+      const sequenceStart = flightDuration;
+      const pressStart = sequenceStart + blendDuration + holdDuration;
+      const sequenceAge = elapsed - sequenceStart;
+      if (sequenceAge >= 0 && elapsed < pressStart + pressDuration + fadeDuration) {
+        active = true;
+        let press = 0;
+        let fade = 1;
+        if (elapsed >= pressStart) {
+          press = Math.min(1, (elapsed - pressStart) / pressDuration);
+          press = 1 - Math.pow(1 - press, 3);
+          if (elapsed > pressStart + pressDuration) {
+            fade = Math.max(0, 1 - (elapsed - pressStart - pressDuration) / fadeDuration);
+          }
+        }
+        const scaleUp = 1 + .07 * press;
+        const down = 5 * press;
+        ctx.save();
+        ctx.translate(box.left + box.width / 2, box.top + box.height / 2 + down);
+        ctx.scale(scaleUp, scaleUp);
+        ctx.globalAlpha = (1 - press) * fade;
+        ctx.drawImage(sequence, -box.width / 2, -box.height / 2, box.width, box.height);
+        ctx.globalAlpha = press * fade;
+        ctx.drawImage(solid, -box.width / 2, -box.height / 2, box.width, box.height);
+        ctx.restore();
+      }
+
       ctx.globalAlpha = 1;
-      if (active) frameId = requestAnimationFrame(draw);
+      if (active) requestAnimationFrame(draw);
       else {
         ctx.clearRect(0, 0, width, height);
         canvas.remove();
       }
     }
-    frameId = requestAnimationFrame(draw);
+    requestAnimationFrame(draw);
   }
 
   requestAnimationFrame(launch);
