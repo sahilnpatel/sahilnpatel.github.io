@@ -9,8 +9,8 @@
   const maskCtx = mask.getContext("2d");
   const phrase = title.textContent.trim();
   const bases = ["A", "C", "T", "G"];
-  const colors = ["#0d2b50", "#126dc1", "#2478bb", "#4d9bd8"];
-  const navy = [13, 43, 80];
+  const colors = ["#4d9bd8", "#62ade4", "#338ccf", "#6eb8eb"];
+  const lightGlow = "rgba(128,198,255,";
   const flightDuration = 850;
   const staggerDuration = 120;
   const blendDuration = 90;
@@ -42,11 +42,11 @@
     sequence.width = mask.width;
     sequence.height = mask.height;
     const sequenceCtx = sequence.getContext("2d");
-    sequenceCtx.font = "700 9px Helvetica, Arial, sans-serif";
+    sequenceCtx.font = "700 10px Helvetica, Arial, sans-serif";
     sequenceCtx.textBaseline = "alphabetic";
     let baseIndex = 0;
-    for (let y = 9; y < mask.height + 8; y += 10) {
-      for (let x = 0; x < mask.width; x += 7) {
+    for (let y = 9; y < mask.height + 8; y += 12) {
+      for (let x = 0; x < mask.width; x += 8) {
         sequenceCtx.fillStyle = colors[baseIndex % colors.length];
         sequenceCtx.fillText(bases[baseIndex % bases.length], x, y);
         baseIndex++;
@@ -75,7 +75,7 @@
       const j = Math.floor(Math.random() * (i + 1));
       [targets[i], targets[j]] = [targets[j], targets[i]];
     }
-    const points = targets.slice(0, 28);
+    const points = targets.slice(0, 36);
     if (!points.length) return;
 
     const centerX = width / 2;
@@ -146,16 +146,16 @@
         const bounceActive = bounceElapsed >= 0 && bounceElapsed < bounceDuration && elapsed < pressStart;
         const bounceT = Math.max(0, Math.min(1, bounceElapsed / bounceDuration));
         const bounceArc = bounceActive ? Math.sin(Math.PI * bounceT) : 0;
-        const bounceY = -6 * bounceArc;
-        const bounceScale = 1 + .035 * bounceArc;
+        const bounceY = 9 * bounceArc;
         const glow = bounceActive ? Math.sin(Math.PI * bounceT) : 0;
-        const scaleUp = 1 + .07 * press + (1 - press) * (bounceScale - 1);
+        const scaleX = 1 + .07 * press + (1 - press) * .025 * bounceArc;
+        const scaleY = 1 + .07 * press - (1 - press) * .04 * bounceArc;
         const down = 5 * press + (1 - press) * bounceY;
         ctx.save();
         ctx.translate(box.left + box.width / 2, box.top + box.height / 2 + down);
-        ctx.scale(scaleUp, scaleUp);
-        ctx.shadowColor = "rgba(36,120,187," + (.62 * glow) + ")";
-        ctx.shadowBlur = 13 * glow;
+        ctx.scale(scaleX, scaleY);
+        ctx.shadowColor = lightGlow + (.88 * glow) + ")";
+        ctx.shadowBlur = 18 * glow;
         ctx.globalAlpha = (1 - press) * fade;
         ctx.drawImage(sequence, -box.width / 2, -box.height / 2, box.width, box.height);
         ctx.globalAlpha = press * fade;
