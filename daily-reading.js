@@ -11,19 +11,22 @@
     if (cls) node.className = cls;
     return node;
   };
+  const feedStatus = topics.length ? el('p','Checking for recent AI policy notes…','sr-only') : null;
+  if (feedStatus) { feedStatus.id='reading-feed-status'; feedStatus.setAttribute('role','status'); feedStatus.setAttribute('aria-live','polite'); main.prepend(feedStatus); }
   const safeUrl = value => { try { const url = new URL(value); return url.protocol === 'https:' ? url.href : null; } catch { return null; } };
   for (const topic of topics) {
     try {
       const response = await fetch(`reading-${topic}.json`, {cache:'no-cache'});
-      if (!response.ok) continue;
+      if (!response.ok) { if (feedStatus) feedStatus.textContent='Showing the saved reading list.'; continue; }
       const data = await response.json();
       if (!main.isConnected || location.pathname !== path || !Array.isArray(data.entries)) continue;
       const entries = data.entries.filter(e => typeof e.id === 'string' && typeof e.title === 'string' && typeof e.summary === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Array.isArray(e.sources) && e.sources.some(s => safeUrl(s.url))).sort((a,b) => b.date.localeCompare(a.date));
-      if (!entries.length) continue;
+      if (!entries.length) { if (feedStatus) feedStatus.textContent='Showing the saved reading list.'; continue; }
       if (home) {
         const preview = main.querySelector('#home-policy-preview');
         if (!preview) continue;
         const latest = entries[0];
+        if (feedStatus) feedStatus.textContent='Recent AI policy notes updated.';
         preview.querySelector('.post-meta').textContent = `AI SAFETY & POLICY · ${latest.date}`;
         preview.querySelector('h3 a').textContent = latest.title;
         preview.querySelector('p:not(.post-meta)').textContent = latest.summary.length > 180 ? latest.summary.slice(0,177).trimEnd()+'…' : latest.summary;
@@ -50,12 +53,13 @@
         fragment.append(article);
       }
       section.append(fragment);
+      if (feedStatus) feedStatus.textContent='Recent AI policy readings updated.';
       const titles = new Set(entries.map(e => e.title));
       main.querySelectorAll('article.post-preview').forEach(article => {
         if (titles.has(article.querySelector('h2')?.textContent.trim())) article.remove();
       });
       main.querySelector('.daily-entries')?.remove();
       main.querySelector('.page-heading')?.after(section);
-    } catch { /* Keep the existing curated reading list when the feed is unavailable. */ }
+    } catch { if (feedStatus) feedStatus.textContent='Showing the saved reading list.'; /* Keep the existing curated reading list when the feed is unavailable. */ }
   }
 })();

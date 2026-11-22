@@ -42,6 +42,7 @@
   const title=document.getElementById("curiosity-detail-title");
   const question=document.getElementById("curiosity-detail-question");
   const link=document.getElementById("curiosity-detail-link");
+  const detail=document.getElementById("curiosity-detail");
   if(!mapEl||!buttons.length||!kicker||!title||!question||!link)return;
   function select(button){
     const entry=entries[button.dataset.interest];
@@ -53,6 +54,9 @@
     question.textContent=entry.question;
     link.textContent=entry.label;
     link.href=entry.href;
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches && typeof detail.animate === "function") {
+      detail.animate([{opacity:.62,transform:"translateY(5px)"},{opacity:1,transform:"translateY(0)"}],{duration:180,easing:"ease-out"});
+    }
   }
   buttons.forEach(button=>button.addEventListener("click",()=>select(button)));
 })();
