@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-22-agency-ai-hearings",
+      "date": "2026-11-22",
+      "title": "Federal consultation asks how AI should be used in agency hearings",
+      "summary": "The Administrative Conference of the United States published a request for comments on November 19, 2026 about generative AI in federal agency adjudications, including evidence summaries, legal research and drafting decisions. It asks whether participants should disclose AI use or certify that they checked outputs, with comments due January 19, 2027. This is a consultation to inform recommended practices, not a new rule; it addresses how agencies can use these tools without compromising accuracy, privacy or fair proceedings.",
+      "question": "If an agency uses AI to summarize evidence in your case, should you be able to inspect and challenge that summary before a decision is made?",
+      "sources": [
+        {
+          "title": "Policies on the Use of Generative Super Intelligence in Agency Adjudication; Request for Comments",
+          "url": "https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23539.pdf"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-21-mental-health-chatbots",
       "date": "2026-11-21",
       "title": "GAO examines safety gaps in mental-health chatbots",
