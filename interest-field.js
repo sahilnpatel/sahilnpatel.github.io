@@ -40,7 +40,8 @@
     vec3 pale = vec3(.76, .87, .97);
     vec3 ink = mix(pale, tint, .48 + contour * .14);
     float edge = smoothstep(.04, .82, field) * .48;
-    color = vec4(ink, edge);
+    float grain = fract(sin(dot(floor(gl_FragCoord.xy * .5), vec2(127.1, 311.7))) * 43758.5453) - .5;
+    color = vec4(ink + grain * .035, edge);
   }`;
 
   function compile(type, source) {

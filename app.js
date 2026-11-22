@@ -81,6 +81,8 @@
       }
       currentHeader.replaceWith(nextHeader);
       currentMain.replaceWith(nextMain);
+      nextMain.classList.add('page-arriving');
+      nextMain.addEventListener('animationend', () => nextMain.classList.remove('page-arriving'), { once: true });
       document.title = nextDocument.title;
       document.body.className = nextDocument.body.className;
 

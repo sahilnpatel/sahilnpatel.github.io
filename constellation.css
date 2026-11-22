@@ -301,3 +301,46 @@ article p,.interest-group>p,.interest-group li,.interest-intro,.prose p,.prose l
 
 /* Leave footer links clear of the fixed soundtrack control. */
 footer{padding-bottom:90px}
+
+
+/* A quiet analog finish for the interest panel and personal photos. */
+.curiosity-detail{
+  position:relative;
+  overflow:hidden;
+  padding:24px 26px;
+  border:1px solid rgba(174,199,222,.72);
+  border-radius:4px;
+  background-color:rgba(255,255,255,.78);
+  background-image:
+    repeating-linear-gradient(90deg,rgba(18,109,193,.026) 0 1px,transparent 1px 8px),
+    linear-gradient(135deg,rgba(255,255,255,.82),rgba(241,248,255,.68));
+  box-shadow:0 12px 30px rgba(16,43,76,.055);
+  backdrop-filter:blur(9px);
+}
+@media(max-width:760px){
+  .curiosity-detail{padding:21px 22px}
+}
+.photo-open{position:relative}
+.photo-open::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:0;
+  background-image:radial-gradient(circle,rgba(7,28,70,.52) .8px,transparent 1px);
+  background-size:5px 5px;
+  mix-blend-mode:multiply;
+  transition:opacity .22s ease;
+}
+.photo-open:hover::after,.photo-open:focus-visible::after{opacity:.13}
+.photo-open img{transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.photo-open:hover img,.photo-open:focus-visible img{transform:scale(1.025)}
+.page-arriving{animation:page-arrive .28s cubic-bezier(.2,.7,.2,1) both}
+@keyframes page-arrive{
+  from{opacity:.35;transform:translateY(7px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@media(prefers-reduced-motion:reduce){
+  .photo-open::after,.photo-open img{transition:none}
+  .page-arriving{animation:none}
+}
