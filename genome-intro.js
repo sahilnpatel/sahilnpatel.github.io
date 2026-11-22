@@ -73,6 +73,8 @@
   if (!points.length) return;
 
   const cx = bounds.left + bounds.width / 2, cy = baseline - cap / 2;
+  const nameScale = Math.max(1, Math.min(1.16, (width - bounds.left - 10) / bounds.width));
+  const flightDuration = 880;
   const particles = points.map((p, i) => {
     const angle = i * 2.39996;
     const dx = Math.cos(angle), dy = Math.sin(angle);
@@ -84,6 +86,10 @@
   });
   const clamp = n => Math.max(0, Math.min(1, n));
   const smooth = n => n * n * (3 - 2 * n);
+  const lastLanding = Math.max(...particles.map(p => p.delay)) + flightDuration;
+  const glowStart = lastLanding + 1250;
+  const revealStart = glowStart + 390;
+  const end = revealStart + 340;
   const start = performance.now();
   function finish() {
     title.style.removeProperty('opacity');
@@ -91,7 +97,7 @@
   }
   function frame(now) {
     const t = now - start;
-    if (t >= 2670 || motion.matches || !title.isConnected || scrollY > 20 ||
+    if (t >= end || motion.matches || !title.isConnected || scrollY > 20 ||
         innerWidth !== width || Math.abs(title.getBoundingClientRect().width - bounds.width) > 1) {
       finish();
       return;
@@ -111,23 +117,26 @@
       ctx.fillRect(-1.13, -1.13, 2.26, 2.26);
       ctx.restore();
     }
-    const bounce = Math.sin(Math.PI * clamp((t - 1950) / 390)) ** 2;
-    const reveal = smooth(clamp((t - 2330) / 340));
+    const bounce = Math.sin(Math.PI * clamp((t - glowStart) / 390)) ** 2;
+    const reveal = smooth(clamp((t - revealStart) / 340));
     title.style.opacity = String(.09 * (1 - smooth(clamp((t - 430) / 620))) + reveal);
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = '600 ' + size + 'px Helvetica, Arial, sans-serif';
+    const scale = 1 + (nameScale - 1) * (1 - reveal);
+    ctx.font = '600 ' + size * scale + 'px Helvetica, Arial, sans-serif';
     ctx.fillStyle = '#286ba0';
     ctx.shadowColor = '#87cbff';
     ctx.shadowBlur = 4 * bounce;
     for (const p of particles) {
-      const u = clamp((t - p.delay) / 880);
+      const u = clamp((t - p.delay) / flightDuration);
       if (!u) continue;
       const remaining = (1 - u) ** 3;
       const arc = remaining * u * 5;
       ctx.globalAlpha = smooth(clamp(u * 3)) * (1 - reveal);
-      ctx.fillText(p.base, p.x + (p.startX - p.x) * remaining + p.bend * arc,
-        p.y + (p.startY - p.y) * remaining - 35 * arc + 4 * bounce);
+      const targetX = bounds.left + (p.x - bounds.left) * scale;
+      const targetY = cy + (p.y - cy) * scale;
+      ctx.fillText(p.base, targetX + (p.startX - targetX) * remaining + p.bend * arc,
+        targetY + (p.startY - targetY) * remaining - 35 * arc + 4 * bounce);
     }
     ctx.globalAlpha = 1;
     ctx.shadowBlur = 0;
