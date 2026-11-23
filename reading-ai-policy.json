@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-23-shared-development-limits",
+      "date": "2026-11-23",
+      "title": "Can a shared metric support limits on AI development?",
+      "summary": "OpenAI chief scientist Jakub Pachocki proposed shared limits on AI development in “Perplexity and Intelligence,” published by OpenAI on November 22, 2026, with further progress tied to concrete improvements in understanding and monitoring models. He suggests using perplexity, a measure of next-token prediction performance, alongside other measurements to set those limits. This is a proposal, not an adopted standard: he acknowledges that comparisons across labs are difficult and that the metric misses capability gains from techniques such as chain-of-thought reasoning.",
+      "question": "What independent tests and verification would be needed before a shared training metric could credibly determine when labs must pause development?",
+      "sources": [
+        {
+          "title": "Perplexity and Intelligence",
+          "url": "https://openai.com/index/perplexity-and-intelligence/"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-22-agency-ai-hearings",
       "date": "2026-11-22",
       "title": "Who should oversee AI in government?",
