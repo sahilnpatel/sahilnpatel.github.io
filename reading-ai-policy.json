@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-24-bridgetown-ai-safety",
+      "date": "2026-11-24",
+      "title": "Bridgetown calls for an international AI safety framework",
+      "summary": "In a November 23, 2026 release, the Government of Barbados and the United Nations called for countries to develop a multilateral AI risk-management framework within a year, backed by independent oversight. Summit discussions addressed independent evaluations and cross-border incident reporting, alongside support for countries lacking the resources to assess AI systems. This is a call for international cooperation, not an enacted global rule.",
+      "question": "What information should AI developers be required to share across borders after a serious safety incident?",
+      "sources": [
+        {
+          "title": "Bridgetown Special Summit closes with Call to Action on AI Safety for Humanity",
+          "url": "https://bridgetownaisummit.bb/wp-content/uploads/2026/11/PRESS-RELEASE-Bridgetown-Special-Summit-on-AI-Safety.pdf"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-23-shared-development-limits",
       "date": "2026-11-23",
       "title": "Can a shared metric support limits on AI development?",
