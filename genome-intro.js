@@ -65,7 +65,8 @@
     title.append(probe);
     const baseline = probe.getBoundingClientRect().top;
     probe.remove();
-    const size = Math.max(4.7, Math.min(7, cap * .115));
+    const phone = width <= 550;
+    const size = Math.max(phone ? 5.6 : 4.7, Math.min(7, cap * .115));
     const spacing = size * 1.04;
     const points = [];
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -101,7 +102,7 @@
     if (!points.length) return;
 
     const cx = bounds.left + bounds.width / 2, cy = baseline - cap / 2;
-    const nameScale = Math.max(1, Math.min(1.16, (width - bounds.left - 10) / bounds.width));
+    const nameScale = Math.max(1, Math.min(phone ? 1.55 : 1.16, (width - bounds.left - (phone ? 18 : 10)) / bounds.width));
     const flightDuration = 880;
     const particles = points.map((p, i) => {
       const angle = i * 2.39996;
@@ -115,7 +116,7 @@
     const clamp = n => Math.max(0, Math.min(1, n));
     const smooth = n => n * n * (3 - 2 * n);
     const lastLanding = Math.max(...particles.map(p => p.delay)) + flightDuration;
-    const glowStart = lastLanding + 1250;
+    const glowStart = lastLanding + (phone ? 1750 : 1250);
     const revealStart = glowStart + 390;
     const end = revealStart + 340;
     let start;
