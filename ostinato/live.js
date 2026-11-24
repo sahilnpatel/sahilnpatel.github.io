@@ -14,6 +14,7 @@ const buttons = {
   new_view: byId('new-view'),
   move_failed: byId('move-failed'),
   reset: byId('reset'),
+  download: byId('download-summary'),
 };
 const frameInterval = 1000 / 12;
 const cameraStallMs = 2000;
@@ -23,6 +24,7 @@ const timestamp = () => (performance.now() - origin) / 1000;
 
 let session = null;
 let lastState = null;
+let completedSummary = null;
 
 function setText(id, text) {
   const element = byId(id);
@@ -47,6 +49,56 @@ function updateControls() {
   buttons.new_view.disabled = !available || !isMove;
   buttons.move_failed.disabled = !available || !isMove;
   buttons.reset.disabled = !available || !session.hasFrame;
+  buttons.download.disabled = !completedSummary;
+}
+
+function setSummary(summary) {
+  completedSummary = summary;
+  setText('summary-detail', summary
+    ? 'Download a local text file with the result as it was when the assessment ended. It contains only summary measurements and outcomes.'
+    : 'Available after an assessment ends. The download is a local text file with only summary measurements and outcomes.');
+}
+
+function assessmentSummary(state, owner) {
+  const { decision, reading, prompt } = state;
+  const completedIn = Math.max(0, decision.completed_at_s - owner.assessmentStartedAt);
+  const hasRate = Number.isFinite(decision.bpm);
+  const score = hasRate && Number.isFinite(reading.bpm) && Number.isFinite(reading.confidence)
+    ? `${reading.confidence.toFixed(2)} (heuristic)` : 'Unavailable';
+  const response = prompt.outcome === 'response' ? 'Hand raise seen'
+    : prompt.outcome === 'none seen' ? 'None seen (inconclusive)'
+    : 'No outcome recorded for this view';
+  return [
+    'Ostinato assessment summary',
+    'Research use only',
+    '',
+    `Source: ${owner.mode === 'sample' ? 'Generated sample (15 breaths/min reference)' : 'Webcam'}`,
+    `Completed after: ${Number.isFinite(completedIn) ? `${completedIn.toFixed(1)} seconds` : 'Unavailable'}`,
+    `View step at completion: ${state.view} of ${state.views}`,
+    '',
+    `Assessment outcome: ${capitalize(decision.status)}`,
+    `Reason: ${capitalize(decision.reason)}`,
+    `Breathing rate: ${hasRate ? `${decision.bpm.toFixed(1)} breaths/min` : 'No confirmed rate'}`,
+    '',
+    `Tracking at completion: ${capitalize(state.tracking)}`,
+    `Breathing signal at completion: ${capitalize(reading.reason)}`,
+    `Signal score of confirmed rate: ${score}`,
+    `Response check: ${response}`,
+    '',
+  ].join('\n');
+}
+
+function downloadSummary() {
+  if (!completedSummary) return;
+  const file = new Blob([completedSummary], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(file);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'ostinato-assessment.txt';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function drawChart() {
@@ -137,6 +189,7 @@ function frameGuidance([title, detail]) {
 function render(state) {
   lastState = state;
   const { decision, reading, prompt } = state;
+  if (decision.final && !completedSummary) setSummary(assessmentSummary(state, session));
   const moving = decision.action === 'move';
   const hasRate = !moving && Number.isFinite(reading.bpm);
   const collecting = !moving && reading.reason === 'need more data' && state.tracking === 'ok';
@@ -240,7 +293,9 @@ function stop(message = 'Frames are processed in this browser.', error = false) 
   showSource(null);
   lastState = null;
   setText('headline', 'Ready to start');
-  setText('detail', 'Choose a video source to begin an assessment.');
+  setText('detail', completedSummary
+    ? 'Download the completed summary or choose a video source to begin again.'
+    : 'Choose a video source to begin an assessment.');
   setText('reading', '—');
   setText('reading-detail', 'Waiting for video.');
   progress.hidden = true;
@@ -252,6 +307,14 @@ function stop(message = 'Frames are processed in this browser.', error = false) 
   updateControls();
   drawTracking(null);
   drawChart();
+}
+
+function renderWorkerState(owner, state, voice) {
+  const startedPrompt = state.prompt.state === 'speaking' && lastState?.prompt.state !== 'speaking';
+  if (state.prompt.state !== 'speaking') cancelSpeech(owner);
+  if (startedPrompt && owner.mode === 'sample') owner.samplePromptAt = state.t;
+  render(state);
+  if (startedPrompt && voice && owner.command?.action !== 'reset') speak(owner, voice, state.prompt.text);
 }
 
 function onWorkerMessage(owner, data) {
@@ -283,8 +346,7 @@ function onWorkerMessage(owner, data) {
       sendCommand('start');
       return;
     }
-    if (data.state.prompt.state !== 'speaking') cancelSpeech(owner);
-    render(data.state);
+    renderWorkerState(owner, data.state, owner.frameVoice);
     scheduleFrame(owner);
     return;
   }
@@ -296,10 +358,15 @@ function onWorkerMessage(owner, data) {
       return;
     }
     owner.starting = false;
-    if (data.action === 'prompt' && owner.mode === 'sample') owner.samplePromptAt = data.state.t;
+    if (data.action === 'start' || data.action === 'reset') {
+      owner.assessmentStartedAt = data.state.t;
+      setSummary(null);
+    }
     if (['reset', 'new_view', 'move_failed'].includes(data.action)) owner.samplePromptAt = null;
-    render(data.state);
-    if (voice && data.state.prompt.state === 'speaking') speak(owner, voice, data.state.prompt.text);
+    renderWorkerState(owner, data.state, voice);
+    const speechResult = owner.speechResult;
+    owner.speechResult = null;
+    if (speechResult && data.state.prompt.state === 'speaking') sendCommand(speechResult);
     scheduleFrame(owner);
   }
 }
@@ -359,7 +426,8 @@ async function submitFrame(owner) {
         overlay.width = bitmap.width;
         overlay.height = bitmap.height;
       }
-      owner.worker.postMessage({ type: 'frame', t, bitmap }, [bitmap]);
+      owner.frameVoice = localVoice();
+      owner.worker.postMessage({ type: 'frame', t, bitmap, sound: Boolean(owner.frameVoice) }, [bitmap]);
     } else {
       const { pixels, landmarks } = drawSample(t, owner);
       owner.worker.postMessage({ type: 'frame', t, width: sample.width, height: sample.height, pixels, landmarks }, [pixels]);
@@ -383,9 +451,11 @@ function sendCommand(action) {
   if (action === 'reset') cancelSpeech(owner);
   const voice = action === 'prompt' && owner.mode === 'camera' ? localVoice() : null;
   const t = timestamp();
-  owner.command = { t, voice };
+  owner.command = { t, action, voice };
   updateControls();
-  owner.worker.postMessage({ type: 'command', t, action, sound: Boolean(voice) });
+  owner.worker.postMessage({
+    type: 'command', t, action, sound: Boolean(voice), camera: owner.mode === 'camera',
+  });
 }
 
 function localVoice() {
@@ -409,7 +479,8 @@ function speak(owner, voice, text) {
   const finish = (action) => {
     if (owner !== session || owner.utterance !== utterance) return;
     owner.utterance = null;
-    sendCommand(action);
+    if (owner.command) owner.speechResult = action;
+    else sendCommand(action);
   };
   utterance.onend = () => finish('speech_done');
   utterance.onerror = () => finish('speech_failed');
@@ -450,6 +521,7 @@ async function start(mode) {
     lastFrameAt: -Infinity, lastVideoFrame: -1, samplePromptAt: null,
   };
   session = owner;
+  setSummary(null);
   updateControls();
   setText('headline', mode === 'camera' ? 'Starting camera' : 'Starting sample');
   setText('detail', 'The assessment begins when video is ready.');
@@ -584,6 +656,7 @@ function drawSample(t, owner) {
 buttons.camera.addEventListener('click', () => start('camera'));
 buttons.sample.addEventListener('click', () => start('sample'));
 buttons.stop.addEventListener('click', () => stop());
+buttons.download.addEventListener('click', downloadSummary);
 for (const action of ['prompt', 'new_view', 'move_failed', 'reset']) {
   buttons[action].addEventListener('click', () => sendCommand(action));
 }

@@ -72,6 +72,7 @@ class BrowserEngine:
         self.t = 0.0
         self._last_frame = None
         self._size = None
+        self._camera = False
         self._reset()
 
     def _clear_view(self):
@@ -83,9 +84,9 @@ class BrowserEngine:
 
     def _reset(self):
         self._clear_view()
-        self.assessor = Assessor(self.t, EXTRA_VIEWS)
+        self.assessor = Assessor(self.t, EXTRA_VIEWS, ask_first=self._camera)
 
-    def frame(self, t, width, height, pixels, landmarks):
+    def frame(self, t, width, height, pixels, landmarks, sound=False):
         """Handle one ordered frame. The worker supplies RGBA and normalized pose."""
         if not math.isfinite(t) or t < self.t:
             raise ValueError("frame time must be finite and ordered")
@@ -109,15 +110,19 @@ class BrowserEngine:
         decision = self.assessor.update(t, reading, responded, asking=self.check.active)
         if decision.final and self.check.active:
             self.check.cancel()
+        elif self.assessor.wants_ask:
+            self.speaker.use_voice = sound
+            self.check.ask(t)
         return self.snapshot()
 
-    def command(self, t, action, sound=False):
+    def command(self, t, action, sound=False, camera=False):
         """User controls. Anchor changes to the most recently processed frame."""
         if action == "start":
             if not math.isfinite(t) or t < 0:
                 raise ValueError("session start time must be finite and nonnegative")
             self.t = t
             self._last_frame = self._size = None
+            self._camera = camera
             self._reset()
             return self.snapshot()
 

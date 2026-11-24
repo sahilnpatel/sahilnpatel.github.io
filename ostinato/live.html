@@ -66,6 +66,8 @@ dl div { display: flex; justify-content: space-between; gap: .9rem; padding: .25
 dt { color: var(--muted); }
 dd { margin: 0; font-weight: 650; text-align: right; }
 .assessment .controls { margin-top: .75rem; }
+.summary { margin-top: 1rem; padding-top: .85rem; border-top: 1px solid var(--line); }
+.summary p { margin-top: .45rem; color: var(--muted); font-size: .84rem; }
 footer { padding: 1rem 0 2.15rem; color: var(--muted); font-size: .83rem; }
 @media (max-width: 715px) {
   .shell { width: min(100% - 32px, 1120px); }
@@ -129,6 +131,10 @@ footer { padding: 1rem 0 2.15rem; color: var(--muted); font-size: .83rem; }
         <button id="new-view" type="button" disabled>Confirm new view</button>
         <button id="move-failed" type="button" disabled>Can’t move</button>
         <button id="reset" type="button" disabled>Restart assessment</button>
+      </div>
+      <div class="summary">
+        <button id="download-summary" type="button" aria-describedby="summary-detail" disabled>Download assessment summary</button>
+        <p id="summary-detail" role="status">Available after an assessment ends. The download is a local text file with only summary measurements and outcomes.</p>
       </div>
     </section>
   </div>
