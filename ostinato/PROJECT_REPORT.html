@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="What the Ostinato research prototype does and how to evaluate its breathing and viewpoint decisions.">
+<title>Ostinato | Project report</title>
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #f7f5ef;
+    --ink: #192825;
+    --muted: #485d56;
+    --accent: #235e4c;
+    --line: #c8d4ca;
+    --panel: #eaf0e9;
+    --dark: #173e34;
+    font-family: system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-padding-top: 1.5rem; }
+  body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.6; }
+  a { color: var(--accent); text-underline-offset: .18em; }
+  a:focus-visible { outline: .18rem solid currentColor; outline-offset: .2rem; }
+  .wrap { width: min(100% - 2.5rem, 68rem); margin-inline: auto; }
+  header { background: var(--dark); color: #fff; padding: 1.5rem 0 3rem; }
+  header a { color: #d1ead8; }
+  .top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .7rem 1.5rem; align-items: baseline; }
+  .tag { font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+  h1, h2 { font-family: Georgia, serif; line-height: 1.06; font-weight: 500; }
+  h1 { font-size: clamp(3rem, 9vw, 6.5rem); margin: 2rem 0 1rem; letter-spacing: -.045em; }
+  h2 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 1rem; letter-spacing: -.025em; }
+  h3 { margin: 0 0 .4rem; line-height: 1.25; }
+  p { margin: 0 0 1rem; max-width: 76ch; }
+  .lead { font-size: clamp(1.05rem, 3vw, 1.35rem); color: #e0eee5; max-width: 59ch; }
+  .snapshot { font-size: .86rem; color: #c4ddce; margin-bottom: 0; }
+  nav { border-bottom: 1px solid var(--line); }
+  nav ul { display: flex; flex-wrap: wrap; gap: .35rem 1.25rem; margin: 0; padding: .85rem 0; list-style: none; }
+  nav a { display: inline-block; padding: .3rem 0; font-size: .9rem; font-weight: 700; }
+  main { padding: 2.65rem 0 3.5rem; }
+  section + section { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--line); }
+  .callout { border-left: .26rem solid var(--accent); background: var(--panel); padding: 1rem 1.2rem; }
+  .callout p:last-child, .card p:last-child { margin: 0; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-block: 1.2rem; }
+  .card { border: 1px solid var(--line); padding: 1.2rem; border-radius: .75rem; }
+  .steps { padding-left: 1.4rem; }
+  .steps li { padding-left: .3rem; margin: 0 0 .8rem; }
+  code, kbd { font-size: .9em; overflow-wrap: anywhere; }
+  kbd { padding: .02rem .28rem; border-radius: .2rem; border: 1px solid var(--line); }
+  pre { background: #162c25; color: #eff5ee; padding: 1rem 1.2rem; border-radius: .55rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+  p.source { font-size: .88rem; color: var(--muted); }
+  dl { margin: 1rem 0 1.5rem; }
+  dt { font-weight: 700; margin-top: .6rem; }
+  dd { margin: 0 0 .65rem; }
+  footer { border-top: 1px solid var(--line); padding: 1rem 0 2rem; color: var(--muted); }
+  @media (max-width: 42rem) { .grid { grid-template-columns: 1fr; } }
+  @media print {
+    :root { --paper: white; --ink: black; }
+    header { color: black; background: white; padding-bottom: .5rem; }
+    header a, header p { color: black; }
+    nav, footer { display: none; }
+    h1 { font-size: 3rem; margin: 1rem 0; }
+    .card, .callout, pre { break-inside: avoid; }
+    pre { color: black; background: #eee; }
+  }
+</style>
+</head>
+<body id="top">
+<header>
+  <div class="wrap">
+    <div class="top"><span class="tag">Project report</span><a href="index.html">Open the project site</a></div>
+    <h1>Ostinato</h1>
+    <p class="lead">An offline research prototype that studies whether a camera can estimate breathing and whether another viewpoint can recover an assessment when the first view fails.</p>
+    <p class="snapshot">Implementation reviewed at <a href="https://github.com/lay-shah/ostinato/commit/9ff701e9cfd097bc898d852ce2ed10d5260726fe">main · 9ff701e</a>. Repository source links require GitHub collaborator access.</p>
+  </div>
+</header>
+<nav aria-label="Report sections"><div class="wrap"><ul>
+  <li><a href="#scope">Project scope</a></li>
+  <li><a href="#workflow">How it works</a></li>
+  <li><a href="#run">Run locally</a></li>
+  <li><a href="#evidence">Evidence</a></li>
+  <li><a href="#evaluation">Evaluation plan</a></li>
+  <li><a href="#sources">Reading</a></li>
+</ul></div></nav>
+<main class="wrap">
+  <section id="scope">
+    <h2>Project scope</h2>
+    <p>Ostinato’s long-term goal is a robot that helps responders locate and assess people after a disaster, including when communications are down. Today the desktop prototype monitors one person at a time. In simulation, a robot chooses viewpoints and visits multiple people, and an offline medic view displays the path, measured rates and reasons for human checks.</p>
+    <div class="callout"><p><strong>Research use only.</strong> Use people and data only as described in the trial protocol. When the system cannot obtain usable evidence, it reports “unable to assess.” An absent motion signal or an unseen response leaves breathing status unknown. The prototype has yet to publish validation against independently counted breaths.</p></div>
+  </section>
+  <section id="workflow">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><strong>Locate and track the chest.</strong> MediaPipe Pose finds landmarks for one person. OpenCV tracks texture inside a chest region and in the background. Subtracting background motion helps account for small camera shifts. The tracker declines when there is insufficient detail or a usable background is missing.</li>
+      <li><strong>Estimate and check the rate.</strong> The monitor uses a rolling 30-second window. NumPy and SciPy resample and filter the signal, then check the frequency and periodicity of chest movement. The estimator needs about 25 seconds of usable history, works in a nominal 6–42 breaths/min range, and rejects weak, interrupted or unstable signals. Its quality score describes the signal.</li>
+      <li><strong>Choose the next action.</strong> The assessor waits for a stable rate, asks for another camera position when the view looks unsuitable, or asks a person to check when time or viewpoints run out. The live interface keeps a completed assessment and its timestamp visible alongside the current camera evidence.</li>
+      <li><strong>Look for a response.</strong> A local voice asks the person to raise one hand. The camera must see the hand down and then held up following the request. If speech fails, the interface can show the prompt. In the desktop app the operator moves the camera. Navigation runs in simulation.</li>
+    </ol>
+    <div class="grid">
+      <div class="card"><h3>What the project tests</h3><p>Ostinato’s contribution is the combination of an explicit decision to withhold a rate, a second viewpoint and a trace that can replay the assessor with both view orders. The testable question is whether a new view improves the chance of an accurate reading within a practical time budget.</p></div>
+      <div class="card"><h3>Skills developed</h3><p>The chest tracker applies pose estimation and optical flow. The breathing estimator uses spectral analysis and rejection criteria. The assessor and voice prompt exercise state-machine design and human–robot interaction. The paired trial CLI turns those components into a reproducible experiment with accuracy and coverage measures.</p></div>
+    </div>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/chest.py">Chest tracking</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/breathing.py">Breathing estimator</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/decision.py">Assessment decisions</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/response.py">Prompt and response</a></p>
+  </section>
+  <section id="run">
+    <h2>Run locally</h2>
+    <p>From a checkout, install with Python 3.10–3.12. Grant the operating system’s camera permission for live measurements. For the first run, sit still 1–2 m from a fixed camera with shoulders, chest and some background visible. Patterned clothing can help the tracker find usable points.</p>
+    <pre><code>python3.10 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+ostinato
+ostinato-sim scene 1001 --html medic.html</code></pre>
+    <p>During an active live assessment, press <kbd>V</kbd> to request a hand raise. When asked to move, reposition the camera and press <kbd>M</kbd>. Use <kbd>R</kbd> to restart and <kbd>Q</kbd> to quit. Run <code>ostinato --no-prompt</code> to ask only on <kbd>V</kbd>, or <code>ostinato --video path/to/clip.mp4</code> to analyze a local video with prompts disabled. Open the generated <code>medic.html</code> in a browser to see a simulated search.</p>
+    <p>Runtime uses the local camera or video and optional local speech. The app requires no account, API key, cloud service or network connection once dependencies are installed. If obtaining the checkout requires GitHub access, authenticate in GitHub or a local credential helper and keep the credentials local. The app processes frames in memory without writing images or video. Paired trial JSON contains counts, timing, rates, signal values and reasons. Keep these files in the ignored <code>data/</code> folder and out of public artifacts.</p>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/README.md">Setup and operation</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/CONTRIBUTING.md">Contributor data rules</a></p>
+  </section>
+  <section id="evidence">
+    <h2>Evidence and limits</h2>
+    <p>A synthetic integration test exercises a blocked first view and a visible second view. It checks that the report counts one accurate recovery and that replay reaches a reading earlier when the visible view comes first. The test uses generated frames, fixed pose landmarks and scripted breath counts.</p>
+    <p>Across 100 synthetic scenes (seeds 0–99), the multi-person simulation reports that it measured 80.9% of people when it predicted viewpoints and 66.5% when it always picked the closest view. Its estimated urgency cue improves time to reach urgent simulated cases only when the cue carries useful information. The simulator assumes known locations and walls, and its rules for successful observations favor chest-direction prediction. The medic display’s attention order is illustrative.</p>
+    <p>Live readings can fail with occlusion, insufficient texture, camera motion, low-amplitude movement or unstable tracking. Additional people can make a raised hand hard to attribute. Noise, disability, injury and language can all affect whether someone can respond to a prompt. The device still needs paired volunteer results to estimate accuracy, coverage and the limits of generalizing to new views.</p>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/tests/test_chest.py">Synthetic integration test</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/docs/SIMULATION.md">Simulation assumptions and results</a></p>
+  </section>
+  <section id="evaluation">
+    <h2>Evaluation plan</h2>
+    <ol class="steps">
+      <li><strong>Establish a reproducible baseline.</strong> Run the synthetic blocked-view test and existing suite. Record the commit, Python version and camera configuration for the pilot.</li>
+      <li><strong>Collect paired windows.</strong> With consenting healthy volunteers and an independent observer, mark a clear front view and a farther angled view. Alternate the order across pairs, keep lighting and camera settings fixed within pairs, and include a condition with partial occlusion. Each view starts with a fresh tracker. The observer counts during each 30-second window and records the count before seeing the estimate. Consult the institution about review requirements before research or publication.</li>
+      <li><strong>Report accuracy with coverage.</strong> Divide reported windows by all windows. Compute absolute error against each window’s manual reference and report mean absolute error over returned rates. Give the number of first-view declines, second-view returns and recoveries within the prespecified 2 breaths/min exploratory tolerance. One extra counted breath over 30 seconds changes the reference by 2 breaths/min. With sufficient pairs, report bias and limits of agreement, accounting for repeated windows per participant.</li>
+      <li><strong>Test the decision separately.</strong> Replay both orders using identical recorded evidence. Compare time to a usable reading and the fraction remaining unassessed. Capture actual repositioning time separately because replay budgets 30 seconds per view and models zero travel. Compare simulated policies on matched scenes and report time to reading alongside the unassessed fraction.</li>
+      <li><strong>Use the pilot to choose the next build.</strong> If accurate recoveries repeat across views and participants, test the viewpoint rule on held-out people and scenes. If recoveries are rare or inaccurate, inspect decline reasons and prioritize tracking before adding a mobile platform. Ask a responder which evidence would have changed an action in a past incident.</li>
+    </ol>
+    <pre><code>pytest -q tests/test_chest.py::test_paired_trial_from_synthetic_frames_to_decision
+mkdir -p data
+python -m ostinato.viewpoints trial data/pair-01.json --views front-1m angled-2m
+python -m ostinato.viewpoints trial data/pair-02.json --views angled-2m front-1m
+python -m ostinato.viewpoints report data/pair-01.json data/pair-02.json --tolerance-bpm 2
+python -m ostinato.viewpoints replay data/pair-01.json
+ostinato-sim compare --scenes 10</code></pre>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/docs/VIEWPOINT_TRIALS.md">Paired trial and replay protocol</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/docs/PLAN.md">Project data-collection rules</a></p>
+  </section>
+  <section id="sources">
+    <h2>Research context</h2>
+    <dl>
+      <dt>Camera-based breathing measurement</dt>
+      <dd>Massaroni et al. (2019) estimated respiratory rate from laptop RGB video in a controlled volunteer study using a wearable pressure signal for comparison. It establishes prior work on camera-based measurement. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6631485/">Sensors, 19(12), 2758</a></dd>
+      <dt>Robots in urban search and rescue</dt>
+      <dd>Casper and Murphy (2003) analyzed robot-assisted response at the World Trade Center and documented what information people and robots needed to exchange. Their findings frame the question of what an assessment should convey to a responder. <a href="https://pubmed.ncbi.nlm.nih.gov/18238185/">IEEE Transactions on Systems, Man, and Cybernetics, Part B, 33(3), 367–385</a></dd>
+      <dt>Evaluating agreement</dt>
+      <dd>Bland and Altman (1986) describe how to analyze paired differences between measurement methods. This supports examining bias and limits of agreement alongside average error. <a href="https://pubmed.ncbi.nlm.nih.gov/2868172/">The Lancet, 8476, 307–310</a></dd>
+    </dl>
+  </section>
+</main>
+<footer><div class="wrap"><a href="#top">Back to top</a></div></footer>
+</body>
+</html>
