@@ -1,4 +1,20 @@
 {
   "version": 1,
-  "entries": []
+  "entries": [
+    {
+      "id": "philosophy-2026-11-24-mill-strongest-objection",
+      "date": "2026-11-24",
+      "title": "Understand the strongest objection",
+      "quote": "He who knows only his own side of the case, knows little of that.",
+      "attribution": "John Stuart Mill, On Liberty, Chapter II",
+      "summary": "Mill argues that a belief is poorly understood if we have never seriously engaged with the strongest reasons against it. Explaining an opposing view fairly can reveal whether a disagreement is about evidence, priorities, or the meaning of the claim—not just expose a weak version that is easy to dismiss.",
+      "question": "Which belief of yours could you defend against the strongest opposing argument, rather than the easiest one to dismiss?",
+      "sources": [
+        {
+          "title": "On Liberty — Project Gutenberg, Chapter II",
+          "url": "https://www.gutenberg.org/cache/epub/34901/pg34901-images.html"
+        }
+      ]
+    }
+  ]
 }
