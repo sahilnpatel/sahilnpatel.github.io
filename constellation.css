@@ -400,7 +400,7 @@ h1{font-style:normal}
 
 @media (max-width: 550px) {
   body > header {flex-direction:column;align-items:flex-start;gap:2px;padding:12px 0 7px}
-  body > header nav {width:100%;max-width:none;justify-content:flex-start;align-items:center;gap:0 12px;font-size:12px}
+  body > header nav {width:100%;max-width:none;justify-content:flex-start;align-items:center;gap:0 clamp(6px,calc(12vw - 32px),12px);font-size:12px}
   body > header nav a {display:inline-flex;align-items:center;min-height:42px}
   .curiosity-heading {display:block}
   .curiosity-heading .interest-cta {margin-top:12px}
