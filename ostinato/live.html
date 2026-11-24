@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Try Ostinato's camera-motion research prototype with your webcam or a generated sample.">
+<title>Ostinato · Live camera</title>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #edf3fa;
+  --white: #f9fcff;
+  --ink: #152847;
+  --muted: #465c76;
+  --accent: #294bc9;
+  --line: #c5d3e4;
+  --serif: "Bodoni 72", Didot, Georgia, serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 var(--sans); }
+h1, h2, p { margin: 0; }
+a { color: var(--accent); text-underline-offset: .22em; }
+button { min-height: 42px; padding: .45rem 1rem; border: 1px solid #8a9fbb; border-radius: 100px; background: var(--white); color: var(--ink); font: 650 .88rem/1.2 var(--sans); cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+button:disabled { opacity: .58; cursor: default; }
+button.primary { background: var(--accent); color: white; border-color: var(--accent); }
+button.primary:hover:not(:disabled) { background: #1736ac; color: white; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+[hidden] { display: none !important; }
+.shell { width: min(100% - 70px, 1120px); margin-inline: auto; }
+.masthead { min-height: 73px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); }
+.brand { font: 400 1.65rem/1 var(--serif); letter-spacing: -.04em; color: var(--ink); text-decoration: none; }
+.masthead nav a { font-size: .85rem; font-weight: 650; color: var(--ink); }
+.intro { padding: clamp(2rem, 5vw, 4rem) 0 1.8rem; }
+.eyebrow { color: var(--accent); font-size: .73rem; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+h1 { font: 400 clamp(3.3rem, 8.6vw, 6.6rem)/.98 var(--serif); letter-spacing: -.055em; margin: .12em 0 .18em; }
+.intro > p:not(.eyebrow) { max-width: 65ch; color: var(--muted); }
+.setup { margin-top: .55rem; font-size: .88rem; }
+.instrument { display: grid; grid-template-columns: minmax(0, 1.62fr) minmax(0, 1fr); overflow: hidden; background: var(--white); border: 1px solid var(--line); border-radius: 22px; }
+.capture, .assessment { min-width: 0; padding: clamp(1rem, 2.9vw, 1.8rem); }
+.assessment { background: #e8f0fb; border-left: 1px solid var(--line); }
+.panel-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .45rem 1rem; margin-bottom: .85rem; }
+h2 { font: 400 1.85rem/1.1 var(--serif); letter-spacing: -.038em; }
+.source-state { display: inline-flex; align-items: center; gap: .42rem; color: var(--muted); font-size: .76rem; font-weight: 650; }
+.source-state::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: #8396af; }
+.source-state[data-active="true"]::before { background: var(--accent); }
+.viewport { position: relative; display: grid; place-items: center; overflow: hidden; aspect-ratio: 4 / 3; background: #dfe9f6; border: 1px solid var(--line); border-radius: 13px; }
+.viewport video, #sample, #tracking-box { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+#tracking-box { pointer-events: none; }
+.placeholder { display: grid; justify-items: center; gap: .65rem; padding: 1rem; text-align: center; color: var(--muted); font-size: .88rem; }
+.placeholder::before { content: ""; width: 3.15rem; height: 3.15rem; border-radius: 100%; border: 1px solid #8ba3cb; box-shadow: inset 0 0 0 8px #dfe9f6, inset 0 0 0 9px #aec0db; }
+.controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+.status { margin-top: .7rem; min-height: 2.6em; color: var(--muted); font-size: .86rem; }
+.status[data-error="true"] { color: #874125; }
+.notice { border-block: 1px solid var(--line); margin: .2rem 0 1rem; padding: .8rem 0; min-height: 4.5rem; }
+.notice strong { display: block; font-size: .97rem; }
+.notice p, .reading-detail, .chart-note { color: var(--muted); font-size: .84rem; }
+.metric { display: block; font: 400 clamp(1.9rem, 4.2vw, 3.05rem)/1.05 var(--serif); letter-spacing: -.045em; font-variant-numeric: tabular-nums; margin: .28rem 0; }
+#chart { display: block; width: 100%; height: 95px; margin: .3rem 0 .2rem; }
+dl { margin: .8rem 0 0; padding-top: .45rem; border-top: 1px solid var(--line); font-size: .83rem; }
+dl div { display: flex; justify-content: space-between; gap: .9rem; padding: .25rem 0; }
+dt { color: var(--muted); }
+dd { margin: 0; font-weight: 650; text-align: right; }
+.assessment .controls { margin-top: .75rem; }
+footer { padding: 1rem 0 2.15rem; color: var(--muted); font-size: .83rem; }
+@media (max-width: 715px) {
+  .shell { width: min(100% - 32px, 1120px); }
+  .instrument { grid-template-columns: 1fr; }
+  .assessment { border-left: 0; border-top: 1px solid var(--line); }
+}
+</style>
+</head>
+<body>
+<header class="masthead shell">
+  <a class="brand" href="./index.html">Ostinato</a>
+  <nav aria-label="Primary"><a href="./index.html#signal">Signal explorer</a></nav>
+</header>
+<main class="shell">
+  <section class="intro" aria-labelledby="page-title">
+    <p class="eyebrow">Camera viewpoint research</p>
+    <h1 id="page-title">Live camera</h1>
+    <p>Run the chest-motion assessment with your webcam or try a generated signal. For a camera trial, hold the camera still and keep the head, shoulders, and chest in view.</p>
+    <p class="setup">The first run downloads the engine and, for the camera, the pose model. A rate needs at least 25 seconds of usable video.</p>
+  </section>
+  <div class="instrument">
+    <section class="capture" aria-labelledby="capture-title">
+      <div class="panel-head">
+        <h2 id="capture-title">Camera view</h2>
+        <span id="source-state" class="source-state">Off</span>
+      </div>
+      <div class="viewport">
+        <p class="placeholder" id="placeholder">Choose a camera or sample to begin.</p>
+        <video id="camera" aria-label="Webcam preview" playsinline muted hidden></video>
+        <canvas id="sample" aria-label="Generated chest-motion sample" width="480" height="360" hidden></canvas>
+        <canvas id="tracking-box" aria-hidden="true" hidden></canvas>
+      </div>
+      <div class="controls" aria-label="Video controls">
+        <button id="start-camera" class="primary" type="button">Start camera</button>
+        <button id="start-sample" type="button">Try sample</button>
+        <button id="stop" type="button" disabled>Stop</button>
+      </div>
+      <p class="status" id="status" role="status">Frames are processed in this browser.</p>
+    </section>
+    <section class="assessment" aria-labelledby="assessment-title">
+      <div class="panel-head"><h2 id="assessment-title">Assessment</h2></div>
+      <div class="notice" role="status" aria-atomic="true">
+        <strong id="headline">Ready to start</strong>
+        <p id="detail">Choose a video source to begin an assessment.</p>
+      </div>
+      <p class="eyebrow">Live breathing estimate</p>
+      <p class="metric" id="reading">—</p>
+      <p class="reading-detail" id="reading-detail">Waiting for video.</p>
+      <div id="signal" aria-label="Chest motion, last 30 seconds" role="img">
+        <canvas id="chart"></canvas>
+      </div>
+      <p class="chart-note" id="chart-note">Chest motion · last 30 seconds</p>
+      <dl>
+        <div><dt>View</dt><dd id="view">—</dd></div>
+        <div><dt>Response check</dt><dd id="response">—</dd></div>
+      </dl>
+      <div class="controls" aria-label="Assessment controls">
+        <button id="prompt" type="button" disabled>Ask for response</button>
+        <button id="new-view" type="button" disabled>Confirm new view</button>
+        <button id="move-failed" type="button" disabled>Can’t move</button>
+        <button id="reset" type="button" disabled>Restart assessment</button>
+      </div>
+    </section>
+  </div>
+  <footer>Research use only. The camera preview stays on this device. Camera and sample frames are never saved.</footer>
+</main>
+<script src="./live.js" defer></script>
+</body>
+</html>
