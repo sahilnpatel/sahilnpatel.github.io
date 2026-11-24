@@ -106,7 +106,7 @@ class BrowserEngine:
         finally:
             self.pose.landmarks = None
         responded = self.check.update(t, self.pose.body)
-        decision = self.assessor.update(t, reading, responded)
+        decision = self.assessor.update(t, reading, responded, asking=self.check.active)
         if decision.final and self.check.active:
             self.check.cancel()
         return self.snapshot()

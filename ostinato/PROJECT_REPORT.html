@@ -71,7 +71,7 @@
     <div class="top"><span class="tag">Project report</span><a href="index.html">Open the project site</a></div>
     <h1>Ostinato</h1>
     <p class="lead">An offline research prototype that studies whether a camera can estimate breathing and whether another viewpoint can recover an assessment when the first view fails.</p>
-    <p class="snapshot">Implementation reviewed at <a href="https://github.com/lay-shah/ostinato/commit/9ff701e9cfd097bc898d852ce2ed10d5260726fe">main · 9ff701e</a>. The repository contains the implementation reviewed here.</p>
+    <p class="snapshot">Implementation reviewed at <a href="https://github.com/lay-shah/ostinato/commit/2ef98019405345d4bc9abcd5a501afae3bae838b">main · 2ef9801</a>. The benchmark and source links refer to this revision.</p>
   </div>
 </header>
 <nav aria-label="Report sections"><div class="wrap"><ul>
@@ -92,15 +92,15 @@
     <h2>How it works</h2>
     <ol class="steps">
       <li><strong>Locate and track the chest.</strong> MediaPipe Pose finds landmarks for one person. OpenCV tracks texture inside a chest region and in the background. Subtracting background motion helps account for small camera shifts. The tracker declines when there is insufficient detail or a usable background is missing.</li>
-      <li><strong>Estimate and check the rate.</strong> The monitor uses a rolling 30-second window. NumPy and SciPy resample and filter the signal, then check the frequency and periodicity of chest movement. The estimator needs about 25 seconds of usable history, works in a nominal 6–42 breaths/min range, and rejects weak, interrupted or unstable signals. Its quality score describes the signal.</li>
+      <li><strong>Estimate and check the rate.</strong> The monitor uses a rolling 30-second window. NumPy and SciPy resample and filter the signal, then check the frequency and periodicity of chest movement. The estimator needs about 25 seconds of usable history, works in a nominal 6–42 breaths/min range, and rejects weak, interrupted or unstable signals. It also checks for motion shared with the background or head, which can make a fan or body sway look like breathing. Its quality score describes the signal.</li>
       <li><strong>Choose the next action.</strong> The assessor waits for a stable rate, asks for another camera position when the view looks unsuitable, or asks a person to check when time or viewpoints run out. The live interface keeps a completed assessment and its timestamp visible alongside the current camera evidence.</li>
-      <li><strong>Look for a response.</strong> A local voice asks the person to raise one hand. The camera must see the hand down and then held up following the request. If speech fails, the interface can show the prompt. In the desktop app the operator moves the camera. Navigation runs in simulation.</li>
+      <li><strong>Look for a response.</strong> A local voice asks the person to raise one hand. The camera looks for a lowered wrist followed by a visible raise away from the face. A hand resting below the frame can establish the lowered position. If speech fails, the interface can show the prompt. In the desktop app the operator moves the camera. Navigation runs in simulation.</li>
     </ol>
     <div class="grid">
       <div class="card"><h3>What the project tests</h3><p>Ostinato’s contribution is the combination of an explicit decision to withhold a rate, a second viewpoint and a trace that can replay the assessor with both view orders. The testable question is whether a new view improves the chance of an accurate reading within a practical time budget.</p></div>
       <div class="card"><h3>Skills developed</h3><p>The chest tracker applies pose estimation and optical flow. The breathing estimator uses spectral analysis and rejection criteria. The assessor and voice prompt exercise state-machine design and human–robot interaction. The paired trial CLI turns those components into a reproducible experiment with accuracy and coverage measures.</p></div>
     </div>
-    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/chest.py">Chest tracking</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/breathing.py">Breathing estimator</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/decision.py">Assessment decisions</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/src/ostinato/response.py">Prompt and response</a></p>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/src/ostinato/chest.py">Chest tracking</a> · <a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/src/ostinato/breathing.py">Breathing estimator</a> · <a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/src/ostinato/decision.py">Assessment decisions</a> · <a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/src/ostinato/response.py">Prompt and response</a></p>
   </section>
   <section id="run">
     <h2>Run locally</h2>
@@ -113,14 +113,15 @@ ostinato
 ostinato-sim scene 1001 --html medic.html</code></pre>
     <p>During an active live assessment, press <kbd>V</kbd> to request a hand raise. When asked to move, reposition the camera and press <kbd>M</kbd>. Use <kbd>R</kbd> to restart and <kbd>Q</kbd> to quit. Run <code>ostinato --no-prompt</code> to ask only on <kbd>V</kbd>, or <code>ostinato --video path/to/clip.mp4</code> to analyze a local video with prompts disabled. Open the generated <code>medic.html</code> in a browser to see a simulated search.</p>
     <p>Runtime uses the local camera or video and optional local speech. The app requires no account, API key, cloud service or network connection once dependencies are installed. If obtaining the checkout requires GitHub access, authenticate in GitHub or a local credential helper and keep the credentials local. The app processes frames in memory without writing images or video. Paired trial JSON contains counts, timing, rates, signal values and reasons. Keep these files in the ignored <code>data/</code> folder and out of public artifacts.</p>
-    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/README.md">Setup and operation</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/CONTRIBUTING.md">Contributor data rules</a></p>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/README.md">Setup and operation</a> · <a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/CONTRIBUTING.md">Contributor data rules</a></p>
   </section>
   <section id="evidence">
     <h2>Evidence and limits</h2>
+    <p><strong>When does the estimator return a rate?</strong> In 500 generated 30-second windows per pattern, it returned a rate in 97% of regular-breathing windows, 75% of moderately uneven windows and 4% of irregular windows. Among the windows where it returned a rate, mean absolute error was about 0.2, 0.4 and 0.4 breaths/min respectively. These figures describe synthetic motion. <a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/docs/ESTIMATOR.md">Benchmark protocol and failure cases</a></p>
     <p>A synthetic integration test exercises a blocked first view and a visible second view. It checks that the report counts one accurate recovery and that replay reaches a reading earlier when the visible view comes first. The test uses generated frames, fixed pose landmarks and scripted breath counts.</p>
     <p>Across 100 synthetic scenes (seeds 0–99), the multi-person simulation reports that it measured 80.9% of people when it predicted viewpoints and 66.5% when it always picked the closest view. Its estimated urgency cue improves time to reach urgent simulated cases only when the cue carries useful information. The simulator assumes known locations and walls, and its rules for successful observations favor chest-direction prediction. The medic display’s attention order is illustrative.</p>
     <p>Live readings can fail with occlusion, insufficient texture, camera motion, low-amplitude movement or unstable tracking. Additional people can make a raised hand hard to attribute. Noise, disability, injury and language can all affect whether someone can respond to a prompt. The device still needs paired volunteer results to estimate accuracy, coverage and the limits of generalizing to new views.</p>
-    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/tests/test_chest.py">Synthetic integration test</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/docs/SIMULATION.md">Simulation assumptions and results</a></p>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/tests/test_chest.py">Synthetic integration test</a> · <a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/docs/SIMULATION.md">Simulation assumptions and results</a></p>
   </section>
   <section id="evaluation">
     <h2>Evaluation plan</h2>
@@ -138,7 +139,7 @@ python -m ostinato.viewpoints trial data/pair-02.json --views angled-2m front-1m
 python -m ostinato.viewpoints report data/pair-01.json data/pair-02.json --tolerance-bpm 2
 python -m ostinato.viewpoints replay data/pair-01.json
 ostinato-sim compare --scenes 10</code></pre>
-    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/docs/VIEWPOINT_TRIALS.md">Paired trial and replay protocol</a> · <a href="https://github.com/lay-shah/ostinato/blob/9ff701e9cfd097bc898d852ce2ed10d5260726fe/docs/PLAN.md">Project data-collection rules</a></p>
+    <p class="source"><a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/docs/VIEWPOINT_TRIALS.md">Paired trial and replay protocol</a> · <a href="https://github.com/lay-shah/ostinato/blob/2ef98019405345d4bc9abcd5a501afae3bae838b/docs/PLAN.md">Project data-collection rules</a></p>
   </section>
   <section id="sources">
     <h2>Research context</h2>

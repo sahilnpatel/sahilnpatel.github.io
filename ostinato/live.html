@@ -51,12 +51,15 @@ h2 { font: 400 1.85rem/1.1 var(--serif); letter-spacing: -.038em; }
 .placeholder { display: grid; justify-items: center; gap: .65rem; padding: 1rem; text-align: center; color: var(--muted); font-size: .88rem; }
 .placeholder::before { content: ""; width: 3.15rem; height: 3.15rem; border-radius: 100%; border: 1px solid #8ba3cb; box-shadow: inset 0 0 0 8px #dfe9f6, inset 0 0 0 9px #aec0db; }
 .controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
-.status { margin-top: .7rem; min-height: 2.6em; color: var(--muted); font-size: .86rem; }
+.status, .framing { margin-top: .7rem; color: var(--muted); font-size: .86rem; }
+.framing { border-left: 2px solid var(--accent); padding-left: .65rem; }
+.framing strong { color: var(--ink); }
 .status[data-error="true"] { color: #874125; }
 .notice { border-block: 1px solid var(--line); margin: .2rem 0 1rem; padding: .8rem 0; min-height: 4.5rem; }
 .notice strong { display: block; font-size: .97rem; }
 .notice p, .reading-detail, .chart-note { color: var(--muted); font-size: .84rem; }
 .metric { display: block; font: 400 clamp(1.9rem, 4.2vw, 3.05rem)/1.05 var(--serif); letter-spacing: -.045em; font-variant-numeric: tabular-nums; margin: .28rem 0; }
+#collection-progress { display: block; width: 100%; height: .7rem; margin: .45rem 0; accent-color: var(--accent); }
 #chart { display: block; width: 100%; height: 95px; margin: .3rem 0 .2rem; }
 dl { margin: .8rem 0 0; padding-top: .45rem; border-top: 1px solid var(--line); font-size: .83rem; }
 dl div { display: flex; justify-content: space-between; gap: .9rem; padding: .25rem 0; }
@@ -80,7 +83,7 @@ footer { padding: 1rem 0 2.15rem; color: var(--muted); font-size: .83rem; }
   <section class="intro" aria-labelledby="page-title">
     <p class="eyebrow">Camera viewpoint research</p>
     <h1 id="page-title">Live camera</h1>
-    <p>Run the chest-motion assessment with your webcam or try a generated signal. For a camera trial, hold the camera still and keep the head, shoulders, and chest in view.</p>
+    <p>Try the chest-motion assessment with your webcam or use the generated sample to see it run without camera access.</p>
     <p class="setup">The first run downloads the engine and, for the camera, the pose model. A rate needs at least 25 seconds of usable video.</p>
   </section>
   <div class="instrument">
@@ -100,6 +103,7 @@ footer { padding: 1rem 0 2.15rem; color: var(--muted); font-size: .83rem; }
         <button id="start-sample" type="button">Try sample</button>
         <button id="stop" type="button" disabled>Stop</button>
       </div>
+      <p class="framing" id="framing" role="status" aria-atomic="true"><strong id="framing-title">Set up your camera.</strong> <span id="framing-detail">Place it on a stable surface. Include the person’s head, both shoulders, chest, and some background.</span></p>
       <p class="status" id="status" role="status">Frames are processed in this browser.</p>
     </section>
     <section class="assessment" aria-labelledby="assessment-title">
@@ -108,9 +112,10 @@ footer { padding: 1rem 0 2.15rem; color: var(--muted); font-size: .83rem; }
         <strong id="headline">Ready to start</strong>
         <p id="detail">Choose a video source to begin an assessment.</p>
       </div>
-      <p class="eyebrow">Live breathing estimate</p>
+      <p class="eyebrow">Current breathing estimate</p>
       <p class="metric" id="reading">—</p>
       <p class="reading-detail" id="reading-detail">Waiting for video.</p>
+      <progress id="collection-progress" aria-label="Video collected" hidden></progress>
       <div id="signal" aria-label="Chest motion, last 30 seconds" role="img">
         <canvas id="chart"></canvas>
       </div>

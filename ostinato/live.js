@@ -5,6 +5,7 @@ const video = byId('camera');
 const sample = byId('sample');
 const overlay = byId('tracking-box');
 const chart = byId('chart');
+const progress = byId('collection-progress');
 const buttons = {
   camera: byId('start-camera'),
   sample: byId('start-sample'),
@@ -16,6 +17,7 @@ const buttons = {
 };
 const frameInterval = 1000 / 12;
 const cameraStallMs = 2000;
+const firstCameraFrameMs = 5000;
 const origin = performance.now();
 const timestamp = () => (performance.now() - origin) / 1000;
 
@@ -113,12 +115,48 @@ function capitalize(text) {
   return text ? text.charAt(0).toUpperCase() + text.slice(1) : '';
 }
 
+const setupGuidance = ['Set up your camera.', 'Place it on a stable surface. Include the person’s head, both shoulders, chest, and some background.'];
+const sampleGuidance = ['Generated sample.', 'The reference rate is 15 breaths per minute.'];
+const viewGuidance = {
+  'chest not visible': ['Chest out of view.', 'Back up or tilt the camera until the head, both shoulders, and chest are visible.'],
+  'not enough chest detail': ['Chest detail is hard to track.', 'Add light from the front or try a view with more visible clothing texture.'],
+  'cannot check camera motion': ['The background is hard to track.', 'Leave some stationary objects visible beside the person.'],
+  'signal too weak': ['Chest motion is hard to track.', 'Bring the camera a little closer while keeping both shoulders and some background visible.'],
+  'background moving': ['Background motion is interfering.', 'Reframe to include a still background.'],
+  'camera moving': ['Camera motion detected.', 'Set the camera on a stable surface.'],
+  'whole body moving': ['Body motion is interfering.', 'When testing with a volunteer, ask them to sit comfortably and keep their head and torso still.'],
+  'too much movement': ['Movement is interfering.', 'Keep the camera still and wait for the view to settle.'],
+  'tracking interrupted': ['Chest tracking was interrupted.', 'Keep both shoulders and the chest within the frame.'],
+};
+
+function frameGuidance([title, detail]) {
+  setText('framing-title', title);
+  setText('framing-detail', detail);
+}
+
 function render(state) {
   lastState = state;
   const { decision, reading, prompt } = state;
-  const hasRate = Number.isFinite(reading.bpm);
+  const moving = decision.action === 'move';
+  const hasRate = !moving && Number.isFinite(reading.bpm);
+  const collecting = !moving && reading.reason === 'need more data' && state.tracking === 'ok';
+  const firstTracked = collecting ? state.samples.find(([, value]) => Number.isFinite(value)) : null;
+  const seconds = firstTracked ? Math.min(state.min_seconds, state.samples.at(-1)[0] - firstTracked[0]) : 0;
+  const guidance = moving ? viewGuidance[decision.reason] : viewGuidance[state.tracking] || viewGuidance[reading.reason];
   let headline = 'Assessing';
-  let detail = capitalize(decision.reason);
+  let detail = 'Hold this view steady.';
+
+  if (session.mode === 'sample') {
+    frameGuidance(sampleGuidance);
+  } else if (guidance) {
+    frameGuidance(guidance);
+  } else if (moving) {
+    frameGuidance(['Try a new angle.', 'Keep the head, shoulders, and chest in view, with a still background.']);
+  } else if (state.tracking === 'ok') {
+    frameGuidance(['Chest in view.', 'Keep the camera steady.']);
+  } else {
+    frameGuidance(['Finding the chest.', setupGuidance[1]]);
+  }
 
   if (prompt.headline) {
     const textOnly = prompt.detail?.startsWith('Voice unavailable');
@@ -126,29 +164,46 @@ function render(state) {
     if (session.mode === 'sample') {
       detail = 'The sample will simulate a hand raise.';
     } else if (prompt.state === 'watching') {
-      detail = 'Show one wrist below your shoulder, then raise it and hold.';
+      detail = 'Start with one wrist below your shoulder, then raise it to the side and hold.';
     } else {
       detail = textOnly ? 'Read this prompt aloud to the person in view.' : 'Playing the prompt with a voice from this device.';
     }
-  } else if (decision.action === 'move') {
+  } else if (moving) {
     headline = 'Move the camera to a new view';
-    detail = `${detail}. Confirm when the camera is still again.`;
+    detail = 'Select Confirm new view once the new view is framed and the camera is still.';
   } else if (decision.action === 'get help') {
     headline = 'A person needs to check';
-    detail = `${capitalize(decision.status)} · ${decision.reason}`;
+    detail = `Assessment ended · ${capitalize(decision.status)} (${decision.reason}).`;
   } else if (decision.action === 'report') {
     headline = Number.isFinite(decision.bpm)
-      ? `Past result · ${decision.bpm.toFixed(1)} breaths/min`
-      : `Past result · ${decision.status}`;
+      ? `Completed assessment · ${decision.bpm.toFixed(1)} breaths/min`
+      : 'Completed assessment · Hand raise seen';
+    detail = 'Select Restart assessment to run a new assessment.';
+  } else if (collecting) {
+    headline = 'Collecting chest motion';
+  } else if (hasRate) {
+    headline = 'Confirming the estimate';
+  } else if (guidance) {
+    headline = 'Waiting for a usable signal';
+    detail = session.mode === 'camera' ? '' : guidance[1];
+  } else if (state.tracking === 'starting') {
+    headline = 'Finding the chest';
+    detail = 'Keep the head, shoulders, and chest in view.';
+  } else {
+    detail = `${capitalize(reading.reason)}. Hold this view steady.`;
   }
 
-  const waiting = reading.reason === 'need more data';
-  const estimateDetail = waiting
-    ? `Collecting steady motion · ${Math.min(Math.floor(state.elapsed), state.min_seconds)} / ${state.min_seconds} s`
+  const estimateDetail = moving ? 'Waiting for the new view.'
+    : collecting ? `${Math.floor(seconds)} of ${state.min_seconds} seconds buffered.`
+    : reading.reason === 'need more data' || state.tracking === 'starting' ? 'Waiting for chest tracking.'
     : capitalize(reading.reason);
+  progress.hidden = !collecting;
+  progress.max = state.min_seconds;
+  progress.value = seconds;
   setText('headline', headline);
   setText('detail', detail);
-  setText('reading', hasRate ? `${reading.bpm.toFixed(1)} breaths/min` : 'Unable to assess');
+  setText('reading', hasRate ? `${reading.bpm.toFixed(1)} breaths/min`
+    : moving || collecting || state.tracking === 'starting' ? '—' : 'Unable to assess');
   setText('reading-detail', hasRate ? `Signal score ${reading.confidence.toFixed(2)}` : estimateDetail);
   setText('view', `${state.view} of ${state.views}`);
   setText('chart-note', `Chest motion · last ${state.window} seconds`);
@@ -157,7 +212,7 @@ function render(state) {
     : prompt.state === 'watching' ? 'Watching for a hand raise'
     : prompt.state === 'speaking' ? 'Showing prompt'
     : 'Not asked yet');
-  drawTracking(state.box);
+  drawTracking(moving ? null : state.box);
   drawChart();
   updateControls();
 }
@@ -175,6 +230,7 @@ function stop(message = 'Frames are processed in this browser.', error = false) 
   const previous = session;
   session = null;
   clearTimeout(previous?.timer);
+  clearTimeout(previous?.firstFrameTimer);
   if (previous?.videoCallback !== undefined) video.cancelVideoFrameCallback(previous.videoCallback);
   if (previous) cancelSpeech(previous);
   previous?.worker?.terminate();
@@ -187,8 +243,11 @@ function stop(message = 'Frames are processed in this browser.', error = false) 
   setText('detail', 'Choose a video source to begin an assessment.');
   setText('reading', '—');
   setText('reading-detail', 'Waiting for video.');
+  progress.hidden = true;
+  progress.value = 0;
   setText('view', '—');
   setText('response', '—');
+  frameGuidance(setupGuidance);
   status(message, error);
   updateControls();
   drawTracking(null);
@@ -220,7 +279,7 @@ function onWorkerMessage(owner, data) {
       owner.hasFrame = true;
       status(owner.mode === 'camera'
         ? 'Camera frames are being processed on this device.'
-        : 'Generated sample · 15 breaths/min reference.');
+        : 'Sample frames are being processed on this device.');
       sendCommand('start');
       return;
     }
@@ -275,7 +334,7 @@ async function submitFrame(owner) {
   if (owner.mode === 'camera' && (
     video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA || videoFrame === owner.lastVideoFrame
   )) {
-    if (owner.hasFrame && owner.lastFrameAt - owner.lastVideoAt >= cameraStallMs) {
+    if (owner.lastFrameAt - owner.lastVideoAt >= cameraStallMs) {
       stop('Camera video was interrupted. Restart the camera or try the sample.', true);
       return;
     }
@@ -287,6 +346,7 @@ async function submitFrame(owner) {
   const t = timestamp();
   try {
     if (owner.mode === 'camera') {
+      clearTimeout(owner.firstFrameTimer);
       owner.lastVideoFrame = videoFrame;
       owner.lastVideoAt = owner.lastFrameAt;
       const [width, height] = scaleCameraFrame();
@@ -312,6 +372,7 @@ async function submitFrame(owner) {
 function beginFrames(owner) {
   if (owner !== session || !owner.sourceReady || !owner.ready || owner.started) return;
   owner.started = true;
+  owner.lastVideoAt = performance.now();
   owner.sampleStartedAt = timestamp();
   scheduleFrame(owner);
 }
@@ -390,6 +451,9 @@ async function start(mode) {
   };
   session = owner;
   updateControls();
+  setText('headline', mode === 'camera' ? 'Starting camera' : 'Starting sample');
+  setText('detail', 'The assessment begins when video is ready.');
+  if (mode === 'sample') frameGuidance(sampleGuidance);
   status(mode === 'camera' ? 'Waiting for camera permission…' : 'Loading the assessment engine…');
   try {
     openWorker(owner);
@@ -415,6 +479,11 @@ async function start(mode) {
         });
       }
       video.srcObject = stream;
+      owner.firstFrameTimer = setTimeout(() => {
+        if (owner === session && video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) {
+          stop('The camera opened without video. Restart the camera or try the sample.', true);
+        }
+      }, firstCameraFrameMs);
       await video.play();
     } catch (error) {
       if (owner === session) stop(cameraError(error), true);
@@ -463,6 +532,8 @@ function drawSample(t, owner) {
   const displacement = 3 * Math.sin(2 * Math.PI * .25 * elapsed);
   const promptWait = owner.samplePromptAt === null ? -1 : t - owner.samplePromptAt;
   const raised = promptWait >= 4.75 && promptWait <= 7.5;
+  const leftWrist = raised ? [144, 50] : [168, 266];
+  const rightWrist = [312, 266];
   ctx.drawImage(sampleBackdrop, 0, 0);
 
   ctx.fillStyle = '#263a55';
@@ -487,13 +558,13 @@ function drawSample(t, owner) {
   ctx.beginPath();
   ctx.moveTo(168, 111);
   ctx.lineTo(144, 160);
-  ctx.lineTo(raised ? 144 : 168, raised ? 50 : 266);
+  ctx.lineTo(...leftWrist);
   ctx.moveTo(312, 111);
   ctx.lineTo(335, 160);
-  ctx.lineTo(312, 266);
+  ctx.lineTo(...rightWrist);
   ctx.stroke();
   ctx.fillStyle = '#cedbec';
-  for (const [x, y] of [[raised ? 144 : 168, raised ? 50 : 266], [312, 266]]) {
+  for (const [x, y] of [leftWrist, rightWrist]) {
     ctx.beginPath();
     ctx.arc(x, y, 11, 0, 2 * Math.PI);
     ctx.fill();
@@ -503,8 +574,8 @@ function drawSample(t, owner) {
   landmarks[0] = [.50, .19, 1];
   landmarks[11] = [.35, .30, 1];
   landmarks[12] = [.65, .30, 1];
-  landmarks[15] = raised ? [.30, .14, 1] : [.35, .74, 1];
-  landmarks[16] = [.65, .74, 1];
+  landmarks[15] = [leftWrist[0] / sample.width, leftWrist[1] / sample.height, 1];
+  landmarks[16] = [rightWrist[0] / sample.width, rightWrist[1] / sample.height, 1];
   landmarks[23] = [.38, .67, 1];
   landmarks[24] = [.62, .67, 1];
   return { pixels: ctx.getImageData(0, 0, sample.width, sample.height).data.buffer, landmarks };
