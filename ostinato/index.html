@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Explore a chest-motion and camera viewpoint research prototype with interactive synthetic trials.">
+<title>Ostinato · Camera viewpoint research</title>
+<style>
+:root {
+  color-scheme: light;
+  --paper: #edf3fa;
+  --white: #f9fcff;
+  --ink: #152847;
+  --muted: #465c76;
+  --accent: #294bc9;
+  --line: #c5d3e4;
+  --dim: #5b708c;
+  --serif: "Bodoni 72", "Didot", Georgia, serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.55 var(--sans); }
+a { color: var(--accent); text-underline-offset: .22em; }
+button, select, input { font: inherit; accent-color: var(--accent); }
+button, select { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { font: 400 3.4rem/.99 var(--serif); letter-spacing: -.05em; }
+h3 { font-size: 1.05rem; }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+.shell { width: min(100% - 80px, 1220px); margin-inline: auto; }
+.skip { position: absolute; left: 1rem; top: -5rem; z-index: 3; background: var(--white); padding: .5rem 1rem; }
+.skip:focus { top: 1rem; }
+.masthead { display: flex; justify-content: space-between; gap: 1rem; align-items: center; border-bottom: 1px solid var(--line); min-height: 73px; }
+.brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); font: 400 1.63rem/1 var(--serif); }
+.brand svg { width: 25px; color: var(--accent); }
+nav { display: flex; gap: clamp(.8rem, 3vw, 2rem); align-items: center; }
+nav a { font-size: .84rem; white-space: nowrap; color: var(--ink); font-weight: 600; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+.hero { min-height: 430px; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; padding: 2rem 0; }
+.eyebrow { color: var(--accent); font: 700 .75rem/1.3 var(--sans); letter-spacing: .13em; text-transform: uppercase; }
+.hero h1 { font-size: clamp(5rem, 11vw, 10.1rem); line-height: .91; margin: .06em 0 .16em -.047em; }
+.hero-copy > p:last-of-type { font-size: clamp(1.06rem, 2vw, 1.25rem); line-height: 1.45; max-width: 35ch; color: var(--muted); }
+.hero-link { margin-top: 1.5rem; display: inline-flex; align-items: center; gap: .9rem; border-radius: 100px; padding: .55rem .95rem .55rem 1.1rem; background: var(--accent); color: white; font-size: .91rem; font-weight: 600; text-decoration: none; }
+.hero-link:hover { background: #1736ac; }
+.hero-link span { font-size: 1.05rem; }
+.hero-figure { margin: 0; max-width: 560px; width: 100%; justify-self: end; }
+.hero-svg text { fill: var(--muted); font: 700 11px var(--sans); letter-spacing: 1.5px; }
+.hero-svg .point-label { fill: var(--ink); }
+.hero-svg a:hover .point-label, .hero-svg a:focus-visible .point-label { fill: var(--accent); text-decoration: underline; }
+.hero-svg a:hover .point-ring, .hero-svg a:focus-visible .point-ring { fill: #d6e3ff; stroke-width: 2.5; }
+.explorer { scroll-margin-top: 1.5rem; margin-bottom: 5rem; }
+.section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding: 1.6rem 0 1.4rem; }
+.section-head h2 { font-size: clamp(2.65rem, 5vw, 4rem); }
+.section-head p { color: var(--muted); font-size: .88rem; text-align: right; }
+.instrument { background: var(--white); border: 1px solid var(--line); border-radius: 22px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(205px, 250px); overflow: hidden; }
+.signal-panel { padding: clamp(1rem, 3vw, 1.85rem); min-width: 0; }
+.controls { display: flex; justify-content: space-between; align-items: end; gap: .85rem; flex-wrap: wrap; }
+fieldset { padding: 0; border: 0; margin: 0; min-width: 0; }
+legend { margin-bottom: .55rem; font-weight: 650; font-size: .82rem; }
+.segment { display: inline-flex; align-items: center; gap: 4px; background: #e8eff9; padding: 4px; border-radius: 100px; }
+.segment button { color: var(--muted); background: transparent; border: 0; border-radius: 100px; padding: .46rem .75rem; font-size: .83rem; font-weight: 650; white-space: nowrap; min-height: 40px; }
+.segment button[aria-pressed="true"] { color: #fff; background: var(--accent); }
+.segment button:hover:not([aria-pressed="true"]) { background: #d6e2f4; color: var(--ink); }
+.switch { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; color: var(--muted); min-height: 40px; cursor: pointer; }
+.switch input { width: 1rem; height: 1rem; margin: 0; }
+.chart { margin: 1.2rem 0 .65rem; }
+.chart svg { height: clamp(170px, 27vw, 270px); }
+.chart-grid { stroke: #dbe5f2; stroke-width: 1; }
+.chart-band { fill: #e7eef7; }
+.chart-reference { stroke: #627998; stroke-width: 1.2; fill: none; stroke-dasharray: 4 5; }
+.chart-observed { stroke: var(--accent); stroke-width: 2.1; fill: none; }
+.chart-labels { position: relative; display: flex; justify-content: space-between; gap: 1rem; font-size: .72rem; color: var(--muted); margin-top: .3rem; }
+.chart-labels span:nth-child(2), .chart-labels span:nth-child(3) { position: absolute; transform: translateX(-50%); }
+.chart-labels span:nth-child(2) { left: 33.333%; }
+.chart-labels span:nth-child(3) { left: 66.667%; }
+.chart-key { display: flex; gap: .6rem 1rem; flex-wrap: wrap; margin-top: .65rem; color: var(--muted); font-size: .79rem; }
+.chart-key span { display: inline-flex; align-items: center; gap: .4rem; }
+.chart-key i { display: block; width: 1.26rem; }
+.key-observed i { border-top: 2px solid var(--accent); }
+.key-reference i { border-top: 2px dashed #627998; }
+.key-hidden i { height: .65rem; background: #e3eaf5; border: 1px solid #c8d5e7; }
+[hidden] { display: none !important; }
+.readout { border-left: 1px solid var(--line); background: #e8f0fb; padding: 1.6rem 1.35rem; }
+.readout .eyebrow { font-size: .67rem; }
+.readout-number { font: 400 clamp(2.25rem, 4.8vw, 3.4rem)/1.04 var(--serif); letter-spacing: -.045em; display: block; margin: .6rem 0 .4rem; }
+.readout p { color: var(--muted); font-size: .85rem; }
+.metrics { display: grid; gap: .6rem; margin: 1.05rem 0 1.3rem; padding: .85rem 0; border-block: 1px solid var(--line); }
+.metrics div { display: flex; justify-content: space-between; gap: .7rem; font-size: .82rem; }
+.metrics dt { color: var(--muted); }
+.metrics dd { font-weight: 650; margin: 0; font-variant-numeric: tabular-nums; }
+.slider-label { font-weight: 650; font-size: .82rem; display: block; }
+.slider-label output { display: block; margin: .24rem 0; color: var(--muted); font-size: .8rem; font-weight: 400; }
+input[type="range"] { width: 100%; margin: .35rem 0; }
+details { margin-top: .7rem; color: var(--muted); font-size: .85rem; }
+summary { cursor: pointer; width: fit-content; padding: .4rem 0; color: var(--ink); font-weight: 600; }
+details p { max-width: 85ch; }
+.routes { scroll-margin-top: 1.5rem; margin-bottom: 4rem; }
+.route-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.15rem; align-items: start; }
+.route-map, .route-data { border: 1px solid var(--line); border-radius: 20px; padding: clamp(1rem, 3vw, 1.65rem); }
+.route-map { background: #e8f0fb; }
+.route-data { background: var(--white); }
+.route-map p, .route-data p { color: var(--muted); font-size: .86rem; }
+.route-map svg { max-height: 160px; margin: .75rem 0 .55rem; }
+.route-map svg text { fill: var(--ink); font: 650 13px var(--sans); }
+.route-label { font-size: .83rem; font-weight: 650; display: block; margin-bottom: .35rem; }
+select { width: 100%; min-height: 44px; background: var(--white); border: 1px solid #8a9fbb; border-radius: 9px; color: var(--ink); padding: .4rem .6rem; }
+table { border-collapse: collapse; width: 100%; margin: .85rem 0 .6rem; text-align: left; font-size: .85rem; }
+th, td { border-bottom: 1px solid var(--line); padding: .57rem .3rem; vertical-align: top; }
+th:first-child, td:first-child { padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; text-align: right; }
+thead th { color: var(--muted); font-weight: 600; }
+tbody th, .time { color: var(--ink); font-weight: 650; }
+.route-path { color: var(--muted); }
+.route-data .scene-cues { margin-top: .5rem; }
+.research { scroll-margin-top: 1.5rem; margin-bottom: 4rem; }
+.research .route-grid { gap: 0 1.15rem; }
+.research details { margin: 0 0 .85rem; padding: .45rem 1rem; background: var(--white); border: 1px solid var(--line); border-radius: 12px; }
+.research details p { padding: .2rem 0 .65rem; }
+.footer { border-top: 1px solid var(--line); padding: 1.35rem 0 2rem; display: flex; gap: .75rem 2rem; justify-content: space-between; flex-wrap: wrap; }
+.footer p { color: var(--muted); font-size: .83rem; }
+.footer a { font-weight: 650; font-size: .87rem; }
+.footer-links { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; }
+@media (max-width: 800px) {
+  .shell { width: min(100% - 44px, 1220px); }
+  .hero { min-height: 360px; gap: 1.2rem; }
+  .instrument { grid-template-columns: minmax(0, 1fr) 215px; }
+}
+@media (max-width: 650px) {
+  .nav-report { display: none; }
+  .hero { grid-template-columns: 1fr; min-height: 0; gap: .45rem; padding: 2.45rem 0 .35rem; }
+  .hero-figure { justify-self: center; max-width: 410px; }
+  .hero h1 { font-size: clamp(4.4rem, 16.5vw, 7rem); }
+  .instrument, .route-grid { grid-template-columns: 1fr; }
+  .readout { border-left: 0; border-top: 1px solid var(--line); padding: 1.1rem; }
+  .section-head { align-items: start; flex-direction: column; gap: .35rem; }
+  .section-head p { text-align: left; }
+  .explorer { margin-bottom: 3.2rem; }
+}
+@media (max-width: 360px) {
+  .shell { width: calc(100% - 30px); }
+  nav { gap: .65rem; }
+  nav a { font-size: .76rem; }
+  .segment button { padding-inline: .55rem; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#main">Skip to content</a>
+<header class="masthead shell">
+  <a class="brand" href="#top" aria-label="Ostinato home">
+    <svg viewBox="0 0 26 26" aria-hidden="true">
+      <circle cx="13" cy="13" r="11.5" fill="none" stroke="currentColor"/>
+      <path d="M4 13h5l2-6 4 12 2-6h5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Ostinato
+  </a>
+  <nav aria-label="Primary">
+    <a href="#signal">Signal</a>
+    <a href="#viewpoints">Viewpoints</a>
+    <a href="#research">Research</a>
+    <a class="nav-report" href="PROJECT_REPORT.html">Report ↗</a>
+  </nav>
+</header>
+<main id="main" class="shell">
+  <section class="hero" aria-labelledby="title">
+    <div class="hero-copy">
+      <p class="eyebrow">Camera viewpoint research</p>
+      <h1 id="title">Ostinato</h1>
+      <p>Can a second camera view recover a usable chest-motion signal?</p>
+      <a class="hero-link" href="#signal">Explore the simulation <span aria-hidden="true">↓</span></a>
+    </div>
+    <figure class="hero-figure">
+      <svg class="hero-svg" viewBox="0 0 560 350" role="group" aria-labelledby="hero-title hero-desc">
+        <title id="hero-title">Three viewpoints around a chest-motion signal</title>
+        <desc id="hero-desc">Select a viewpoint to open its signal. A clear line of sight reaches the signal. A second line ends at an obstruction and a third shows camera motion.</desc>
+        <defs>
+          <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".9" fill="#a6bad7"/></pattern>
+          <radialGradient id="glow"><stop stop-color="#cedfff"/><stop offset="1" stop-color="#edf3fa"/></radialGradient>
+        </defs>
+        <ellipse cx="301" cy="177" rx="227" ry="164" fill="url(#glow)"/>
+        <rect x="28" y="21" width="510" height="306" fill="url(#dots)" opacity=".54"/>
+        <g fill="none" stroke="#8ea6cd">
+          <circle cx="300" cy="176" r="151" stroke-dasharray="2 6"/>
+          <circle cx="300" cy="176" r="118" opacity=".72"/>
+          <circle cx="300" cy="176" r="85" opacity=".72"/>
+          <path d="M300 23v306M105 176h397" opacity=".5"/>
+        </g>
+        <g fill="none" stroke="#294bc9">
+          <path d="M190 73L300 176L437 111" opacity=".65" stroke-dasharray="4 6"/>
+          <path d="M119 249L212 212" opacity=".65" stroke-width="1.5" stroke-dasharray="4 5"/>
+          <path d="M300 176L211 212" opacity=".23" stroke-dasharray="4 5"/>
+          <path d="M189 72q-18 10-20 22m22-25q-30 7-38 25m41-28q-39 1-53 25" opacity=".6"/>
+          <path d="M203 198l18 31m-15-31l18 30" stroke="#5f7393" stroke-width="2"/>
+        </g>
+        <circle cx="300" cy="176" r="55" fill="#f6f9ff" stroke="#284ac7"/>
+        <circle cx="300" cy="176" r="46" fill="none" stroke="#b0c2e2"/>
+        <path d="M265 176q6 0 10-4t10-4t9 9t10 9t9-11t10-11t10 12h4" fill="none" stroke="#294bc9" stroke-width="2.6" stroke-linecap="round"/>
+        <a href="#signal" data-hero-view="moving" aria-label="Explore the moving view">
+          <rect x="122" y="30" width="115" height="58" fill="transparent"/>
+          <circle class="point-ring" cx="190" cy="73" r="7" fill="#edf3fa" stroke="#294bc9" stroke-width="1.5"/>
+          <circle cx="190" cy="73" r="2.5" fill="#294bc9"/>
+          <text class="point-label" x="129" y="51">MOVING VIEW</text>
+        </a>
+        <a href="#signal" data-hero-view="clear" aria-label="Explore the clear view">
+          <rect x="418" y="83" width="134" height="50" fill="transparent"/>
+          <circle class="point-ring" cx="437" cy="111" r="8" fill="#edf3fa" stroke="#294bc9" stroke-width="1.5"/>
+          <circle cx="437" cy="111" r="3" fill="#294bc9"/>
+          <text class="point-label" x="451" y="107">CLEAR VIEW</text>
+        </a>
+        <a href="#signal" data-hero-view="blocked" aria-label="Explore the blocked view">
+          <rect x="45" y="229" width="126" height="58" fill="transparent"/>
+          <circle class="point-ring" cx="119" cy="249" r="7" fill="#edf3fa" stroke="#294bc9" stroke-width="1.5"/>
+          <circle cx="119" cy="249" r="2.5" fill="#294bc9"/>
+          <text class="point-label" x="50" y="276">BLOCKED VIEW</text>
+        </a>
+        <text x="300" y="258" text-anchor="middle">CHEST MOTION</text>
+      </svg>
+    </figure>
+  </section>
+
+  <section class="explorer" id="signal" aria-labelledby="signal-title">
+    <header class="section-head">
+      <h2 id="signal-title">Signal explorer</h2>
+      <p>Synthetic motion · 30-second observation</p>
+    </header>
+    <div class="instrument">
+      <div class="signal-panel">
+        <div class="controls">
+          <fieldset>
+            <legend>Camera view</legend>
+            <div class="segment">
+              <button type="button" data-view="blocked" aria-pressed="true">Blocked</button>
+              <button type="button" data-view="clear" aria-pressed="false">Clear</button>
+              <button type="button" data-view="moving" aria-pressed="false">Moving</button>
+            </div>
+          </fieldset>
+          <label class="switch"><input type="checkbox" id="show-reference" checked> Show reference</label>
+        </div>
+        <figure class="chart">
+          <svg viewBox="0 0 700 220" preserveAspectRatio="none" role="img" aria-labelledby="chart-title chart-description">
+            <title id="chart-title">Simulated relative chest motion over 30 seconds</title>
+            <desc id="chart-description">The blocked view has long gaps in observed motion.</desc>
+            <g id="missing-bands"></g>
+            <path class="chart-grid" vector-effect="non-scaling-stroke" d="M0 10V210H700V10M0 30H700M0 70H700M0 110H700M0 150H700M0 190H700M233.33 10V210M466.67 10V210" fill="none"/>
+            <path id="reference-line" class="chart-reference" vector-effect="non-scaling-stroke"/>
+            <path id="observed-line" class="chart-observed" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+          </svg>
+          <div class="chart-labels" aria-hidden="true"><span>0 s</span><span>10 s</span><span>20 s</span><span>30 s</span></div>
+          <figcaption class="chart-key">
+            <span class="key-observed"><i></i> Simulated camera motion</span>
+            <span class="key-reference" id="reference-key"><i></i> Synthetic reference</span>
+            <span class="key-hidden" id="missing-key"><i></i> Missing samples</span>
+          </figcaption>
+        </figure>
+      </div>
+      <aside class="readout" aria-label="Signal reading">
+        <div role="status" aria-atomic="true">
+          <h3 class="eyebrow">Reading</h3>
+          <strong class="readout-number" id="estimate">Withheld</strong>
+          <p id="readout-reason">Too little of the observation is visible.</p>
+          <dl class="metrics">
+            <div><dt>Sample coverage</dt><dd id="coverage">—</dd></div>
+            <div><dt>Peak power share</dt><dd id="concentration">—</dd></div>
+          </dl>
+        </div>
+        <label class="slider-label" for="reference-rate">Synthetic reference rate
+          <output id="reference-value" for="reference-rate">16 cycles/min</output>
+        </label>
+        <input type="range" id="reference-rate" min="10" max="30" step="2" value="16">
+      </aside>
+    </div>
+    <noscript><p>Enable JavaScript to generate the signal and run the viewpoint simulation.</p></noscript>
+    <details>
+      <summary>How the reading is calculated</summary>
+      <p>The demo generates 360 samples over 30 seconds. It centers the available samples and tests frequencies from 6 to 40 cycles per minute in steps of 2. Peak power share is the strongest frequency's power divided by the total across those frequencies. The demo reports the strongest frequency when at least 65% of samples are visible and one frequency accounts for at least 55% of the power. These are demonstration thresholds.</p>
+    </details>
+  </section>
+
+  <section class="routes" id="viewpoints" aria-labelledby="route-title">
+    <header class="section-head">
+      <h2 id="route-title">Viewpoint trials</h2>
+      <p>Scripted geometry · 30 seconds per observation</p>
+    </header>
+    <div class="route-grid">
+      <div class="route-map">
+        <h3>Two candidate views</h3>
+        <svg viewBox="0 0 400 125" role="img" aria-labelledby="map-title map-description">
+          <title id="map-title">Simulation positions on a straight line</title>
+          <desc id="map-description">View A is one unit from the start and view B is four units from the start.</desc>
+          <path d="M35 55H365" stroke="#9bb1d5" stroke-width="2"/>
+          <path d="M200 51v8m82.5-8v8" stroke="#9bb1d5" stroke-width="1"/>
+          <rect x="30" y="50" width="10" height="10" rx="1" fill="#294bc9"/>
+          <g fill="#e8f0fb" stroke="#294bc9" stroke-width="2">
+            <circle cx="117.5" cy="55" r="7"/><circle cx="365" cy="55" r="7"/>
+          </g>
+          <g font-size="12" text-anchor="middle">
+            <text x="35" y="31">Start</text><text x="117.5" y="31">View A</text><text x="365" y="31">View B</text>
+            <text x="35" y="87">0</text><text x="117.5" y="87">1</text><text x="365" y="87">4</text>
+          </g>
+        </svg>
+        <p>Both policies travel at one unit per second. After a withheld reading, each tries the remaining view once.</p>
+      </div>
+      <div class="route-data">
+        <label class="route-label" for="scenario">Scene</label>
+        <select id="scenario">
+          <option value="near-blocked">Near view obstructed</option>
+          <option value="both-clear">Both views clear</option>
+          <option value="weak-clear">Clear view has weak signal</option>
+          <option value="neither-usable">Neither view usable</option>
+        </select>
+        <div aria-live="polite" aria-atomic="true">
+          <p class="scene-cues" id="scene-cues"></p>
+          <table>
+            <thead><tr><th scope="col">Policy</th><th scope="col">Views tried</th><th scope="col">Outcome</th></tr></thead>
+            <tbody id="route-results"></tbody>
+          </table>
+        </div>
+        <p>Visibility-first uses the scripted obstruction cue. The reading outcome is revealed after observing.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="research" id="research" aria-labelledby="research-title">
+    <header class="section-head">
+      <h2 id="research-title">Inside the research</h2>
+    </header>
+    <div class="route-grid">
+      <details>
+        <summary>Paired camera trials</summary>
+        <p>The webcam protocol compares two positions with the same consenting participant. An observer counts breaths independently in each window. The analysis compares how often the camera reports a rate, the reference error in those readings, and how often the second view recovers a reading after the first withholds it. <a href="PROJECT_REPORT.html#evaluation">Read the evaluation plan</a>.</p>
+      </details>
+      <details>
+        <summary>What the simulation can show</summary>
+        <p>The browser demo uses a generated signal and scripted geometry. It shows how a decision rule can withhold a reading and how the order of viewpoints changes elapsed time. Webcam performance needs paired observations. <a href="PROJECT_REPORT.html#evidence">Read the evidence summary</a>.</p>
+      </details>
+    </div>
+  </section>
+</main>
+<footer class="footer shell">
+  <p>Ostinato is an experimental prototype. This demo uses synthetic inputs throughout.</p>
+  <div class="footer-links"><a href="PROJECT_REPORT.html">Read the research report ↗</a><a href="#top">Back to top ↑</a></div>
+</footer>
+
+<script>
+'use strict';
+
+const durationSeconds = 30;
+const samplesPerSecond = 12;
+const sampleCount = durationSeconds * samplesPerSecond;
+const frequencyCandidates = Array.from({ length: 18 }, (_, index) => 6 + index * 2);
+const qualityThresholds = { coverage: 0.65, concentration: 0.55 };
+const byId = (id) => document.getElementById(id);
+const rateControl = byId('reference-rate');
+const showReference = byId('show-reference');
+const viewButtons = [...document.querySelectorAll('[data-view]')];
+const percent = (value) => `${Math.round(value * 100)}%`;
+let currentView = 'blocked';
+
+function wave(cyclesPerMinute, seconds, phase = 0) {
+  return Math.sin(2 * Math.PI * cyclesPerMinute * seconds / 60 + phase);
+}
+
+function synthesize(view, cyclesPerMinute) {
+  return Array.from({ length: sampleCount }, (_, index) => {
+    const time = index / samplesPerSecond;
+    const reference = wave(cyclesPerMinute, time, 0.35);
+    const texture = 0.075 * wave(65, time) + 0.04 * wave(117, time, 1.3);
+    const blocked = view === 'blocked' && (time >= 3 && time < 14 || time >= 17 && time < 27);
+    const cameraMotion = view === 'moving'
+      ? [6, 8, 18, 24, 32, 38].reduce((sum, frequency, position) => (
+          sum + 0.29 * wave(frequency, time, position * 0.7)
+        ), 0)
+      : 0;
+    const observed = (view === 'moving' ? 0.26 : 0.84) * reference + texture + cameraMotion;
+    return { time, reference, observed: blocked ? null : observed };
+  });
+}
+
+function analyze(samples) {
+  const available = samples.filter((sample) => sample.observed !== null);
+  const coverage = available.length / samples.length;
+  const mean = available.reduce((sum, sample) => sum + sample.observed, 0) / (available.length || 1);
+
+  const powers = frequencyCandidates.map((rate) => {
+    let sine = 0;
+    let cosine = 0;
+    for (const sample of available) {
+      const centered = sample.observed - mean;
+      sine += centered * wave(rate, sample.time);
+      cosine += centered * wave(rate, sample.time, Math.PI / 2);
+    }
+    return { rate, power: sine ** 2 + cosine ** 2 };
+  });
+  const peak = powers.reduce((best, candidate) => candidate.power > best.power ? candidate : best);
+  const totalPower = powers.reduce((sum, candidate) => sum + candidate.power, 0);
+  const concentration = totalPower ? peak.power / totalPower : 0;
+  const sufficientCoverage = coverage >= qualityThresholds.coverage;
+  const passes = sufficientCoverage && concentration >= qualityThresholds.concentration;
+  return { coverage, concentration, sufficientCoverage, passes, rate: passes ? peak.rate : null };
+}
+
+function horizontal(time) {
+  return time / durationSeconds * 700;
+}
+
+function trace(samples, key) {
+  let penDown = false;
+  return samples.map((sample) => {
+    if (sample[key] === null) {
+      penDown = false;
+      return '';
+    }
+    const command = penDown ? 'L' : 'M';
+    penDown = true;
+    return `${command}${horizontal(sample.time).toFixed(2)},${(110 - sample[key] * 48).toFixed(2)}`;
+  }).join('');
+}
+
+function drawMissingBands(samples) {
+  const layer = byId('missing-bands');
+  layer.replaceChildren();
+  let start = null;
+  for (const sample of [...samples, { time: durationSeconds, observed: 0 }]) {
+    if (sample.observed === null && start === null) {
+      start = sample.time;
+    } else if (sample.observed !== null && start !== null) {
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect.setAttribute('x', horizontal(start));
+      rect.setAttribute('y', '10');
+      rect.setAttribute('width', horizontal(sample.time - start));
+      rect.setAttribute('height', '200');
+      rect.setAttribute('class', 'chart-band');
+      layer.append(rect);
+      start = null;
+    }
+  }
+}
+
+function renderSignal() {
+  const referenceRate = Number(rateControl.value);
+  const samples = synthesize(currentView, referenceRate);
+  const reading = analyze(samples);
+  const reason = reading.passes
+    ? 'A dominant rhythm is visible.'
+    : reading.sufficientCoverage
+      ? 'Camera movement competes with the rhythm.'
+      : 'Too little of the observation is visible.';
+
+  byId('reference-value').textContent = `${referenceRate} cycles/min`;
+  rateControl.setAttribute('aria-valuetext', `${referenceRate} cycles per minute`);
+  byId('estimate').textContent = reading.passes ? `${reading.rate} cpm` : 'Withheld';
+  if (reading.passes) {
+    byId('estimate').setAttribute('aria-label', `${reading.rate} cycles per minute`);
+  } else {
+    byId('estimate').removeAttribute('aria-label');
+  }
+  byId('readout-reason').textContent = reason;
+  byId('coverage').textContent = percent(reading.coverage);
+  byId('concentration').textContent = percent(reading.concentration);
+  byId('chart-description').textContent =
+    `The ${currentView} view has ${percent(reading.coverage)} sample coverage. ${reason} The reference is ${showReference.checked ? 'shown' : 'hidden'}.`;
+  byId('reference-line').setAttribute('d', showReference.checked ? trace(samples, 'reference') : '');
+  byId('observed-line').setAttribute('d', trace(samples, 'observed'));
+  byId('reference-key').hidden = !showReference.checked;
+  byId('missing-key').hidden = reading.coverage === 1;
+  drawMissingBands(samples);
+}
+
+const viewA = { name: 'A', position: 1 };
+const viewB = { name: 'B', position: 4 };
+const scenes = {
+  'near-blocked': [
+    { ...viewA, obstructed: true, usable: false },
+    { ...viewB, obstructed: false, usable: true },
+  ],
+  'both-clear': [
+    { ...viewA, obstructed: false, usable: true },
+    { ...viewB, obstructed: false, usable: true },
+  ],
+  'weak-clear': [
+    { ...viewA, obstructed: true, usable: true },
+    { ...viewB, obstructed: false, usable: false },
+  ],
+  'neither-usable': [
+    { ...viewA, obstructed: true, usable: false },
+    { ...viewB, obstructed: false, usable: false },
+  ],
+};
+
+function runPolicy(scene, preferVisibility) {
+  const remaining = [...scene];
+  const visits = [];
+  let position = 0;
+  let elapsed = 0;
+  for (let attempt = 0; attempt < scene.length; attempt += 1) {
+    remaining.sort((a, b) => {
+      const visibility = preferVisibility ? Number(a.obstructed) - Number(b.obstructed) : 0;
+      return visibility || Math.abs(a.position - position) - Math.abs(b.position - position) ||
+        a.name.localeCompare(b.name);
+    });
+    const view = remaining.shift();
+    elapsed += Math.abs(view.position - position) + durationSeconds;
+    position = view.position;
+    visits.push(view.name);
+    if (view.usable) return { visits, elapsed, success: true };
+  }
+  return { visits, elapsed, success: false };
+}
+
+function renderRoutes() {
+  const scene = scenes[byId('scenario').value];
+  byId('scene-cues').textContent = scene.map((view) => (
+    `View ${view.name} ${view.obstructed ? 'obstructed' : 'clear'}`
+  )).join(' · ');
+  const results = byId('route-results');
+  results.replaceChildren();
+  for (const [label, preferVisibility] of [['Nearest first', false], ['Visibility first', true]]) {
+    const { visits, elapsed, success } = runPolicy(scene, preferVisibility);
+    const row = results.insertRow();
+    const heading = document.createElement('th');
+    heading.scope = 'row';
+    heading.textContent = label;
+    row.append(heading);
+    const route = row.insertCell();
+    route.className = 'route-path';
+    route.textContent = visits.join(' → ');
+    const outcome = row.insertCell();
+    outcome.className = 'time';
+    outcome.textContent = success ? `Reading at ${elapsed} s` : `Withheld after ${elapsed} s`;
+  }
+}
+
+function selectView(view) {
+  currentView = view;
+  for (const button of viewButtons) {
+    button.setAttribute('aria-pressed', String(button.dataset.view === view));
+  }
+  renderSignal();
+}
+
+for (const button of viewButtons) {
+  button.addEventListener('click', () => selectView(button.dataset.view));
+}
+for (const link of document.querySelectorAll('[data-hero-view]')) {
+  link.addEventListener('click', () => selectView(link.dataset.heroView));
+}
+rateControl.addEventListener('input', renderSignal);
+showReference.addEventListener('change', renderSignal);
+byId('scenario').addEventListener('change', renderRoutes);
+renderSignal();
+renderRoutes();
+</script>
+</body>
+</html>
