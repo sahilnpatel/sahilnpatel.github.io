@@ -102,7 +102,7 @@
       else window.scrollTo(0, 0);
       initPageFeatures();
 
-      const pageScripts = ['daily-reading.js', 'interest-map.js', 'interest-field.js', 'quotes.js'];
+      const pageScripts = ['daily-reading.js', 'interest-map.js', 'interest-field.js', 'quotes.js', 'genome-intro.js'];
       document.querySelectorAll('script[src]').forEach(script => {
         try {
           const pathname = new URL(script.src).pathname;
