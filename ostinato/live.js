@@ -15,6 +15,7 @@ const buttons = {
   reset: byId('reset'),
 };
 const frameInterval = 1000 / 12;
+const cameraStallMs = 2000;
 const origin = performance.now();
 const timestamp = () => (performance.now() - origin) / 1000;
 
@@ -174,6 +175,7 @@ function stop(message = 'Frames are processed in this browser.', error = false) 
   const previous = session;
   session = null;
   clearTimeout(previous?.timer);
+  if (previous?.videoCallback !== undefined) video.cancelVideoFrameCallback(previous.videoCallback);
   if (previous) cancelSpeech(previous);
   previous?.worker?.terminate();
   previous?.stream?.getTracks().forEach((track) => track.stop());
@@ -269,9 +271,14 @@ function scaleCameraFrame() {
 async function submitFrame(owner) {
   if (owner !== session || owner.command || owner.framePending) return;
   owner.lastFrameAt = performance.now();
+  const videoFrame = owner.videoCallback === undefined ? video.currentTime : owner.videoFrames;
   if (owner.mode === 'camera' && (
-    video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA || video.currentTime === owner.videoTime
+    video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA || videoFrame === owner.lastVideoFrame
   )) {
+    if (owner.hasFrame && owner.lastFrameAt - owner.lastVideoAt >= cameraStallMs) {
+      stop('Camera video was interrupted. Restart the camera or try the sample.', true);
+      return;
+    }
     scheduleFrame(owner);
     return;
   }
@@ -280,7 +287,8 @@ async function submitFrame(owner) {
   const t = timestamp();
   try {
     if (owner.mode === 'camera') {
-      owner.videoTime = video.currentTime;
+      owner.lastVideoFrame = videoFrame;
+      owner.lastVideoAt = owner.lastFrameAt;
       const [width, height] = scaleCameraFrame();
       const bitmap = await createImageBitmap(video, { resizeWidth: width, resizeHeight: height });
       if (owner !== session) {
@@ -359,6 +367,17 @@ function cameraError(error) {
   return 'The camera could not start. Check your browser settings or try the sample.';
 }
 
+function watchVideoFrames(owner) {
+  if (!video.requestVideoFrameCallback) return;
+  owner.videoFrames = 0;
+  const next = () => {
+    if (owner !== session) return;
+    owner.videoFrames += 1;
+    owner.videoCallback = video.requestVideoFrameCallback(next);
+  };
+  owner.videoCallback = video.requestVideoFrameCallback(next);
+}
+
 async function start(mode) {
   if (session) return;
   if (mode === 'camera' && (!navigator.mediaDevices?.getUserMedia || !window.createImageBitmap)) {
@@ -367,7 +386,7 @@ async function start(mode) {
   }
   const owner = {
     mode, started: false, starting: true, sourceReady: false, hasFrame: false,
-    lastFrameAt: -Infinity, videoTime: -1, samplePromptAt: null,
+    lastFrameAt: -Infinity, lastVideoFrame: -1, samplePromptAt: null,
   };
   session = owner;
   updateControls();
@@ -403,6 +422,7 @@ async function start(mode) {
     }
   }
   if (owner !== session) return;
+  if (mode === 'camera') watchVideoFrames(owner);
   if (mode === 'sample') {
     overlay.width = sample.width;
     overlay.height = sample.height;
