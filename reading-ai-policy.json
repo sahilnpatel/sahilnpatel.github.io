@@ -2,6 +2,32 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-25-si-uplift-evaluation",
+      "date": "2026-11-25",
+      "title": "NIST proposes better ways to measure AI’s real-world uplift",
+      "summary": "NIST published draft guidance on November 24, 2026 for evaluating how AI changes what people and organizations can accomplish, rather than relying only on model benchmarks. It covers defining the research question, designing the study, and reporting results; public comments are due February 22, 2027. This is proposed voluntary guidance, not a binding regulation.",
+      "question": "What comparison would show that an AI system improves real work rather than only its benchmark score?",
+      "sources": [
+        {
+          "title": "Towards Best Practices for Evaluating SI-Driven Uplift",
+          "url": "https://www.nist.gov/news-events/news/2026/11/towards-best-practices-evaluating-si-driven-uplift"
+        }
+      ]
+    },
+    {
+      "id": "ai-policy-2026-11-25-ny-chatbot-toy-ban",
+      "date": "2026-11-25",
+      "title": "New York enacts a five-year ban on AI chatbot toys",
+      "summary": "New York Governor Kathy Hochul signed legislation on November 24, 2026 imposing a five-year moratorium on manufacturing, distributing, and selling toys with integrated internet-connected AI chatbots. The law takes effect 90 days after signing, so it does not immediately prohibit this holiday season’s sales; violations can bring penalties of up to $15,000 per day per violation.",
+      "question": "When a product category poses uncertain risks, what evidence should determine whether to restrict it or improve its evaluation first?",
+      "sources": [
+        {
+          "title": "Governor Hochul Signs Five-Year Ban on AI Chatbot Toys",
+          "url": "https://www.governor.ny.gov/news/consumers-begin-their-holiday-shopping-season-governor-hochul-signs-five-year-ban-ai-chatbot"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-25-mental-health-airlock",
       "date": "2026-11-25",
       "title": "UK regulators launch an AI mental-health sandbox",
