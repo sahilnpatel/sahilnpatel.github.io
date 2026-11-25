@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-25-douglass-pathway-freedom",
+      "date": "2026-11-25",
+      "title": "Learning can open a path to freedom",
+      "quote": "From that moment, I understood the pathway from slavery to freedom.",
+      "attribution": "Frederick Douglass, Narrative of the Life of Frederick Douglass, Chapter VI",
+      "summary": "Douglass describes realizing that literacy was connected to the power slavery tried to deny him. Knowledge did not erase the injustice around him, but it gave him a clearer understanding of how that system worked and strengthened his determination to learn. The passage treats education as more than information: it can make dependence visible and create room for purposeful action.",
+      "question": "What knowledge would make you less dependent on someone else’s interpretation of your choices?",
+      "sources": [
+        {
+          "title": "Narrative of the Life of Frederick Douglass, Chapter VI",
+          "url": "https://en.wikisource.org/wiki/Narrative_of_the_Life_of_Frederick_Douglass,_an_American_Slave/Chapter_6"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-24-mill-strongest-objection",
       "date": "2026-11-24",
       "title": "Understand the strongest objection",
