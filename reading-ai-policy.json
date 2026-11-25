@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-25-mental-health-airlock",
+      "date": "2026-11-25",
+      "title": "UK regulators launch an AI mental-health sandbox",
+      "summary": "On November 23, 2026, the UK’s MHRA and NICE announced the AI in Mental Health Airlock, a programme bringing developers, clinicians and people with lived experience together to work through safety and evidence requirements. It will explore how to evaluate AI mental-health tools, including technologies whose medical purpose may place them under medical-device regulation. The programme is intended to improve evaluation methods; participation does not establish that a tool is safe or effective.",
+      "question": "What evidence should an AI mental-health tool provide beyond reassuring or empathetic responses before it is used in patient care?",
+      "sources": [
+        {
+          "title": "AI in Mental Health Airlock to support safe innovation",
+          "url": "https://www.gov.uk/government/news/ai-in-mental-health-airlock-to-support-safe-innovation"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-24-bridgetown-ai-safety",
       "date": "2026-11-24",
       "title": "Bridgetown calls for an international AI safety framework",
