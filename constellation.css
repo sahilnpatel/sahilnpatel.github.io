@@ -406,3 +406,27 @@ h1{font-style:normal}
   .curiosity-heading .interest-cta {margin-top:12px}
   .photo-card figcaption {font-size:12px;line-height:1.4}
 }
+
+.intro-bio {
+  display: grid;
+  grid-template-columns: clamp(150px, 18vw, 192px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: 24px;
+}
+.intro-portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-card);
+}
+.home-intro .intro-bio-copy > p:first-child { margin-top: 0; }
+@media (max-width: 600px) {
+  .intro-bio { display: flow-root; margin-top: 20px; }
+  .intro-portrait {
+    float: left;
+    width: clamp(84px, 26vw, 136px);
+    margin: 4px 16px 8px 0;
+  }
+  .intro-bio-copy .links { clear: both; }
+}
