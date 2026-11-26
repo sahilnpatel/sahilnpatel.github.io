@@ -1,48 +1,59 @@
 (() => {
-  class HomeSectionGuide extends HTMLElement {
-    connectedCallback() {
-      const links = Array.from(this.querySelectorAll('a[href^="#"]'));
-      const sections = links.map(link => document.getElementById(link.hash.slice(1)));
-      if (!sections.length || sections.some(section => !section)) return;
+  let removeBackdrop;
+  const syncBackdrop = () => {
+    removeBackdrop?.();
+    removeBackdrop = undefined;
+    if (!document.body.classList.contains('home-page')) return;
+    const sections = Array.from(document.querySelectorAll('#main > section[id]'));
+    if (!sections.length) return;
 
-      let frame = 0;
-      const update = () => {
-        frame = 0;
-        const readingLine = window.innerHeight * 0.27;
-        let current = 0;
-        for (let i = 1; i < sections.length; i++) {
-          if (sections[i].getBoundingClientRect().top <= readingLine) current = i;
-        }
-        if (Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight - 1) {
-          current = sections.length - 1;
-        }
-        links.forEach((link, i) => {
-          if (i === current) link.setAttribute('aria-current', 'location');
-          else link.removeAttribute('aria-current');
-        });
-      };
-      const schedule = () => {
-        if (!frame) frame = requestAnimationFrame(update);
-      };
-      window.addEventListener('scroll', schedule, { passive: true });
-      const observer = new ResizeObserver(schedule);
-      observer.observe(document.documentElement);
-      sections.forEach(section => observer.observe(section));
-      this.dispose = () => {
-        window.removeEventListener('scroll', schedule);
-        observer.disconnect();
-        cancelAnimationFrame(frame);
-      };
-      update();
-    }
+    const backdrop = document.createElement('div');
+    backdrop.className = 'section-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
+    const layers = sections.map(section => {
+      const layer = document.createElement('div');
+      layer.className = 'scene scene-' + section.id;
+      backdrop.append(layer);
+      return layer;
+    });
+    document.body.prepend(backdrop);
 
-    disconnectedCallback() {
-      this.dispose?.();
-    }
-  }
-  customElements.define('home-section-guide', HomeSectionGuide);
+    let frame = 0;
+    let active = -1;
+    const update = () => {
+      frame = 0;
+      const midpoint = window.innerHeight * 0.48;
+      let next = 0;
+      for (let i = 1; i < sections.length; i++) {
+        if (sections[i].getBoundingClientRect().top <= midpoint) next = i;
+      }
+      if (Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight - 1) {
+        next = sections.length - 1;
+      }
+      if (next === active) return;
+      layers[active]?.classList.remove('is-active');
+      layers[next].classList.add('is-active');
+      active = next;
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    const observer = new ResizeObserver(schedule);
+    sections.forEach(section => observer.observe(section));
+    update();
+    removeBackdrop = () => {
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+      backdrop.remove();
+    };
+  };
 
   const initPageFeatures = () => {
+    syncBackdrop();
     const photoDialog = document.querySelector('.photo-dialog');
     if (photoDialog && !photoDialog.dataset.bound) {
       photoDialog.dataset.bound = 'true';
