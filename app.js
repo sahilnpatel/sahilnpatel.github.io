@@ -1,4 +1,47 @@
 (() => {
+  class HomeSectionGuide extends HTMLElement {
+    connectedCallback() {
+      const links = Array.from(this.querySelectorAll('a[href^="#"]'));
+      const sections = links.map(link => document.getElementById(link.hash.slice(1)));
+      if (!sections.length || sections.some(section => !section)) return;
+
+      let frame = 0;
+      const update = () => {
+        frame = 0;
+        const readingLine = window.innerHeight * 0.27;
+        let current = 0;
+        for (let i = 1; i < sections.length; i++) {
+          if (sections[i].getBoundingClientRect().top <= readingLine) current = i;
+        }
+        if (Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight - 1) {
+          current = sections.length - 1;
+        }
+        links.forEach((link, i) => {
+          if (i === current) link.setAttribute('aria-current', 'location');
+          else link.removeAttribute('aria-current');
+        });
+      };
+      const schedule = () => {
+        if (!frame) frame = requestAnimationFrame(update);
+      };
+      window.addEventListener('scroll', schedule, { passive: true });
+      const observer = new ResizeObserver(schedule);
+      observer.observe(document.documentElement);
+      sections.forEach(section => observer.observe(section));
+      this.dispose = () => {
+        window.removeEventListener('scroll', schedule);
+        observer.disconnect();
+        cancelAnimationFrame(frame);
+      };
+      update();
+    }
+
+    disconnectedCallback() {
+      this.dispose?.();
+    }
+  }
+  customElements.define('home-section-guide', HomeSectionGuide);
+
   const initPageFeatures = () => {
     const photoDialog = document.querySelector('.photo-dialog');
     if (photoDialog && !photoDialog.dataset.bound) {
