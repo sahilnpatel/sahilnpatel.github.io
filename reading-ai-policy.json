@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-26-monitor-evaluation",
+      "date": "2026-11-26",
+      "title": "AI monitor results depend on how attacks are tested",
+      "summary": "A preprint published on arXiv on November 25, 2026, by Charlie Griffin and colleagues found that an AI monitor’s measured miss rate rose from 0.5% to 20.8% as researchers optimized attacks within one method. The study held the tasks and monitor fixed, showing how a weak test can make a safeguard look stronger than it is. These are experimental results for a former production monitor, not an estimate of failures in current deployed systems.",
+      "question": "What should an independent auditor require before treating a low monitor miss rate as evidence that an AI system is safe to deploy?",
+      "sources": [
+        {
+          "title": "Attack Policy Selection can Mislead Monitor Evaluators",
+          "url": "https://arxiv.org/abs/2611.34934"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-25-si-uplift-evaluation",
       "date": "2026-11-25",
       "title": "NIST proposes better ways to measure AI’s real-world uplift",
