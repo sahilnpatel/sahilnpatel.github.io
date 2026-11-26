@@ -19,33 +19,46 @@
     document.body.prepend(backdrop);
 
     let frame = 0;
-    let active = -1;
+    let stops = [];
     const update = () => {
       frame = 0;
-      const midpoint = window.innerHeight * 0.48;
-      let next = 0;
-      for (let i = 1; i < sections.length; i++) {
-        if (sections[i].getBoundingClientRect().top <= midpoint) next = i;
-      }
-      if (Math.ceil(window.scrollY + window.innerHeight) >= document.documentElement.scrollHeight - 1) {
-        next = sections.length - 1;
-      }
-      if (next === active) return;
-      layers[active]?.classList.remove('is-active');
-      layers[next].classList.add('is-active');
-      active = next;
+      const scroll = Math.max(0, window.scrollY);
+      let left = 0;
+      while (left + 1 < stops.length && stops[left + 1] <= scroll) left++;
+      const right = Math.min(left + 1, stops.length - 1);
+      const range = stops[right] - stops[left];
+      const t = range > 0 ? Math.max(0, Math.min(1, (scroll - stops[left]) / range)) : 0;
+      const blend = t * t * (3 - 2 * t);
+      layers.forEach((layer, i) => {
+        const opacity = i === left ? 1 - blend : i === right ? blend : 0;
+        layer.style.opacity = opacity.toFixed(4);
+      });
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
+    const measure = () => {
+      const viewport = window.innerHeight;
+      const end = Math.max(0, document.documentElement.scrollHeight - viewport);
+      // Each scene peaks when its section fills the view. Pin the first and last to the scroll limits.
+      stops = sections.map((section, i) => {
+        if (i === 0) return 0;
+        if (i === sections.length - 1) return end;
+        const rect = section.getBoundingClientRect();
+        const center = window.scrollY + rect.top + rect.height / 2;
+        return Math.max(0, Math.min(end, center - viewport / 2));
+      });
+      schedule();
+    };
     window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('resize', schedule);
-    const observer = new ResizeObserver(schedule);
+    window.addEventListener('resize', measure);
+    const observer = new ResizeObserver(measure);
+    observer.observe(document.body);
     sections.forEach(section => observer.observe(section));
-    update();
+    measure();
     removeBackdrop = () => {
       window.removeEventListener('scroll', schedule);
-      window.removeEventListener('resize', schedule);
+      window.removeEventListener('resize', measure);
       observer.disconnect();
       cancelAnimationFrame(frame);
       backdrop.remove();
