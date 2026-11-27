@@ -16,7 +16,7 @@
       if (!response.ok) continue;
       const data = await response.json();
       if (!main.isConnected || location.pathname !== path || !Array.isArray(data.entries)) continue;
-      const entries = data.entries.filter(e => typeof e.id === 'string' && typeof e.title === 'string' && typeof e.summary === 'string' && /^\\d{4}-\\d{2}-\\d{2}$/.test(e.date) && Array.isArray(e.sources) && e.sources.some(s => safeUrl(s.url))).sort((a,b) => b.date.localeCompare(a.date));
+      const entries = data.entries.filter(e => typeof e.id === 'string' && typeof e.title === 'string' && typeof e.summary === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Array.isArray(e.sources) && e.sources.some(s => safeUrl(s.url))).sort((a,b) => b.date.localeCompare(a.date));
       if (!entries.length) continue;
       const latest = entries[0];
       if (home) {
