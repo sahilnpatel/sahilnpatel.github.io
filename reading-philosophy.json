@@ -2,6 +2,21 @@
   "version": 1,
   "entries": [
     {
+      "id": "philosophy-2026-11-27-nietzsche-self-knowledge",
+      "date": "2026-11-27",
+      "title": "Why self-knowledge is difficult",
+      "quote": "We are unknown, we knowers, ourselves to ourselves: this has its own good reason.",
+      "attribution": "Friedrich Nietzsche, On the Genealogy of Morals, Preface §1, translated by Horace B. Samuel",
+      "summary": "Nietzsche warns that being knowledgeable does not make us reliable interpreters of our own motives. We can explain a disagreement as a matter of principle while overlooking embarrassment, jealousy, or a desire for approval. The challenge is not to assume every conviction is selfish, but to examine what our certainty may be hiding.",
+      "question": "When you last felt certain you were right, what else might you have been protecting?",
+      "sources": [
+        {
+          "title": "The Genealogy of Morals — Project Gutenberg, Preface",
+          "url": "https://www.gutenberg.org/cache/epub/52319/pg52319-images.html"
+        }
+      ]
+    },
+    {
       "id": "philosophy-2026-11-25-douglass-pathway-freedom",
       "date": "2026-11-25",
       "title": "Learning can open a path to freedom",
