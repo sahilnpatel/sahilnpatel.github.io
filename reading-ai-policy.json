@@ -2,6 +2,19 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-27-system-wide-ai-risk",
+      "date": "2026-11-27",
+      "title": "Bank of England plans tests for system-wide AI disruption",
+      "summary": "The Bank of England’s Financial Stability Report, published November 26, 2026, warns that AI-enabled cyberattacks and reliance on shared technology providers can disrupt multiple financial firms at once. It outlines stronger penetration testing and a December exercise for authorities responding to simultaneous AI-enabled cyber incidents. The concern is whether essential services can keep operating when failures spread across institutions.",
+      "question": "How should regulators test shared AI providers when a failure could affect many institutions simultaneously?",
+      "sources": [
+        {
+          "title": "Financial Stability Report – November 2026, section 5.2",
+          "url": "https://www.bankofengland.co.uk/financial-stability-report/2026/november-2026"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-26-monitor-evaluation",
       "date": "2026-11-26",
       "title": "AI monitor results depend on how attacks are tested",
