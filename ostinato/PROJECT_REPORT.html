@@ -71,7 +71,7 @@
     <div class="top"><span class="tag">Project report</span><a href="index.html">Open the project site</a></div>
     <h1>Ostinato</h1>
     <p class="lead">An offline research prototype that studies whether a camera can estimate breathing and whether another viewpoint can recover an assessment when the first view fails.</p>
-    <p class="snapshot">Implementation reviewed at <a href="https://github.com/lay-shah/ostinato/commit/2ef98019405345d4bc9abcd5a501afae3bae838b">main · 2ef9801</a>. The benchmark and source links refer to this revision.</p>
+    <p class="snapshot">Estimator benchmark and algorithm references use <a href="https://github.com/lay-shah/ostinato/commit/2ef98019405345d4bc9abcd5a501afae3bae838b">main · 2ef9801</a>. The live site includes subsequent browser updates.</p>
   </div>
 </header>
 <nav aria-label="Report sections"><div class="wrap"><ul>
@@ -104,7 +104,7 @@
   </section>
   <section id="run">
     <h2>Run locally</h2>
-    <p><a href="live.html">Start the browser webcam assessment</a> to run the Python tracker and estimator on your device. The first load downloads the runtime and pose model. Camera access is optional until you select the camera. The desktop instructions below remain available.</p>
+    <p><a href="live.html">Start the browser webcam assessment</a> to run the Python tracker and estimator on your device. The first load downloads the runtime and pose model. Camera access is optional until you select the camera. After a completed assessment, download a text summary with its source, decision, and response outcome. The download also works after you stop the camera.</p>
     <p>From a checkout, install with Python 3.10–3.12. Grant the operating system’s camera permission for live measurements. For the first run, sit still 1–2 m from a fixed camera with shoulders, chest and some background visible. Patterned clothing can help the tracker find usable points.</p>
     <pre><code>python3.10 -m venv .venv
 source .venv/bin/activate

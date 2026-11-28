@@ -81,19 +81,19 @@ async function startPose() {
     return poseLoad;
 }
 
-function processPixels(t, width, height, pixels, landmarks) {
+function processPixels(t, width, height, pixels, landmarks, sound = false) {
     const pythonPixels = runtime.toPy(pixels);
     let pythonLandmarks;
     try {
         pythonLandmarks = runtime.toPy(landmarks);
-        return JSON.parse(frameInPython(t, width, height, pythonPixels, pythonLandmarks));
+        return JSON.parse(frameInPython(t, width, height, pythonPixels, pythonLandmarks, sound));
     } finally {
         pythonLandmarks?.destroy();
         pythonPixels.destroy();
     }
 }
 
-async function processFrame({ t, bitmap, width, height, pixels, landmarks }) {
+async function processFrame({ t, bitmap, width, height, pixels, landmarks, sound }) {
     if (!bitmap) {
         const rgba = new Uint8Array(pixels);
         if (!Number.isInteger(width) || !Number.isInteger(height) || width < 1 || height < 1 ||
@@ -121,11 +121,11 @@ async function processFrame({ t, bitmap, width, height, pixels, landmarks }) {
 
     frameContext.drawImage(bitmap, 0, 0);
     const rgba = frameContext.getImageData(0, 0, width, height).data;
-    return processPixels(t, width, height, new Uint8Array(rgba.buffer), landmarks);
+    return processPixels(t, width, height, new Uint8Array(rgba.buffer), landmarks, Boolean(sound));
 }
 
 async function handleMessage(message) {
-    const { type, action, t, sound, bitmap } = message;
+    const { type, action, t, sound, camera, bitmap } = message;
     const request = { requestType: type, action, t };
     try {
         if (type === "init") {
@@ -138,7 +138,7 @@ async function handleMessage(message) {
         if (!Number.isFinite(t) || t < 0) throw new Error("The session timestamp is invalid.");
         const state = type === "frame"
             ? await processFrame(message)
-            : JSON.parse(commandInPython(t, action, Boolean(sound)));
+            : JSON.parse(commandInPython(t, action, Boolean(sound), Boolean(camera)));
         self.postMessage({ type: "state", ...request, state });
     } catch (error) {
         self.postMessage({ type: "error", ...request, message: error?.message || String(error) });
