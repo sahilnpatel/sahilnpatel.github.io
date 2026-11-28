@@ -1,10 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 320" fill="none">
-  <g stroke="#7198ac" stroke-opacity=".31" stroke-width="1">
-    <path d="m51 91 21-12 21 12v24l-21 12-21-12z M93 91l21-12 21 12v24l-21 12-21-12 M51 91 34 81l-15 9 M114 79V59l14-9 M72 127v19l16 9"/>
-    <path d="m206 239 18-10 18 10v21l-18 10-18-10z M242 239l16-9v-17 M206 260l-16 9-13-7 M224 229v-15"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 340" fill="none">
+  <defs>
+    <g id="rings" stroke="#407cad" stroke-opacity=".32" stroke-width="1.2" stroke-linejoin="round">
+      <path d="M0 0 15-9 30 0v18l-15 9-15-9z M0 0-14-5-24 9l10 14 14-5 M-24 9l-11 3"/>
+      <path d="m61 0 15-9 15 9v18l-15 9-15-9z M91 18l13 7"/>
+    </g>
+  </defs>
+  <g transform="translate(43 79)">
+    <use href="#rings"/>
+    <path d="M34 5h22M34 13h22" stroke="#6194bb" stroke-opacity=".35" stroke-dasharray="2 3"/>
+    <g fill="#5285ad" fill-opacity=".61" text-anchor="middle" font-family="monospace" font-size="12"><text x="15" y="13">A</text><text x="76" y="13">T</text></g>
   </g>
-  <g fill="#769fb3" opacity=".46">
-    <circle cx="19" cy="90" r="2.5"/><circle cx="128" cy="50" r="2.5"/><circle cx="88" cy="155" r="2.3"/>
-    <circle cx="258" cy="213" r="2.3"/><circle cx="177" cy="262" r="2.3"/><circle cx="224" cy="214" r="2.3"/>
+  <g transform="translate(166 240)">
+    <use href="#rings"/>
+    <path d="M34 2h22M34 9h22M34 16h22" stroke="#6194bb" stroke-opacity=".35" stroke-dasharray="2 3"/>
+    <g fill="#5285ad" fill-opacity=".61" text-anchor="middle" font-family="monospace" font-size="12"><text x="15" y="13">G</text><text x="76" y="13">C</text></g>
   </g>
 </svg>

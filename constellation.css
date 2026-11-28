@@ -428,25 +428,20 @@ h1{font-style:normal}
   .intro-bio-copy .links { clear: both; }
 }
 
-/* One helix at the edge of the homepage. */
-body:not(.home-page)::before {
+/* Shared DNA artwork stays in the margins of each page. */
+body { background: #f8fbff; }
+body::before, body::after {
   content: "";
   position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+body::after {
   inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background: url("constellation-field.svg") center top / 1440px 960px repeat-y;
+  background: url("molecular-margin.svg?v=base-pairs") left top / 310px 340px repeat;
+  mask-image: linear-gradient(to right, #000, #0008 9%, transparent 23%, transparent 78%, #0008 94%, #000);
 }
-body.home-page {
-  background: #f8fbff;
-  timeline-scope: --interests-in-view;
-}
-.home-page #interests { view-timeline: --interests-in-view block; }
-.home-page::before {
-  content: "";
-  position: fixed;
-  z-index: -1;
-  pointer-events: none;
+body::before {
   top: 48%;
   right: clamp(0px, 1.5vw, 40px);
   width: clamp(42px, 5vw, 84px);
@@ -455,6 +450,8 @@ body.home-page {
   background: url("dna-margin.svg") center / contain no-repeat;
   opacity: var(--helix-rest, .33);
 }
+.home-page { timeline-scope: --interests-in-view; }
+.home-page #interests { view-timeline: --interests-in-view block; }
 @keyframes helix-emphasis {
   0%, 100% { opacity: var(--helix-rest, .33); }
   50% { opacity: var(--helix-peak, .52); }
@@ -468,6 +465,10 @@ body.home-page {
   }
 }
 @media (max-width: 600px) {
-  .home-page::before { right: -9px; --helix-rest: .23; --helix-peak: .34; }
+  body::before { right: -9px; --helix-rest: .23; --helix-peak: .34; }
+  body::after {
+    background-size: 220px auto;
+    mask-image: linear-gradient(to right, #0009, transparent 13%, transparent 86%, #0009);
+  }
 }
-@media print, (forced-colors: active) { body::before { display: none; } }
+@media print, (forced-colors: active) { body::before, body::after { display: none; } }
