@@ -430,18 +430,11 @@ h1{font-style:normal}
 
 /* Shared DNA artwork stays in the margins of each page. */
 body { background: #f8fbff; }
-body::before, body::after {
+body::before {
   content: "";
   position: fixed;
   z-index: -1;
   pointer-events: none;
-}
-body::after {
-  inset: 0;
-  background: url("molecular-margin.svg?v=base-pairs") left top / 310px 340px repeat;
-  mask-image: linear-gradient(to right, #000, #0008 9%, transparent 23%, transparent 78%, #0008 94%, #000);
-}
-body::before {
   top: 48%;
   right: clamp(0px, 1.5vw, 40px);
   width: clamp(42px, 5vw, 84px);
@@ -466,9 +459,5 @@ body::before {
 }
 @media (max-width: 600px) {
   body::before { right: -9px; --helix-rest: .23; --helix-peak: .34; }
-  body::after {
-    background-size: 220px auto;
-    mask-image: linear-gradient(to right, #0009, transparent 13%, transparent 86%, #0009);
-  }
 }
-@media print, (forced-colors: active) { body::before, body::after { display: none; } }
+@media print, (forced-colors: active) { body::before { display: none; } }
