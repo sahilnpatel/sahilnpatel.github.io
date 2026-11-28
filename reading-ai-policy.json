@@ -2,6 +2,23 @@
   "version": 1,
   "entries": [
     {
+      "id": "ai-policy-2026-11-28-uk-superintelligence-bill",
+      "date": "2026-11-28",
+      "title": "UK bill proposes prohibitions on runaway AI capabilities",
+      "summary": "UK Parliament published the Artificial Superintelligence Bill’s introduced text on November 25, 2026, proposing restrictions on systems that could undermine human authorities, including designated self-improvement and self-preservation capabilities. It includes monitoring and enforcement powers, making the definition of prohibited capabilities central to its scope. This is not law: the November 27 proceedings postponed its second reading to February 5, 2027.",
+      "question": "How could lawmakers distinguish dangerous autonomous AI development from useful AI-assisted research in a rule that can be tested and enforced?",
+      "sources": [
+        {
+          "title": "Artificial Superintelligence Bill, as introduced",
+          "url": "https://publications.parliament.uk/pa/bills/cbill/59-02/0142/260142.pdf"
+        },
+        {
+          "title": "House of Commons Votes and Proceedings, 27 November 2026",
+          "url": "https://commonsbusiness.parliament.uk/Document/108637/Pdf?subType=LargePrint"
+        }
+      ]
+    },
+    {
       "id": "ai-policy-2026-11-27-system-wide-ai-risk",
       "date": "2026-11-27",
       "title": "Bank of England plans tests for system-wide AI disruption",
